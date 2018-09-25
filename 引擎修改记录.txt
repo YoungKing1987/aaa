@@ -1,0 +1,15 @@
+frameworks\cocos2d-x\cocos\scripting\lua-bindings\auto\lua_cocos2dx_auto.cpp 修改opengl报错
+
+frameworks/runtime-src/proj.ios_mac/ios/AppController.mm 支持ios多点触摸
+
+frameworks\cocos2d-x\cocos\2d\CCNode.cpp 构造函数中设置跟随父节点透明度变化而变化
+
+frameworks\cocos2d-x\cocos\scripting\lua-bindings\manual\cocos2d\lua_cocos2dx_manual.cpp 添加ccUtils里的一个导出函数
+
+frameworks\cocos2d-x\extensions\GUI\CCScrollView\CCScrollView.cpp 添加一个函数stopScrolling并导出到lua，用来停止滚动
+
+frameworks\cocos2d-x\cocos\platform\CCImage.cpp CCImage类新增两个方法 create和getColorByPos 并导出到lua，用于获取图片某一点RGBA值
+
+1.UIRichText.cpp
+里的 addProtectedChild 改为 addChild
+2.UIRichText 新增 getRenderSize 接口，获取富文本的真实高度

@@ -1,0 +1,7 @@
+1.编译项目最好用老版本的sdk 例如 -18
+2.手动替换gradle文件
+	示例目录：C:\Users\Administrator\.gradle\wrapper\dists
+3.生成的target安卓sdk 需要配置两个文件：
+	1）.\frameworks\runtime-src\proj.android-studio\build.gradle
+	2）.\frameworks\cocos2d-x\cocos\platform\android\libcocos2dx			\build.gradle
+4.修改E:\2dx_empty\cocos2d-x-3.14\tools\cocos2d-console\plugins\plugin_compile\build_android.py文件
