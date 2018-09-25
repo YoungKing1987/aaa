@@ -181,6 +181,60 @@ void captureScreen(const std::function<void(bool, const std::string&)>& afterCap
     });
 }
 
+Sprite* captureScreenEx()
+{
+
+	static Image* image = new (std::nothrow) Image;
+	auto glView = Director::getInstance()->getOpenGLView();
+	auto frameSize = glView->getFrameSize();
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+	frameSize = frameSize * glView->getFrameZoomFactor() * glView->getRetinaFactor();
+#endif
+
+	int width = static_cast<int>(frameSize.width);
+	int height = static_cast<int>(frameSize.height);
+
+
+	std::shared_ptr<GLubyte> buffer(new GLubyte[width * height * 4], [](GLubyte* p) { CC_SAFE_DELETE_ARRAY(p); });
+	if (!buffer)
+	{
+		return nullptr;
+	}
+
+	glPixelStorei(GL_PACK_ALIGNMENT, 1);
+	glReadPixels(0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, buffer.get());
+
+	std::shared_ptr<GLubyte> flippedBuffer(new GLubyte[width * height * 4], [](GLubyte* p) { CC_SAFE_DELETE_ARRAY(p); });
+	if (!flippedBuffer)
+	{
+		return nullptr;;
+	}
+
+	for (int row = 0; row < height; ++row)
+	{
+		memcpy(flippedBuffer.get() + (height - row - 1) * width * 4, buffer.get() + row * width * 4, width * 4);
+	}
+
+
+	if (image)
+	{
+		image->initWithRawData(flippedBuffer.get(), width * height * 4, width, height, 8);
+
+		Texture2D * texture = new (std::nothrow) Texture2D();
+
+		texture->initWithImage(image);
+		Sprite * sprite = Sprite::createWithTexture(texture);
+
+		return sprite;
+
+	}
+	else
+	{
+		CCLOG("Malloc Image memory failed!");
+		return nullptr;
+	}
+}
+
 Image* captureNode(Node* startNode, float scale)
 { // The best snapshot API, support Scene and any Node
     auto& size = startNode->getContentSize();

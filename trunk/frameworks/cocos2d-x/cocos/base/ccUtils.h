@@ -68,7 +68,7 @@ namespace utils
      * @since v3.2
      */
     CC_DLL void  captureScreen(const std::function<void(bool, const std::string&)>& afterCaptured, const std::string& filename);
-
+	CC_DLL Sprite*  captureScreenEx();
     /** Capture a specific Node.
     * @param startNode specify the snapshot Node. It should be cocos2d::Scene
     * @param scale
