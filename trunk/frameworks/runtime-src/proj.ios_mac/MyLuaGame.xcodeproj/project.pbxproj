@@ -107,6 +107,7 @@
 		50D7C96E17EBBEE6005D0B91 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50D7C96D17EBBEE6005D0B91 /* AppKit.framework */; };
 		50D7C97017EBBEEC005D0B91 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50D7C96F17EBBEEC005D0B91 /* IOKit.framework */; };
 		5200BECA1A53D9A500AC45E4 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5200BEC91A53D9A500AC45E4 /* Security.framework */; };
+		8318ACF2215B715A00AF31BB /* manifest in Resources */ = {isa = PBXBuildFile; fileRef = 8318ACEF215B715900AF31BB /* manifest */; };
 		9FA3AE4E1BE9BCC900FC9645 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FA3AE4D1BE9BCC900FC9645 /* CFNetwork.framework */; };
 		9FF504841A5E87B100AFDA55 /* ConsoleWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FF504811A5E87B100AFDA55 /* ConsoleWindow.xib */; };
 		9FF504851A5E87B100AFDA55 /* ConsoleWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FF504831A5E87B100AFDA55 /* ConsoleWindowController.m */; };
@@ -372,6 +373,7 @@
 		50D7C96D17EBBEE6005D0B91 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		50D7C96F17EBBEEC005D0B91 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		5200BEC91A53D9A500AC45E4 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
+		8318ACEF215B715900AF31BB /* manifest */ = {isa = PBXFileReference; lastKnownFileType = folder; name = manifest; path = ../../../manifest; sourceTree = "<group>"; };
 		9FA3AE4D1BE9BCC900FC9645 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/CFNetwork.framework; sourceTree = DEVELOPER_DIR; };
 		9FF504781A5E86D600AFDA55 /* libsimulator.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = libsimulator.xcodeproj; path = "../../cocos2d-x/tools/simulator/libsimulator/proj.ios_mac/libsimulator.xcodeproj"; sourceTree = "<group>"; };
 		9FF504811A5E87B100AFDA55 /* ConsoleWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConsoleWindow.xib; sourceTree = "<group>"; };
@@ -464,6 +466,7 @@
 		1A8A4ED51F6F9AD00044495E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				8318ACEF215B715900AF31BB /* manifest */,
 				1A8A4ED61F6F9AE70044495E /* config.json */,
 				1A8A4ED71F6F9AE70044495E /* res */,
 				1A8A4ED81F6F9AE80044495E /* src */,
@@ -1142,6 +1145,7 @@
 				39EEABA9214786E300B16CFF /* LuaXml.lua in Resources */,
 				39EEABA3214786E300B16CFF /* dump.lua in Resources */,
 				1A8A4EDB1F6F9AEE0044495E /* res in Resources */,
+				8318ACF2215B715A00AF31BB /* manifest in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
