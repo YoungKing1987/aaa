@@ -30,7 +30,6 @@ THE SOFTWARE.
 #include <vector>
 #include <unordered_map>
 #include <type_traits>
-#include <mutex>
 
 #include "platform/CCPlatformMacros.h"
 #include "base/ccTypes.h"
@@ -168,7 +167,7 @@ public:
     /**
      *  Gets string from a file.
      */
-    virtual std::string getStringFromFile(const std::string& filename) const;
+    virtual std::string getStringFromFile(const std::string& filename);
     
     /**
      * Gets string from a file, async off the main cocos thread
@@ -177,13 +176,13 @@ public:
      * @param callback Function that will be called when file is read. Will be called 
      * on the main cocos thread.
      */
-    virtual void getStringFromFile(const std::string& path, std::function<void(std::string)> callback) const;
+    virtual void getStringFromFile(const std::string& path, std::function<void(std::string)> callback);
 
     /**
      *  Creates binary data from a file.
      *  @return A data object.
      */
-    virtual Data getDataFromFile(const std::string& filename) const;
+    virtual Data getDataFromFile(const std::string& filename);
     
 
     /**
@@ -193,7 +192,7 @@ public:
      * @param callback Function that will be called when file is read. Will be called 
      * on the main cocos thread.
      */
-    virtual void getDataFromFile(const std::string& filename, std::function<void(Data)> callback) const;
+    virtual void getDataFromFile(const std::string& filename, std::function<void(Data)> callback);
 
     enum class Status
     {
@@ -267,11 +266,11 @@ public:
             std::is_base_of< ResizableBuffer, ResizableBufferAdapter<T> >::value
         >::type
     >
-    Status getContents(const std::string& filename, T* buffer) const {
+    Status getContents(const std::string& filename, T* buffer) {
         ResizableBufferAdapter<T> buf(buffer);
         return getContents(filename, &buf);
     }
-    virtual Status getContents(const std::string& filename, ResizableBuffer* buffer) const;
+    virtual Status getContents(const std::string& filename, ResizableBuffer* buffer);
 
     /**
      *  Gets resource file data
@@ -282,7 +281,7 @@ public:
      *  @return Upon success, a pointer to the data is returned, otherwise NULL.
      *  @warning Recall: you are responsible for calling free() on any Non-NULL pointer returned.
      */
-    CC_DEPRECATED_ATTRIBUTE virtual unsigned char* getFileData(const std::string& filename, const char* mode, ssize_t *size) const;
+    CC_DEPRECATED_ATTRIBUTE virtual unsigned char* getFileData(const std::string& filename, const char* mode, ssize_t *size);
 
     /**
      *  Gets resource file data from a zip file.
@@ -292,7 +291,7 @@ public:
      *  @return Upon success, a pointer to the data is returned, otherwise nullptr.
      *  @warning Recall: you are responsible for calling free() on any Non-nullptr pointer returned.
      */
-    virtual unsigned char* getFileDataFromZip(const std::string& zipFilePath, const std::string& filename, ssize_t *size) const;
+    virtual unsigned char* getFileDataFromZip(const std::string& zipFilePath, const std::string& filename, ssize_t *size);
 
 
     /** Returns the fullpath for a given filename.
@@ -394,7 +393,7 @@ public:
      *               Return: /User/path1/path2/hello.pvr (If there a a key(hello.png)-value(hello.pvr) in FilenameLookup dictionary. )
      *
      */
-    virtual std::string fullPathFromRelativeFile(const std::string &filename, const std::string &relativeFile) const;
+    virtual std::string fullPathFromRelativeFile(const std::string &filename, const std::string &relativeFile);
 
     /**
      *  Sets the array that contains the search order of the resources.
@@ -422,7 +421,7 @@ public:
      *  @since v2.1
      *  @lua NA
      */
-    virtual const std::vector<std::string> getSearchResolutionsOrder() const;
+    virtual const std::vector<std::string>& getSearchResolutionsOrder() const;
 
     /**
      *  Sets the array of search paths.
@@ -448,7 +447,7 @@ public:
     /**
      * Get default resource root path.
      */
-    const std::string getDefaultResourceRootPath() const;
+    const std::string& getDefaultResourceRootPath() const;
 
     /**
      * Set default resource root path.
@@ -472,13 +471,13 @@ public:
      *  @see fullPathForFilename(const char*).
      *  @lua NA
      */
-    virtual const std::vector<std::string> getSearchPaths() const;
+    virtual const std::vector<std::string>& getSearchPaths() const;
 
     /**
      *  Gets the original search path array set by 'setSearchPaths' or 'addSearchPath'.
      *  @return The array of the original search paths
      */
-    virtual const std::vector<std::string> getOriginalSearchPaths() const;
+    virtual const std::vector<std::string>& getOriginalSearchPaths() const;
 
     /**
      *  Gets the writable path.
@@ -507,13 +506,13 @@ public:
      *  @return ValueMap of the file contents.
      *  @note This method is used internally.
      */
-    virtual ValueMap getValueMapFromFile(const std::string& filename) const;
+    virtual ValueMap getValueMapFromFile(const std::string& filename);
 
 
     /** Converts the contents of a file to a ValueMap.
      *  This method is used internally.
      */
-    virtual ValueMap getValueMapFromData(const char* filedata, int filesize) const;
+    virtual ValueMap getValueMapFromData(const char* filedata, int filesize);
 
     /**
     * write a ValueMap into a plist file
@@ -522,7 +521,7 @@ public:
     *@param fullPath The full path to the file you want to save a string
     *@return bool
     */
-    virtual bool writeToFile(const ValueMap& dict, const std::string& fullPath) const;
+    virtual bool writeToFile(const ValueMap& dict, const std::string& fullPath);
 
     /**
      *  write a string into a file
@@ -531,7 +530,7 @@ public:
      * @param fullPath The full path to the file you want to save a string
      * @return bool True if write success
      */
-    virtual bool writeStringToFile(const std::string& dataStr, const std::string& fullPath) const;
+    virtual bool writeStringToFile(const std::string& dataStr, const std::string& fullPath);
 
     
     /**
@@ -547,7 +546,7 @@ public:
      * function will be executed on the main cocos thread. It will have on boolean argument 
      * signifying if the write was successful.
      */
-    virtual void writeStringToFile(std::string dataStr, const std::string& fullPath, std::function<void(bool)> callback) const;
+    virtual void writeStringToFile(std::string dataStr, const std::string& fullPath, std::function<void(bool)> callback);
     
     /**
      * write Data into a file
@@ -556,7 +555,7 @@ public:
      *@param fullPath The full path to the file you want to save a string
      *@return bool
      */
-    virtual bool writeDataToFile(const Data& data, const std::string& fullPath) const;
+    virtual bool writeDataToFile(const Data& data, const std::string& fullPath);
     
 
     /**
@@ -573,7 +572,7 @@ public:
     * function will be executed on the main cocos thread. It will have on boolean argument 
     * signifying if the write was successful.
     */
-    virtual void writeDataToFile(Data data, const std::string& fullPath, std::function<void(bool)> callback) const;
+    virtual void writeDataToFile(Data data, const std::string& fullPath, std::function<void(bool)> callback);
 
     /**
     * write ValueMap into a plist file
@@ -582,7 +581,7 @@ public:
     *@param fullPath The full path to the file you want to save a string
     *@return bool
     */
-    virtual bool writeValueMapToFile(const ValueMap& dict, const std::string& fullPath) const;
+    virtual bool writeValueMapToFile(const ValueMap& dict, const std::string& fullPath);
 
     /**
     * Write a ValueMap into a file, done async off the main cocos thread.
@@ -598,7 +597,7 @@ public:
     * function will be executed on the main cocos thread. It will have on boolean argument 
     * signifying if the write was successful.
     */
-    virtual void writeValueMapToFile(ValueMap dict, const std::string& fullPath, std::function<void(bool)> callback) const;
+    virtual void writeValueMapToFile(ValueMap dict, const std::string& fullPath, std::function<void(bool)> callback);
 
     /**
     * write ValueVector into a plist file
@@ -607,7 +606,7 @@ public:
     *@param fullPath The full path to the file you want to save a string
     *@return bool
     */
-    virtual bool writeValueVectorToFile(const ValueVector& vecData, const std::string& fullPath) const;
+    virtual bool writeValueVectorToFile(const ValueVector& vecData, const std::string& fullPath);
 
     /**
     * Write a ValueVector into a file, done async off the main cocos thread.
@@ -623,7 +622,7 @@ public:
     * function will be executed on the main cocos thread. It will have on boolean argument 
     * signifying if the write was successful.
     */
-    virtual void writeValueVectorToFile(ValueVector vecData, const std::string& fullPath, std::function<void(bool)> callback) const;
+    virtual void writeValueVectorToFile(ValueVector vecData, const std::string& fullPath, std::function<void(bool)> callback);
 
     /**
     * Windows fopen can't support UTF-8 filename
@@ -636,7 +635,7 @@ public:
 
     // Converts the contents of a file to a ValueVector.
     // This method is used internally.
-    virtual ValueVector getValueVectorFromFile(const std::string& filename) const;
+    virtual ValueVector getValueVectorFromFile(const std::string& filename);
 
     /**
      *  Checks whether a file exists.
@@ -657,7 +656,7 @@ public:
      *  @param callback The function that will be called when the operation is complete. Will have one boolean
      * argument, true if the file exists, false otherwise.
      */
-    virtual void isFileExist(const std::string& filename, std::function<void(bool)> callback) const;
+    virtual void isFileExist(const std::string& filename, std::function<void(bool)> callback);
 
     /**
     *  Gets filename extension is a suffix (separated from the base filename by a dot) in lower case.
@@ -693,7 +692,7 @@ public:
      * @param callback that will accept a boolean, true if the file exists, false otherwise. 
      * Callback will happen on the main cocos thread.
      */
-    virtual void isDirectoryExist(const std::string& fullPath, std::function<void(bool)> callback) const;
+    virtual void isDirectoryExist(const std::string& fullPath, std::function<void(bool)> callback);
 
     /**
      *  Creates a directory.
@@ -701,7 +700,7 @@ public:
      *  @param dirPath The path of the directory, it must be an absolute path.
      *  @return True if the directory have been created successfully, false if not.
      */
-    virtual bool createDirectory(const std::string& dirPath) const;
+    virtual bool createDirectory(const std::string& dirPath);
 
     /**
      * Create a directory, async off the main cocos thread.
@@ -710,7 +709,7 @@ public:
      * @param callback The function that will be called when the operation is complete. Will have one boolean
      * argument, true if the directory was successfully, false otherwise.
      */
-    virtual void createDirectory(const std::string& dirPath, std::function<void(bool)> callback) const;
+    virtual void createDirectory(const std::string& dirPath, std::function<void(bool)> callback);
 
     /**
      *  Removes a directory.
@@ -718,7 +717,7 @@ public:
      *  @param dirPath  The full path of the directory, it must be an absolute path.
      *  @return True if the directory have been removed successfully, false if not.
      */
-    virtual bool removeDirectory(const std::string& dirPath) const;
+    virtual bool removeDirectory(const std::string& dirPath);
 
     /**
      * Removes a directory, async off the main cocos thread.
@@ -727,7 +726,7 @@ public:
      * @param callback The function that will be called when the operation is complete. Will have one boolean
      * argument, true if the directory was successfully removed, false otherwise.
      */
-    virtual void removeDirectory(const std::string& dirPath, std::function<void(bool)> callback) const;
+    virtual void removeDirectory(const std::string& dirPath, std::function<void(bool)> callback);
 
     /**
      *  Removes a file.
@@ -735,7 +734,7 @@ public:
      *  @param filepath The full path of the file, it must be an absolute path.
      *  @return True if the file have been removed successfully, false if not.
      */
-    virtual bool removeFile(const std::string &filepath) const;
+    virtual bool removeFile(const std::string &filepath);
 
     /**
      * Removes a file, async off the main cocos thread.
@@ -744,7 +743,7 @@ public:
      * @param callback The function that will be called when the operation is complete. Will have one boolean
      * argument, true if the file was successfully removed, false otherwise.
      */
-    virtual void removeFile(const std::string &filepath, std::function<void(bool)> callback) const;
+    virtual void removeFile(const std::string &filepath, std::function<void(bool)> callback);
 
     /**
      *  Renames a file under the given directory.
@@ -754,7 +753,7 @@ public:
      *  @param name     The new name of the file.
      *  @return True if the file have been renamed successfully, false if not.
      */
-    virtual bool renameFile(const std::string &path, const std::string &oldname, const std::string &name) const;
+    virtual bool renameFile(const std::string &path, const std::string &oldname, const std::string &name);
 
     /**
      *  Renames a file under the given directory, async off the main cocos thread.
@@ -765,7 +764,7 @@ public:
      *  @param callback The function that will be called when the operation is complete. Will have one boolean
      * argument, true if the file was successfully renamed, false otherwise.
      */
-    virtual void renameFile(const std::string &path, const std::string &oldname, const std::string &name, std::function<void(bool)> callback) const;
+    virtual void renameFile(const std::string &path, const std::string &oldname, const std::string &name, std::function<void(bool)> callback);
 
     /**
      *  Renames a file under the given directory.
@@ -774,7 +773,7 @@ public:
      *  @param newfullpath  The new fullpath of the file. Includes path and name.
      *  @return True if the file have been renamed successfully, false if not.
      */
-    virtual bool renameFile(const std::string &oldfullpath, const std::string &newfullpath) const;
+    virtual bool renameFile(const std::string &oldfullpath, const std::string &newfullpath);
 
     /**
      *  Renames a file under the given directory, async off the main cocos thread.
@@ -784,7 +783,7 @@ public:
      *  @param callback The function that will be called when the operation is complete. Will have one boolean
      * argument, true if the file was successfully renamed, false otherwise.
      */
-    virtual void renameFile(const std::string &oldfullpath, const std::string &newfullpath, std::function<void(bool)> callback) const;
+    virtual void renameFile(const std::string &oldfullpath, const std::string &newfullpath, std::function<void(bool)> callback);
 
     /**
      *  Retrieve the file size.
@@ -793,7 +792,7 @@ public:
      *  @param filepath The path of the file, it could be a relative or absolute path.
      *  @return The file size.
      */
-    virtual long getFileSize(const std::string &filepath) const;
+    virtual long getFileSize(const std::string &filepath);
 
     /**
      *  Retrieve the file size, async off the main cocos thread.
@@ -803,7 +802,7 @@ public:
      *  @param callback The function that will be called when the operation is complete. Will have one long
      * argument, the file size.
      */
-    virtual void getFileSize(const std::string &filepath, std::function<void(long)> callback) const;
+    virtual void getFileSize(const std::string &filepath, std::function<void(long)> callback);
 
     /**
      *  List all files in a directory.
@@ -843,7 +842,7 @@ public:
     virtual void listFilesRecursivelyAsync(const std::string& dirPath, std::function<void(std::vector<std::string>)> callback) const;
 
     /** Returns the full path cache. */
-    const std::unordered_map<std::string, std::string> getFullPathCache() const { return _fullPathCache; }
+    const std::unordered_map<std::string, std::string>& getFullPathCache() const { return _fullPathCache; }
 
     /**
      *  Gets the new filename from the filename lookup dictionary.
@@ -906,13 +905,6 @@ protected:
      */
     virtual std::string getFullPathForDirectoryAndFilename(const std::string& directory, const std::string& filename) const;
 
-
-    /**
-    * mutex used to protect fields. 
-    */
-    mutable std::recursive_mutex _mutex;
-
-
     /** Dictionary used to lookup filenames based on a key.
      *  It is used internally by the following methods:
      *
@@ -967,8 +959,8 @@ protected:
     /**
      *  Remove null value key (for iOS)
      */
-    virtual void valueMapCompact(ValueMap& valueMap) const;
-    virtual void valueVectorCompact(ValueVector& valueVector) const;
+    virtual void valueMapCompact(ValueMap& valueMap);
+    virtual void valueVectorCompact(ValueVector& valueVector);
 
     template<typename T, typename R, typename ...ARGS>
     static void performOperationOffthread(T&& action, R&& callback, ARGS&& ...args)

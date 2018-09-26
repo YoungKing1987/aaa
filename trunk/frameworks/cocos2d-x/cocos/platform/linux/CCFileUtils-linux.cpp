@@ -43,8 +43,6 @@ THE SOFTWARE.
 
 using namespace std;
 
-#define DECLARE_GUARD std::lock_guard<std::recursive_mutex> mutexGuard(_mutex)
-
 NS_CC_BEGIN
 
 FileUtils* FileUtils::getInstance()
@@ -67,7 +65,6 @@ FileUtilsLinux::FileUtilsLinux()
 
 bool FileUtilsLinux::init()
 {
-    DECLARE_GUARD;
     // get application path
     char fullpath[256] = {0};
     ssize_t length = readlink("/proc/self/exe", fullpath, sizeof(fullpath)-1);
@@ -99,7 +96,6 @@ bool FileUtilsLinux::init()
 
 string FileUtilsLinux::getWritablePath() const
 {
-    DECLARE_GUARD;
     struct stat st;
     stat(_writablePath.c_str(), &st);
     if (!S_ISDIR(st.st_mode)) {
@@ -111,7 +107,6 @@ string FileUtilsLinux::getWritablePath() const
 
 bool FileUtilsLinux::isFileExistInternal(const std::string& strFilePath) const
 {
-    DECLARE_GUARD;
     if (strFilePath.empty())
     {
         return false;
@@ -124,7 +119,7 @@ bool FileUtilsLinux::isFileExistInternal(const std::string& strFilePath) const
     }
 
     struct stat sts;
-    return (stat(strPath.c_str(), &sts) == 0) && S_ISREG(sts.st_mode);
+    return (stat(strPath.c_str(), &sts) != -1) ? true : false;
 }
 
 NS_CC_END
