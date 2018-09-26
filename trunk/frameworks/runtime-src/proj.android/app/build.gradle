@@ -170,6 +170,11 @@ android.applicationVariants.all { variant ->
             into "${buildDir}/intermediates/assets/${variant.dirName}/src"
         }
 
+        copy {
+            from "${buildDir}/../../../../../manifest"
+            into "${buildDir}/intermediates/assets/${variant.dirName}/manifest"
+        }
+
         // copy {
         //     from "${buildDir}/../../../../cocos2d-x/cocos/scripting/lua-bindings/script"
         //     into  "${buildDir}/intermediates/assets/${variant.dirName}/src/cocos"
