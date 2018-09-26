@@ -10,6 +10,102 @@
     <Filter Include="resource">
       <UniqueIdentifier>{2d1d0979-58cd-4ab6-b91c-13650158f1fa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\custom">
+      <UniqueIdentifier>{eef720a2-4786-460a-8843-84e9c8082df9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\custom\protocol">
+      <UniqueIdentifier>{eb04965d-9b6e-4936-952c-beb55141c15d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\custom\protocol\pbc">
+      <UniqueIdentifier>{ab2feab2-c10b-4154-a0a5-872f581eeecf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\custom\protocol\protobuf">
+      <UniqueIdentifier>{a4773a51-b167-43b7-8d37-a2c5bfb48e03}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\custom\protocol\pbc\src">
+      <UniqueIdentifier>{bbcefac7-ef37-4259-ad80-45f4c49c8f14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\custom\extension">
+      <UniqueIdentifier>{05f2515d-1803-48fb-aaf0-4f8a7c1e4182}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\custom\extension\bit">
+      <UniqueIdentifier>{6372b835-b055-4dc2-9f86-b56b5e02028f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\custom\extension\cencbtl">
+      <UniqueIdentifier>{a71817c7-6647-41d1-ba6b-d5230677abf7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\custom\extension\cjson">
+      <UniqueIdentifier>{ee0bd621-8073-461b-8978-ac6a348f6396}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\custom\extension\crandom">
+      <UniqueIdentifier>{39b9f864-aac4-403a-b6c2-87f77b826472}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\custom\extension\crypto">
+      <UniqueIdentifier>{a5c9e78c-ffc3-4296-946b-717182dbbb3c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\custom\extension\debugger">
+      <UniqueIdentifier>{26bff6f6-7d1e-452b-98ac-d7d1c856672e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\custom\extension\filesystem">
+      <UniqueIdentifier>{c18d47da-c2e6-41e5-b9e4-97fe3090a1f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\custom\extension\lsqlite3">
+      <UniqueIdentifier>{028557df-a9f5-48fd-8ad3-e626ed9188d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\custom\extension\luasnapshot">
+      <UniqueIdentifier>{719cfde2-f3f8-405d-a785-de898ee83cef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\custom\extension\luastruct">
+      <UniqueIdentifier>{f93fd462-f4e6-4465-8e58-96ec59ae0193}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\custom\extension\luaxml">
+      <UniqueIdentifier>{01a64bf4-4fdc-4cdd-a398-67dad94bfc21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\custom\extension\messagepack">
+      <UniqueIdentifier>{a00b0c50-7c16-4def-9636-2a95524e42e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\custom\extension\zlib">
+      <UniqueIdentifier>{348ef215-428c-41aa-b143-c4e3e1300d10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\custom\extension\time">
+      <UniqueIdentifier>{cd5dd179-0a27-4896-b35c-4e0859a64a43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\custom\gamehelp">
+      <UniqueIdentifier>{12e3f302-d210-49f0-97f9-156767dfa2b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\custom\extra">
+      <UniqueIdentifier>{27e155c2-1015-469f-8990-2ed775a8cf23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\custom\extra\encode">
+      <UniqueIdentifier>{30f86293-beba-4e6c-bdbe-3a22971770f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\custom\extra\luabinding">
+      <UniqueIdentifier>{740eac9e-9c51-4a23-985b-f1b9492028d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\custom\extra\native">
+      <UniqueIdentifier>{f22c17a2-c5eb-4c29-a5a3-e22d37a609e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\custom\extra\network">
+      <UniqueIdentifier>{d7eef9c1-6618-4edd-8585-1145e6c277bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\custom\extra\platform">
+      <UniqueIdentifier>{6e8c4af8-d4e6-4127-862d-8971e867b47f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\custom\extra\encode\base64">
+      <UniqueIdentifier>{25d275bd-d4fa-4cf2-a753-0b70977cb2fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\custom\extra\encode\md5">
+      <UniqueIdentifier>{05d21591-e431-45c0-bb04-f11684137c3e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\custom\extra\platform\win32">
+      <UniqueIdentifier>{5f779dd2-877b-4f4e-9490-3dcaa8e042d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\custom\Log">
+      <UniqueIdentifier>{15da2c43-ac7b-48d7-ab08-73e6e40ba902}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\custom\AStar">
+      <UniqueIdentifier>{d633f588-94fa-428d-8692-de5e7faf4ea6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Classes\AppDelegate.h">
@@ -26,6 +122,141 @@
     <ClInclude Include="targetver.h">
       <Filter>win32</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\custom\protocol\pbc\pbc.h">
+      <Filter>Classes\custom\protocol\pbc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\custom\protocol\pbc\pbc-lua.h">
+      <Filter>Classes\custom\protocol\pbc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\custom\protocol\pbc\src\alloc.h">
+      <Filter>Classes\custom\protocol\pbc\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\custom\protocol\pbc\src\array.h">
+      <Filter>Classes\custom\protocol\pbc\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\custom\protocol\pbc\src\bootstrap.h">
+      <Filter>Classes\custom\protocol\pbc\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\custom\protocol\pbc\src\context.h">
+      <Filter>Classes\custom\protocol\pbc\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\custom\protocol\pbc\src\descriptor.pbc.h">
+      <Filter>Classes\custom\protocol\pbc\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\custom\protocol\pbc\src\map.h">
+      <Filter>Classes\custom\protocol\pbc\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\custom\protocol\pbc\src\pattern.h">
+      <Filter>Classes\custom\protocol\pbc\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\custom\protocol\pbc\src\proto.h">
+      <Filter>Classes\custom\protocol\pbc\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\custom\protocol\pbc\src\stringpool.h">
+      <Filter>Classes\custom\protocol\pbc\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\custom\protocol\pbc\src\varint.h">
+      <Filter>Classes\custom\protocol\pbc\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\lua_reg_auto.hpp">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\custom\extension\zlib\lua_zlib.h">
+      <Filter>Classes\custom\extension\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\custom\extension\messagepack\lua_cmsgpack.h">
+      <Filter>Classes\custom\extension\messagepack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\custom\extension\lsqlite3\lsqlite3.h">
+      <Filter>Classes\custom\extension\lsqlite3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\custom\extension\lsqlite3\sqlite3.h">
+      <Filter>Classes\custom\extension\lsqlite3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\custom\extension\filesystem\lfs.h">
+      <Filter>Classes\custom\extension\filesystem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\custom\extension\debugger\debugger.h">
+      <Filter>Classes\custom\extension\debugger</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\custom\extension\crypto\qtea.h">
+      <Filter>Classes\custom\extension\crypto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\custom\extension\crypto\uECC.h">
+      <Filter>Classes\custom\extension\crypto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\custom\extension\crypto\xor.h">
+      <Filter>Classes\custom\extension\crypto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\custom\extension\crypto\xxtea.h">
+      <Filter>Classes\custom\extension\crypto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\custom\extension\crandom\crandom.h">
+      <Filter>Classes\custom\extension\crandom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\custom\extension\cjson\fpconv.h">
+      <Filter>Classes\custom\extension\cjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\custom\extension\cjson\lua_cjson.h">
+      <Filter>Classes\custom\extension\cjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\custom\extension\cjson\strbuf.h">
+      <Filter>Classes\custom\extension\cjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\custom\extension\lua_extensions.h">
+      <Filter>Classes\custom\extension</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\custom\gamehelp\CCGh.h">
+      <Filter>Classes\custom\gamehelp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\custom\extra\encode\CCEncode.h">
+      <Filter>Classes\custom\extra\encode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\custom\extra\encode\base64\libbase64.h">
+      <Filter>Classes\custom\extra\encode\base64</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\custom\extra\encode\md5\md5.h">
+      <Filter>Classes\custom\extra\encode\md5</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\custom\extra\luabinding\cocos2dx_extra_luabinding.h">
+      <Filter>Classes\custom\extra\luabinding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\custom\extra\native\CCAlertViewDelegate.h">
+      <Filter>Classes\custom\extra\native</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\custom\extra\native\CCNative.h">
+      <Filter>Classes\custom\extra\native</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\custom\extra\network\CCNetwork.h">
+      <Filter>Classes\custom\extra\network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\custom\extra\platform\win32\CCNativeWin32.h">
+      <Filter>Classes\custom\extra\platform\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\custom\extra\platform\win32\CCNativeWin32def.h">
+      <Filter>Classes\custom\extra\platform\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\custom\extra\cocos2dx_extra_ex.h">
+      <Filter>Classes\custom\extra</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\custom\Log\ErrorWindow.h">
+      <Filter>Classes\custom\Log</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\custom\Log\LogMore.h">
+      <Filter>Classes\custom\Log</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\custom\AStar\AStar.h">
+      <Filter>Classes\custom\AStar</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\custom\AStar\AStarManager.h">
+      <Filter>Classes\custom\AStar</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\custom\AStar\BlockAllocator.h">
+      <Filter>Classes\custom\AStar</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\custom\AStar\Singleton.h">
+      <Filter>Classes\custom\AStar</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp">
@@ -38,6 +269,165 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>win32</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\custom\protocol\pbc\pbc-lua.c">
+      <Filter>Classes\custom\protocol\pbc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\custom\protocol\pbc\src\alloc.c">
+      <Filter>Classes\custom\protocol\pbc\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\custom\protocol\pbc\src\array.c">
+      <Filter>Classes\custom\protocol\pbc\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\custom\protocol\pbc\src\bootstrap.c">
+      <Filter>Classes\custom\protocol\pbc\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\custom\protocol\pbc\src\context.c">
+      <Filter>Classes\custom\protocol\pbc\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\custom\protocol\pbc\src\decode.c">
+      <Filter>Classes\custom\protocol\pbc\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\custom\protocol\pbc\src\map.c">
+      <Filter>Classes\custom\protocol\pbc\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\custom\protocol\pbc\src\pattern.c">
+      <Filter>Classes\custom\protocol\pbc\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\custom\protocol\pbc\src\proto.c">
+      <Filter>Classes\custom\protocol\pbc\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\custom\protocol\pbc\src\register.c">
+      <Filter>Classes\custom\protocol\pbc\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\custom\protocol\pbc\src\rmessage.c">
+      <Filter>Classes\custom\protocol\pbc\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\custom\protocol\pbc\src\stringpool.c">
+      <Filter>Classes\custom\protocol\pbc\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\custom\protocol\pbc\src\varint.c">
+      <Filter>Classes\custom\protocol\pbc\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\custom\protocol\pbc\src\wmessage.c">
+      <Filter>Classes\custom\protocol\pbc\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\lua_reg_auto.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\custom\extension\bit\bit.c">
+      <Filter>Classes\custom\extension\bit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\custom\extension\cencbtl\encbtl.c">
+      <Filter>Classes\custom\extension\cencbtl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\custom\extension\zlib\lua_zlib.c">
+      <Filter>Classes\custom\extension\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\custom\extension\time\ctime.c">
+      <Filter>Classes\custom\extension\time</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\custom\extension\messagepack\lua_cmsgpack.c">
+      <Filter>Classes\custom\extension\messagepack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\custom\extension\luaxml\LuaXML_lib.c">
+      <Filter>Classes\custom\extension\luaxml</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\custom\extension\luastruct\struct.c">
+      <Filter>Classes\custom\extension\luastruct</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\custom\extension\luasnapshot\snapshot.c">
+      <Filter>Classes\custom\extension\luasnapshot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\custom\extension\lsqlite3\lsqlite3.c">
+      <Filter>Classes\custom\extension\lsqlite3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\custom\extension\lsqlite3\sqlite3.c">
+      <Filter>Classes\custom\extension\lsqlite3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\custom\extension\filesystem\lfs.c">
+      <Filter>Classes\custom\extension\filesystem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\custom\extension\debugger\debugger.c">
+      <Filter>Classes\custom\extension\debugger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\custom\extension\crypto\crypto.c">
+      <Filter>Classes\custom\extension\crypto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\custom\extension\crypto\qtea.c">
+      <Filter>Classes\custom\extension\crypto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\custom\extension\crypto\uECC.c">
+      <Filter>Classes\custom\extension\crypto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\custom\extension\crypto\xor.c">
+      <Filter>Classes\custom\extension\crypto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\custom\extension\crypto\xxtea.c">
+      <Filter>Classes\custom\extension\crypto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\custom\extension\crandom\crandom.c">
+      <Filter>Classes\custom\extension\crandom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\custom\extension\cjson\fpconv.c">
+      <Filter>Classes\custom\extension\cjson</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\custom\extension\cjson\lua_cjson.c">
+      <Filter>Classes\custom\extension\cjson</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\custom\extension\cjson\strbuf.c">
+      <Filter>Classes\custom\extension\cjson</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\custom\extension\lua_extensions.c">
+      <Filter>Classes\custom\extension</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\custom\gamehelp\CCGh.cpp">
+      <Filter>Classes\custom\gamehelp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\custom\extra\encode\CCEncode.cpp">
+      <Filter>Classes\custom\extra\encode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\custom\extra\encode\base64\libbase64.cc">
+      <Filter>Classes\custom\extra\encode\base64</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\custom\extra\encode\md5\md5.cc">
+      <Filter>Classes\custom\extra\encode\md5</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\custom\extra\luabinding\cocos2dx_extra_luabinding.cpp">
+      <Filter>Classes\custom\extra\luabinding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\custom\extra\network\CCNetwork.cpp">
+      <Filter>Classes\custom\extra\network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\custom\extra\platform\win32\CCNative.cpp">
+      <Filter>Classes\custom\extra\platform\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\custom\extra\platform\win32\CCNativeWin32.cpp">
+      <Filter>Classes\custom\extra\platform\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\custom\extra\platform\win32\CCNetworkWin32.cpp">
+      <Filter>Classes\custom\extra\platform\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\custom\extra\cocos2dx_extra_ex.cpp">
+      <Filter>Classes\custom\extra</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\custom\Log\ErrorWindow.cpp">
+      <Filter>Classes\custom\Log</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\custom\Log\LogMore.cpp">
+      <Filter>Classes\custom\Log</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\custom\AStar\AStar.cpp">
+      <Filter>Classes\custom\AStar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\custom\AStar\AStarManager.cpp">
+      <Filter>Classes\custom\AStar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\custom\AStar\BlockAllocator.cpp">
+      <Filter>Classes\custom\AStar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\custom\AStar\Singleton.cpp">
+      <Filter>Classes\custom\AStar</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">
@@ -46,5 +436,41 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\game.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\Classes\custom\extension\luaxml\readme.txt">
+      <Filter>Classes\custom\extension\luaxml</Filter>
+    </Text>
+    <Text Include="..\Classes\custom\extension\crypto\profile.txt">
+      <Filter>Classes\custom\extension\crypto</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Classes\custom\extension\luaxml\LuaXml.lua">
+      <Filter>Classes\custom\extension\luaxml</Filter>
+    </None>
+    <None Include="..\Classes\custom\extension\luaxml\Makefile">
+      <Filter>Classes\custom\extension\luaxml</Filter>
+    </None>
+    <None Include="..\Classes\custom\extension\luaxml\test.lua">
+      <Filter>Classes\custom\extension\luaxml</Filter>
+    </None>
+    <None Include="..\Classes\custom\extension\luastruct\Makefile">
+      <Filter>Classes\custom\extension\luastruct</Filter>
+    </None>
+    <None Include="..\Classes\custom\extension\luastruct\README.md">
+      <Filter>Classes\custom\extension\luastruct</Filter>
+    </None>
+    <None Include="..\Classes\custom\extension\luastruct\test.lua">
+      <Filter>Classes\custom\extension\luastruct</Filter>
+    </None>
+    <None Include="..\Classes\custom\extension\debugger\ldt_debugger.lua">
+      <Filter>Classes\custom\extension\debugger</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="..\Classes\custom\extension\luaxml\test.xml">
+      <Filter>Classes\custom\extension\luaxml</Filter>
+    </Xml>
   </ItemGroup>
 </Project>

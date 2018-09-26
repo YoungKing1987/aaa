@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2003
+VisualStudioVersion = 15.0.27004.2008
 MinimumVisualStudioVersion = 12.0.21005.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MyLuaGame", "MyLuaGame.vcxproj", "{4E6A7A0E-DDD8-4BAA-8B22-C964069364ED}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -53,6 +53,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {337D9804-816F-4CBE-861E-56D76E12B714}
+		SolutionGuid = {97429845-F809-4AEA-84D5-FC37F1A13F70}
 	EndGlobalSection
 EndGlobal
