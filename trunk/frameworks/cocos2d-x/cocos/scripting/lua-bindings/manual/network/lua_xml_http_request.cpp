@@ -263,7 +263,6 @@ void LuaMinXmlHttpRequest::_setHttpRequestHeader()
     for (auto it = _requestHeader.begin(); it != _requestHeader.end(); ++it)
     {
         header.push_back(it->first + ": " + it->second);
-        
     }
     
     if (!header.empty())

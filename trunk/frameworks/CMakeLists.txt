@@ -1,142 +1,130 @@
-#/****************************************************************************
-# Copyright (c) 2013-2014 cocos2d-x.org
-#
-# http://www.cocos2d-x.org
-#
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
+cmake_minimum_required(VERSION 3.6)
 
-# The above copyright notice and this permission notice shall be included in
-# all copies or substantial portions of the Software.
+set(APP_NAME lua-tests)
 
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-# THE SOFTWARE.
-# ****************************************************************************/
-cmake_policy(SET CMP0017 NEW)
+project(${APP_NAME})
 
-cmake_minimum_required(VERSION 2.8)
+if(NOT DEFINED BUILD_ENGINE_DONE)
+    set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../..)
+    set(CMAKE_MODULE_PATH ${COCOS2DX_ROOT_PATH}/cmake/Modules/)
 
-set(APP_NAME HelloLua)
-project (${APP_NAME})
-
-set(COCOS2D_ROOT ${CMAKE_SOURCE_DIR}/cocos2d-x)
-
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${COCOS2D_ROOT}/cmake/Modules/")
-include(CocosBuildHelpers)
-
-option(DEBUG_MODE "Debug or release?" ON)
-option(USE_BULLET "Use bullet for physics3d library" ON)
-
-if(DEBUG_MODE)
-  set(CMAKE_BUILD_TYPE DEBUG)
-else(DEBUG_MODE)
-  set(CMAKE_BUILD_TYPE RELEASE)
-endif(DEBUG_MODE)
-
-if(USE_BULLET)
-  add_definitions(-DCC_ENABLE_BULLET_INTEGRATION=1)
-  add_definitions(-DCC_USE_PHYSICS=1)
-endif(USE_BULLET)
-
-
-# libcocos2d
-set(BUILD_CPP_EMPTY_TEST OFF CACHE BOOL "turn off build cpp-empty-test")
-set(BUILD_CPP_TESTS OFF CACHE BOOL "turn off build cpp-tests")
-set(BUILD_LUA_TESTS OFF CACHE BOOL "turn off build lua-tests")
-set(BUILD_JS_LIBS OFF CACHE BOOL "turn off build js related targets")
-add_subdirectory(${COCOS2D_ROOT})
-
-
-# Some macro definitions
-if(WINDOWS)
-  if(BUILD_SHARED_LIBS)
-    ADD_DEFINITIONS (-D_USRDLL -D_EXPORT_DLL_ -D_USEGUIDLL -D_USREXDLL -D_USRSTUDIODLL)
-  else()
-    ADD_DEFINITIONS (-DCC_STATIC)
-  endif()
-
-  ADD_DEFINITIONS (-DCOCOS2DXWIN32_EXPORTS -D_WINDOWS -DWIN32 -D_WIN32)
-  set(PLATFORM_FOLDER win32)
-elseif(MACOSX OR APPLE)
-  ADD_DEFINITIONS (-DCC_TARGET_OS_MAC)
-  ADD_DEFINITIONS (-DUSE_FILE32API)
-  set(PLATFORM_FOLDER mac)
-elseif(LINUX)
-  ADD_DEFINITIONS(-DLINUX)
-  set(PLATFORM_FOLDER linux)
-elseif(ANDROID)
-  ADD_DEFINITIONS (-DUSE_FILE32API)
-  set(PLATFORM_FOLDER android)
-else()
-  message( FATAL_ERROR "Unsupported platform, CMake will exit" )
+    include(CocosBuildSet)
+    if(NOT USE_COCOS_PREBUILT)
+        set(BUILD_LUA_LIBS ON)
+        add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
+    endif()
 endif()
 
+set(GAME_HEADER
+    Classes/AppDelegate.h
+    Classes/lua_test_bindings.h
+    Classes/lua_assetsmanager_test_sample.h
+    )
+set(GAME_SOURCE
+    Classes/AppDelegate.cpp
+    Classes/lua_assetsmanager_test_sample.cpp
+    Classes/lua_test_bindings.cpp
+    )
 
-# Compiler options
-if(MSVC)
-  ADD_DEFINITIONS(-D_CRT_SECURE_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS
-                  -wd4251 -wd4244 -wd4334 -wd4005 -wd4820 -wd4710
-                  -wd4514 -wd4056 -wd4996 -wd4099)
+set(res_res_folders
+    "${CMAKE_CURRENT_SOURCE_DIR}/../res"
+    "${COCOS2DX_ROOT_PATH}/tests/cpp-tests/Resources"
+    )
+set(res_src_folders
+    "${CMAKE_CURRENT_SOURCE_DIR}/../src"
+    )
+set(res_script_folders
+    "${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings/script"
+    )
+if(APPLE OR VS)
+    cocos_mark_multi_resources(res_res RES_TO "Resources/res" FOLDERS ${res_res_folders})
+    cocos_mark_multi_resources(res_src RES_TO "Resources/src" FOLDERS ${res_src_folders})
+    cocos_mark_multi_resources(res_script RES_TO "Resources/src/cocos" FOLDERS ${res_script_folders})
+    set(cc_common_res ${res_res} ${res_src} ${res_script})
+endif()
+
+if(ANDROID)
+    # change APP_NAME to the share library name for Android, it's value depend on AndroidManifest.xml
+    set(APP_NAME lua_tests)
+    list(APPEND GAME_SOURCE proj.android/app/jni/main.cpp)
+elseif(LINUX)
+    list(APPEND GAME_SOURCE proj.linux/main.cpp)
+elseif(WINDOWS)
+    add_definitions(-D_USRLUASTATIC)
+    list(APPEND GAME_HEADER
+         proj.win32/main.h
+         proj.win32/resource.h
+         )
+    list(APPEND GAME_SOURCE proj.win32/main.cpp ${cc_common_res})
+elseif(APPLE)
+    if(IOS)
+        list(APPEND GAME_HEADER
+             proj.ios_mac/ios/AppController.h
+             proj.ios_mac/ios/LuaObjectCBridgeTest.h
+             proj.ios_mac/ios/RootViewController.h
+             )
+        set(APP_UI_RES
+            proj.ios_mac/ios/LaunchScreen.storyboard
+            proj.ios_mac/ios/LaunchScreenBackground.png
+            proj.ios_mac/ios/Images.xcassets
+            )
+        list(APPEND GAME_SOURCE
+             proj.ios_mac/ios/main.m
+             proj.ios_mac/ios/LuaObjectCBridgeTest.mm
+             proj.ios_mac/ios/AppController.mm
+             proj.ios_mac/ios/RootViewController.mm
+             ${APP_UI_RES}
+             )
+    elseif(MACOSX)
+        list(APPEND GAME_HEADER
+             proj.ios_mac/mac/LuaObjectCBridgeTest.h
+             )
+        set(APP_UI_RES
+            proj.ios_mac/mac/en.lproj/MainMenu.xib
+            proj.ios_mac/mac/Icon.icns
+            proj.ios_mac/mac/Info.plist
+            )
+        list(APPEND GAME_SOURCE
+             proj.ios_mac/mac/main.cpp
+             proj.ios_mac/mac/LuaObjectCBridgeTest.mm
+             ${APP_UI_RES}
+             )
+    endif()
+    list(APPEND GAME_SOURCE ${cc_common_res})
+endif()
+
+set(APP_SRC ${GAME_HEADER} ${GAME_SOURCE})
+
+if(NOT ANDROID)
+    add_executable(${APP_NAME} ${APP_SRC})
 else()
-  set(CMAKE_C_FLAGS_DEBUG "-g -Wall -DCOCOS2D_DEBUG=1")
-  set(CMAKE_CXX_FLAGS_DEBUG ${CMAKE_C_FLAGS_DEBUG})
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99")
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wno-deprecated-declarations -Wno-reorder")
-  if(CLANG)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
-  endif()
-endif(MSVC)
+    add_library(${APP_NAME} SHARED ${APP_SRC})
+    add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos/platform/android ${ENGINE_BINARY_PATH}/cocos/cpp-android)
+    target_link_libraries(${APP_NAME} -Wl,--whole-archive cpp_android_spec -Wl,--no-whole-archive)
+    add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings/proj.android ${ENGINE_BINARY_PATH}/cocos/lua-android)
+    target_link_libraries(${APP_NAME} -Wl,--whole-archive lua_android_spec -Wl,--no-whole-archive)
+endif()
+target_link_libraries(${APP_NAME} luacocos2d)
+target_include_directories(${APP_NAME} PRIVATE Classes)
 
-set(GAME_SRC
-  runtime-src/proj.linux/main.cpp
-  runtime-src/Classes/AppDelegate.cpp
-)
+# mark app resources
+setup_cocos_app_config(${APP_NAME})
+if(APPLE)
+    set_target_properties(${APP_NAME} PROPERTIES RESOURCE "${APP_UI_RES}")
+    if(MACOSX)
+        set_target_properties(${APP_NAME} PROPERTIES
+                              MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/proj.ios_mac/mac/Info.plist"
+                              )
+    elseif(IOS)
+        cocos_pak_xcode(${APP_NAME} INFO_PLIST "iOSBundleInfo.plist.in")
+        set_xcode_property(${APP_NAME} ASSETCATALOG_COMPILER_APPICON_NAME "AppIcon-${APP_NAME}")
+    endif()
+elseif(WINDOWS)
+    cocos_copy_target_dll(${APP_NAME} COPY_TO ${APP_RES_DIR})
+endif()
 
-
-include_directories(
-  /usr/include
-  /usr/include/GLFW
-  /usr/local/include/GLFW
-  runtime-src/Classes
-  ${COCOS2D_ROOT}/cocos
-  ${COCOS2D_ROOT}/cocos/scripting/lua-bindings/manual
-  ${COCOS2D_ROOT}/external/lua/lua
-  ${COCOS2D_ROOT}/external/
-  ${COCOS2D_ROOT}/external/lua/tolua
-  ${COCOS2D_ROOT}/cocos/audio/include
-)
-
-# add the executable
-add_executable(${APP_NAME} ${GAME_SRC})
-
-target_link_libraries(${APP_NAME} cocos2d luacocos2d)
-
-set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin")
-
-set_target_properties(${APP_NAME} PROPERTIES
-     RUNTIME_OUTPUT_DIRECTORY  "${APP_BIN_DIR}")
-
-pre_build(${APP_NAME}
-  COMMAND ${CMAKE_COMMAND} -E remove_directory ${APP_BIN_DIR}/Resources
-  COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/../res ${APP_BIN_DIR}/Resources/res
-  COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/../src ${APP_BIN_DIR}/Resources/src
-  COMMAND ${CMAKE_COMMAND} -E copy_directory ${COCOS2D_ROOT}/cocos/scripting/lua-bindings/script/cocos2d ${APP_BIN_DIR}/Resources
-  COMMAND ${CMAKE_COMMAND} -E copy_directory ${COCOS2D_ROOT}/cocos/scripting/lua-bindings/script/cocosdenshion ${APP_BIN_DIR}/Resources
-  COMMAND ${CMAKE_COMMAND} -E copy_directory ${COCOS2D_ROOT}/cocos/scripting/lua-bindings/script/cocosbuilder ${APP_BIN_DIR}/Resources
-  COMMAND ${CMAKE_COMMAND} -E copy_directory ${COCOS2D_ROOT}/cocos/scripting/lua-bindings/script/cocostudio ${APP_BIN_DIR}/Resources
-  COMMAND ${CMAKE_COMMAND} -E copy_directory ${COCOS2D_ROOT}/cocos/scripting/lua-bindings/script/extension ${APP_BIN_DIR}/Resources
-  COMMAND ${CMAKE_COMMAND} -E copy_directory ${COCOS2D_ROOT}/cocos/scripting/lua-bindings/script/network ${APP_BIN_DIR}/Resources
-  COMMAND ${CMAKE_COMMAND} -E copy_directory ${COCOS2D_ROOT}/cocos/scripting/lua-bindings/script/ui ${APP_BIN_DIR}/Resources
-  COMMAND ${CMAKE_COMMAND} -E copy_directory ${COCOS2D_ROOT}/cocos/scripting/lua-bindings/script/3d ${APP_BIN_DIR}/Resources
-  COMMAND ${CMAKE_COMMAND} -E copy_directory ${COCOS2D_ROOT}/cocos/scripting/lua-bindings/script/physics3d ${APP_BIN_DIR}/Resources
-  )
-  
+if(LINUX OR WINDOWS)
+    cocos_copy_res(COPY_TO ${APP_RES_DIR}/res FOLDERS ${res_res_folders})
+    cocos_copy_res(COPY_TO ${APP_RES_DIR}/src FOLDERS ${res_src_folders})
+    cocos_copy_res(COPY_TO ${APP_RES_DIR}/src/cocos FOLDERS ${res_script_folders})
+endif()

@@ -257,6 +257,7 @@
     <ClInclude Include="..\Classes\custom\AStar\Singleton.h">
       <Filter>Classes\custom\AStar</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\cocos2d-x\external\tinyxml2\tinyxml2.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp">
@@ -428,6 +429,7 @@
     <ClCompile Include="..\Classes\custom\AStar\Singleton.cpp">
       <Filter>Classes\custom\AStar</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\cocos2d-x\external\tinyxml2\tinyxml2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">
@@ -436,41 +438,5 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\game.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="..\Classes\custom\extension\luaxml\readme.txt">
-      <Filter>Classes\custom\extension\luaxml</Filter>
-    </Text>
-    <Text Include="..\Classes\custom\extension\crypto\profile.txt">
-      <Filter>Classes\custom\extension\crypto</Filter>
-    </Text>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\Classes\custom\extension\luaxml\LuaXml.lua">
-      <Filter>Classes\custom\extension\luaxml</Filter>
-    </None>
-    <None Include="..\Classes\custom\extension\luaxml\Makefile">
-      <Filter>Classes\custom\extension\luaxml</Filter>
-    </None>
-    <None Include="..\Classes\custom\extension\luaxml\test.lua">
-      <Filter>Classes\custom\extension\luaxml</Filter>
-    </None>
-    <None Include="..\Classes\custom\extension\luastruct\Makefile">
-      <Filter>Classes\custom\extension\luastruct</Filter>
-    </None>
-    <None Include="..\Classes\custom\extension\luastruct\README.md">
-      <Filter>Classes\custom\extension\luastruct</Filter>
-    </None>
-    <None Include="..\Classes\custom\extension\luastruct\test.lua">
-      <Filter>Classes\custom\extension\luastruct</Filter>
-    </None>
-    <None Include="..\Classes\custom\extension\debugger\ldt_debugger.lua">
-      <Filter>Classes\custom\extension\debugger</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Xml Include="..\Classes\custom\extension\luaxml\test.xml">
-      <Filter>Classes\custom\extension\luaxml</Filter>
-    </Xml>
   </ItemGroup>
 </Project>

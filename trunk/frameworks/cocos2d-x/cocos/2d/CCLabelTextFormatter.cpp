@@ -198,6 +198,7 @@ bool Label::multilineTextWrap(const std::function<int(const std::u32string&, int
                 recordPlaceholderInfo(letterIndex, character);
                 continue;
             }
+
             // \b - Next char not change x position
             if (character == StringUtils::UnicodeCharacters::NextCharNoChangeX)
             {
@@ -271,7 +272,7 @@ bool Label::multilineTextWrap(const std::function<int(const std::u32string&, int
             highestY = tokenHighestY;
         if (lowestY > tokenLowestY)
             lowestY = tokenLowestY;
-        
+
         index += tokenLen;
     }
 

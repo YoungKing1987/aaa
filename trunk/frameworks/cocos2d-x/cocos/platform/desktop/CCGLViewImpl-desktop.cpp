@@ -504,7 +504,6 @@ void GLViewImpl::setDefaultIcon() const {
 }
 #endif /* CC_ICON_SET_SUPPORT */
 
-
 void GLViewImpl::setCursorVisible( bool isVisible )
 {
     if( _mainWindow == NULL )

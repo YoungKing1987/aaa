@@ -111,12 +111,6 @@
 -- @function [parent=#GLView] setDefaultIcon 
 -- @param self
 -- @return GLView#GLView self (return value: cc.GLView)
-
--- Get scale factor of the vertical direction.<br>
--- return Scale factor of the vertical direction.
--- @function [parent=#GLView] getScaleY 
--- @param self
--- @return float#float ret (return value: float)
         
 --------------------------------
 -- Get scale factor of the horizontal direction.<br>
@@ -156,6 +150,7 @@
 -- @function [parent=#GLView] getDesignResolutionSize 
 -- @param self
 -- @return size_table#size_table ret (return value: size_table)
+        
 --------------------------------
 -- @overload self, array_table         
 -- @overload self, string         
@@ -163,7 +158,6 @@
 -- @param self
 -- @param #string filename
 -- @return GLView#GLView self (return value: cc.GLView)
-
 
 --------------------------------
 --  When the window is closed, it will return false if the platforms is Ios or Android.<br>

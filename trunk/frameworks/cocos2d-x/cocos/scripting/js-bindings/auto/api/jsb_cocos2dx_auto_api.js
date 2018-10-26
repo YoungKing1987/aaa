@@ -2379,6 +2379,16 @@ getViewPortRect : function (
 },
 
 /**
+ * @method getScaleY
+ * @return {float}
+ */
+getScaleY : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method setContentScaleFactor
  * @param {float} arg0
  * @return {bool}
@@ -2477,13 +2487,11 @@ bool
 },
 
 /**
- * @method getScaleY
- * @return {float}
+ * @method setDefaultIcon
  */
-getScaleY : function (
+setDefaultIcon : function (
 )
 {
-    return 0;
 },
 
 /**
@@ -2544,6 +2552,16 @@ getDesignResolutionSize : function (
 )
 {
     return cc.Size;
+},
+
+/**
+ * @method setIcon
+* @param {Array|String} array
+*/
+setIcon : function(
+str 
+)
+{
 },
 
 /**
@@ -12130,6 +12148,16 @@ color4f
 },
 
 /**
+ * @method setIsolated
+ * @param {bool} arg0
+ */
+setIsolated : function (
+bool 
+)
+{
+},
+
+/**
  * @method drawRect
 * @param {vec2_object|vec2_object} vec2
 * @param {vec2_object|vec2_object} vec2
@@ -12432,6 +12460,16 @@ color4f
 },
 
 /**
+ * @method isIsolated
+ * @return {bool}
+ */
+isIsolated : function (
+)
+{
+    return false;
+},
+
+/**
  * @method drawCubicBezier
  * @param {vec2_object} arg0
  * @param {vec2_object} arg1
@@ -12545,6 +12583,16 @@ disableEffect : function(
 labeleffect 
 )
 {
+},
+
+/**
+ * @method getLabelType
+ * @return {cc.Label::LabelType}
+ */
+getLabelType : function (
+)
+{
+    return 0;
 },
 
 /**
@@ -12919,6 +12967,16 @@ setLineSpacing : function (
 float 
 )
 {
+},
+
+/**
+ * @method getRenderingFontSize
+ * @return {float}
+ */
+getRenderingFontSize : function (
+)
+{
+    return 0;
 },
 
 /**
