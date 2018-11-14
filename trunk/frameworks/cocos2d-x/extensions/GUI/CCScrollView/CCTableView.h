@@ -272,12 +272,17 @@ public:
     virtual void scrollViewDidScroll(ScrollView* view) override;
     virtual void scrollViewDidZoom(ScrollView* view)  override {}
 	//add by hhz
+	int _mode;// 1-动态加载 2-一次性全加载
+	int getMode();
+	void setMode(int mode);
+
 	//virtual void scrollViewDidBounceToTop(ScrollView* view) override;
 	
     virtual bool onTouchBegan(Touch *pTouch, Event *pEvent) override;
     virtual void onTouchMoved(Touch *pTouch, Event *pEvent) override;
     virtual void onTouchEnded(Touch *pTouch, Event *pEvent) override;
     virtual void onTouchCancelled(Touch *pTouch, Event *pEvent) override;
+
 
 protected:
     long __indexFromOffset(Vec2 offset);

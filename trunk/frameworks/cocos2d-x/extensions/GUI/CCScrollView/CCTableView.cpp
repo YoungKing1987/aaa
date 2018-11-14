@@ -91,7 +91,7 @@ TableView::TableView()
 , _oldDirection(Direction::NONE)
 , _isUsedCellsDirty(false)
 {
-
+	_mode = 1;
 }
 
 TableView::~TableView()
@@ -523,6 +523,13 @@ void TableView::scrollViewDidScroll(ScrollView* /*view*/)
 		endIdx = countOfItems - 1;
 	}
 
+	//add by hhz 
+	if (_mode == 2)
+	{
+		startIdx = 0;
+		endIdx   = countOfItems;
+	}
+
 #if 0 // For Testing.
     Ref* pObj;
     int i = 0;
@@ -701,6 +708,16 @@ void TableView::onTouchCancelled(Touch *pTouch, Event *pEvent)
 
         _touchedCell = nullptr;
     }
+}
+
+int TableView::getMode()
+{
+	return _mode;
+}
+
+void TableView::setMode(int mode)
+{
+	_mode = mode;
 }
 
 NS_CC_EXT_END
