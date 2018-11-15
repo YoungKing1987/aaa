@@ -2868,13 +2868,13 @@ int tolua_GameScript_SkeletonAnimation_getAnimationDuration(lua_State* tolua_S)
 
 
 #if COCOS2D_DEBUG >= 1
-	CCLOG("test log1");
+	//CCLOG("test log1");
 	//if (!tolua_isusertable(tolua_S, 1, "sp.SkeletonAnimation", 0, &tolua_err)) goto tolua_lerror;
 	if (!tolua_isusertype(tolua_S, 1, "sp.SkeletonAnimation", 0, &tolua_err)) goto tolua_lerror;
 #endif
-	CCLOG("test log2");
+	//CCLOG("test log2");
 	cobj = (spine::SkeletonAnimation*)tolua_tousertype(tolua_S, 1, 0);
-	CCLOG("test log3");
+	//CCLOG("test log3");
 #if COCOS2D_DEBUG >= 1
 	if (!cobj)
 	{
