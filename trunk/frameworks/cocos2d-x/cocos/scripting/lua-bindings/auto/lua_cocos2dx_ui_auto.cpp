@@ -35706,7 +35706,6 @@ int lua_cocos2dx_ui_EditBox_create(lua_State* tolua_S)
 
     do 
     {
-        
         if (argc == 3)
         {
             cocos2d::Size arg0;
@@ -35938,8 +35937,8 @@ int lua_register_cocos2dx_ui_EditBox(lua_State* tolua_S)
         tolua_function(tolua_S,"setFontName",lua_cocos2dx_ui_EditBox_setFontName);
         tolua_function(tolua_S,"registerScriptEditBoxHandler",lua_cocos2dx_ui_EditBox_registerScriptEditBoxHandler);
         tolua_function(tolua_S,"setCapInsetsDisabledRenderer",lua_cocos2dx_ui_EditBox_setCapInsetsDisabledRenderer);
-        tolua_function(tolua_S,"loadTextureDisabled",lua_cocos2dx_ui_EditBox_loadTextureDisabled);
         tolua_function(tolua_S,"setPlaceholderFontSize",lua_cocos2dx_ui_EditBox_setPlaceholderFontSize);
+        tolua_function(tolua_S,"loadTextureDisabled",lua_cocos2dx_ui_EditBox_loadTextureDisabled);
         tolua_function(tolua_S,"setInputMode",lua_cocos2dx_ui_EditBox_setInputMode);
         tolua_function(tolua_S,"unregisterScriptEditBoxHandler",lua_cocos2dx_ui_EditBox_unregisterScriptEditBoxHandler);
         tolua_function(tolua_S,"keyboardWillShow",lua_cocos2dx_ui_EditBox_keyboardWillShow);

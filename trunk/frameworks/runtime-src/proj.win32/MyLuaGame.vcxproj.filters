@@ -28,17 +28,8 @@
     <Filter Include="Classes\custom\extension">
       <UniqueIdentifier>{05f2515d-1803-48fb-aaf0-4f8a7c1e4182}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Classes\custom\extension\bit">
-      <UniqueIdentifier>{6372b835-b055-4dc2-9f86-b56b5e02028f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Classes\custom\extension\cencbtl">
-      <UniqueIdentifier>{a71817c7-6647-41d1-ba6b-d5230677abf7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Classes\custom\extension\cjson">
       <UniqueIdentifier>{ee0bd621-8073-461b-8978-ac6a348f6396}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Classes\custom\extension\crandom">
-      <UniqueIdentifier>{39b9f864-aac4-403a-b6c2-87f77b826472}</UniqueIdentifier>
     </Filter>
     <Filter Include="Classes\custom\extension\crypto">
       <UniqueIdentifier>{a5c9e78c-ffc3-4296-946b-717182dbbb3c}</UniqueIdentifier>
@@ -48,9 +39,6 @@
     </Filter>
     <Filter Include="Classes\custom\extension\filesystem">
       <UniqueIdentifier>{c18d47da-c2e6-41e5-b9e4-97fe3090a1f8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Classes\custom\extension\lsqlite3">
-      <UniqueIdentifier>{028557df-a9f5-48fd-8ad3-e626ed9188d0}</UniqueIdentifier>
     </Filter>
     <Filter Include="Classes\custom\extension\luasnapshot">
       <UniqueIdentifier>{719cfde2-f3f8-405d-a785-de898ee83cef}</UniqueIdentifier>
@@ -73,38 +61,8 @@
     <Filter Include="Classes\custom\gamehelp">
       <UniqueIdentifier>{12e3f302-d210-49f0-97f9-156767dfa2b2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Classes\custom\extra">
-      <UniqueIdentifier>{27e155c2-1015-469f-8990-2ed775a8cf23}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Classes\custom\extra\encode">
-      <UniqueIdentifier>{30f86293-beba-4e6c-bdbe-3a22971770f7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Classes\custom\extra\luabinding">
-      <UniqueIdentifier>{740eac9e-9c51-4a23-985b-f1b9492028d5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Classes\custom\extra\native">
-      <UniqueIdentifier>{f22c17a2-c5eb-4c29-a5a3-e22d37a609e2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Classes\custom\extra\network">
-      <UniqueIdentifier>{d7eef9c1-6618-4edd-8585-1145e6c277bb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Classes\custom\extra\platform">
-      <UniqueIdentifier>{6e8c4af8-d4e6-4127-862d-8971e867b47f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Classes\custom\extra\encode\base64">
-      <UniqueIdentifier>{25d275bd-d4fa-4cf2-a753-0b70977cb2fc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Classes\custom\extra\encode\md5">
-      <UniqueIdentifier>{05d21591-e431-45c0-bb04-f11684137c3e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Classes\custom\extra\platform\win32">
-      <UniqueIdentifier>{5f779dd2-877b-4f4e-9490-3dcaa8e042d1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Classes\custom\Log">
       <UniqueIdentifier>{15da2c43-ac7b-48d7-ab08-73e6e40ba902}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Classes\custom\AStar">
-      <UniqueIdentifier>{d633f588-94fa-428d-8692-de5e7faf4ea6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -167,12 +125,6 @@
     <ClInclude Include="..\Classes\custom\extension\messagepack\lua_cmsgpack.h">
       <Filter>Classes\custom\extension\messagepack</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\custom\extension\lsqlite3\lsqlite3.h">
-      <Filter>Classes\custom\extension\lsqlite3</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\custom\extension\lsqlite3\sqlite3.h">
-      <Filter>Classes\custom\extension\lsqlite3</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\custom\extension\filesystem\lfs.h">
       <Filter>Classes\custom\extension\filesystem</Filter>
     </ClInclude>
@@ -191,9 +143,6 @@
     <ClInclude Include="..\Classes\custom\extension\crypto\xxtea.h">
       <Filter>Classes\custom\extension\crypto</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\custom\extension\crandom\crandom.h">
-      <Filter>Classes\custom\extension\crandom</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\custom\extension\cjson\fpconv.h">
       <Filter>Classes\custom\extension\cjson</Filter>
     </ClInclude>
@@ -209,55 +158,12 @@
     <ClInclude Include="..\Classes\custom\gamehelp\CCGh.h">
       <Filter>Classes\custom\gamehelp</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\custom\extra\encode\CCEncode.h">
-      <Filter>Classes\custom\extra\encode</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\custom\extra\encode\base64\libbase64.h">
-      <Filter>Classes\custom\extra\encode\base64</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\custom\extra\encode\md5\md5.h">
-      <Filter>Classes\custom\extra\encode\md5</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\custom\extra\luabinding\cocos2dx_extra_luabinding.h">
-      <Filter>Classes\custom\extra\luabinding</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\custom\extra\native\CCAlertViewDelegate.h">
-      <Filter>Classes\custom\extra\native</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\custom\extra\native\CCNative.h">
-      <Filter>Classes\custom\extra\native</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\custom\extra\network\CCNetwork.h">
-      <Filter>Classes\custom\extra\network</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\custom\extra\platform\win32\CCNativeWin32.h">
-      <Filter>Classes\custom\extra\platform\win32</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\custom\extra\platform\win32\CCNativeWin32def.h">
-      <Filter>Classes\custom\extra\platform\win32</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\custom\extra\cocos2dx_extra_ex.h">
-      <Filter>Classes\custom\extra</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\custom\Log\ErrorWindow.h">
       <Filter>Classes\custom\Log</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\custom\Log\LogMore.h">
       <Filter>Classes\custom\Log</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\custom\AStar\AStar.h">
-      <Filter>Classes\custom\AStar</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\custom\AStar\AStarManager.h">
-      <Filter>Classes\custom\AStar</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\custom\AStar\BlockAllocator.h">
-      <Filter>Classes\custom\AStar</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\custom\AStar\Singleton.h">
-      <Filter>Classes\custom\AStar</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\cocos2d-x\external\tinyxml2\tinyxml2.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp">
@@ -315,12 +221,6 @@
     <ClCompile Include="..\Classes\lua_reg_auto.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\custom\extension\bit\bit.c">
-      <Filter>Classes\custom\extension\bit</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\custom\extension\cencbtl\encbtl.c">
-      <Filter>Classes\custom\extension\cencbtl</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\custom\extension\zlib\lua_zlib.c">
       <Filter>Classes\custom\extension\zlib</Filter>
     </ClCompile>
@@ -338,12 +238,6 @@
     </ClCompile>
     <ClCompile Include="..\Classes\custom\extension\luasnapshot\snapshot.c">
       <Filter>Classes\custom\extension\luasnapshot</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\custom\extension\lsqlite3\lsqlite3.c">
-      <Filter>Classes\custom\extension\lsqlite3</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\custom\extension\lsqlite3\sqlite3.c">
-      <Filter>Classes\custom\extension\lsqlite3</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\custom\extension\filesystem\lfs.c">
       <Filter>Classes\custom\extension\filesystem</Filter>
@@ -366,9 +260,6 @@
     <ClCompile Include="..\Classes\custom\extension\crypto\xxtea.c">
       <Filter>Classes\custom\extension\crypto</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\custom\extension\crandom\crandom.c">
-      <Filter>Classes\custom\extension\crandom</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\custom\extension\cjson\fpconv.c">
       <Filter>Classes\custom\extension\cjson</Filter>
     </ClCompile>
@@ -384,52 +275,12 @@
     <ClCompile Include="..\Classes\custom\gamehelp\CCGh.cpp">
       <Filter>Classes\custom\gamehelp</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\custom\extra\encode\CCEncode.cpp">
-      <Filter>Classes\custom\extra\encode</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\custom\extra\encode\base64\libbase64.cc">
-      <Filter>Classes\custom\extra\encode\base64</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\custom\extra\encode\md5\md5.cc">
-      <Filter>Classes\custom\extra\encode\md5</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\custom\extra\luabinding\cocos2dx_extra_luabinding.cpp">
-      <Filter>Classes\custom\extra\luabinding</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\custom\extra\network\CCNetwork.cpp">
-      <Filter>Classes\custom\extra\network</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\custom\extra\platform\win32\CCNative.cpp">
-      <Filter>Classes\custom\extra\platform\win32</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\custom\extra\platform\win32\CCNativeWin32.cpp">
-      <Filter>Classes\custom\extra\platform\win32</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\custom\extra\platform\win32\CCNetworkWin32.cpp">
-      <Filter>Classes\custom\extra\platform\win32</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\custom\extra\cocos2dx_extra_ex.cpp">
-      <Filter>Classes\custom\extra</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\custom\Log\ErrorWindow.cpp">
       <Filter>Classes\custom\Log</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\custom\Log\LogMore.cpp">
       <Filter>Classes\custom\Log</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\custom\AStar\AStar.cpp">
-      <Filter>Classes\custom\AStar</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\custom\AStar\AStarManager.cpp">
-      <Filter>Classes\custom\AStar</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\custom\AStar\BlockAllocator.cpp">
-      <Filter>Classes\custom\AStar</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\custom\AStar\Singleton.cpp">
-      <Filter>Classes\custom\AStar</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\cocos2d-x\external\tinyxml2\tinyxml2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">

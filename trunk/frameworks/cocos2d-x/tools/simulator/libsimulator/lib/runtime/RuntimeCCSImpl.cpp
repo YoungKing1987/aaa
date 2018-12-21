@@ -22,12 +22,12 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "tinyxml2.h"
+
 #include "RuntimeCCSImpl.h"
 #include "ConfigParser.h"
 #include "cocostudio/CocoStudio.h"
 #include "ui/UIHelper.h"
-
+#include "tinyxml2.h"
 
 ////////////////////////////////////////
 

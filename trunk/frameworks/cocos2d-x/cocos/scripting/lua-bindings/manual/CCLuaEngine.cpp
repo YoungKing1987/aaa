@@ -768,7 +768,6 @@ int LuaEngine::handleEvent(ScriptHandlerMgr::HandlerType type,void* data)
     {
         case ScriptHandlerMgr::HandlerType::SCROLLVIEW_SCROLL:
         case ScriptHandlerMgr::HandlerType::SCROLLVIEW_ZOOM:
-		case ScriptHandlerMgr::HandlerType::SCROLLVIEW_BOUNCETOTOP:
         case ScriptHandlerMgr::HandlerType::TABLECELL_TOUCHED:
         case ScriptHandlerMgr::HandlerType::TABLECELL_HIGHLIGHT:
         case ScriptHandlerMgr::HandlerType::TABLECELL_UNHIGHLIGHT:
@@ -878,7 +877,6 @@ int LuaEngine::handleTableViewEvent(ScriptHandlerMgr::HandlerType type,void* dat
     {
         case ScriptHandlerMgr::HandlerType::SCROLLVIEW_SCROLL:
         case ScriptHandlerMgr::HandlerType::SCROLLVIEW_ZOOM:
-		case ScriptHandlerMgr::HandlerType::SCROLLVIEW_BOUNCETOTOP:
         {
             toluafix_pushusertype_ccobject(_stack->getLuaState(), obj->_ID, &(obj->_luaID), (void*)(obj),"cc.TableView");
             ret = _stack->executeFunctionByHandler(handler, 1);

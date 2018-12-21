@@ -15,7 +15,7 @@ extern "C" {
 #include "filesystem/lfs.h"
 
 // lsqlite3
-#include "lsqlite3/lsqlite3.h"
+//#include "lsqlite3/lsqlite3.h"
 
 // lua debugger
 #include "debugger/debugger.h"
@@ -38,16 +38,16 @@ extern int luaopen_ccrypto(lua_State *L);
 extern int luaopen_ctime(lua_State *L);
 
 // lua crandom
-extern int luaopen_crandom(lua_State *L);
+//extern int luaopen_crandom(lua_State *L);
 
 // lua snapshot
 extern int luaopen_snapshot(lua_State *L);
 
 // lua battle check token
-extern int luaopen_encbtl(lua_State *L);
+//extern int luaopen_encbtl(lua_State *L);
 
 // lua bit
-extern int luaopen_bit(lua_State *L);
+//extern int luaopen_bit(lua_State *L);
 
 static luaL_Reg luax_exts[] = {
     {"cjson", luaopen_cjson_safe},
@@ -79,11 +79,11 @@ void luaopen_lua_extensions_ex(lua_State *L)
 	luaopen_LuaXML_lib(L);
 	luaopen_ccrypto(L);
 	luaopen_ctime(L);
-	luaopen_crandom(L);
+	//luaopen_crandom(L);
 	//luaopen_debugger(L);
 	luaopen_snapshot(L);
-    luaopen_encbtl(L);
-    luaopen_bit(L);
+    //luaopen_encbtl(L);
+    //luaopen_bit(L);
 }
 
 #ifdef __cplusplus

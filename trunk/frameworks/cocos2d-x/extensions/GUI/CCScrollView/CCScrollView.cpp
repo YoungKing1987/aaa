@@ -66,9 +66,6 @@ ScrollView::ScrollView()
 , _scissorRestored(false)
 , _touchListener(nullptr)
 , _animatedScrollAction(nullptr)
-//hhz
-//,isInTopTouchBegan(false)
-//,movePos(Vec2(0, 0))
 {
 
 }
@@ -254,36 +251,9 @@ void ScrollView::setContentOffsetInDuration(Vec2 offset, float dt)
     scroll = MoveTo::create(dt, offset);
     expire = CallFuncN::create(CC_CALLBACK_1(ScrollView::stoppedAnimatedScroll,this));
     _animatedScrollAction = _container->runAction(Sequence::create(scroll, expire, nullptr));
-	//结束的时候判断 是否是回弹 
-	//movePos.x = offset.x - _container->getPosition().x;
-	//movePos.y = offset.y - _container->getPosition().y;
-	//add by hhz
-	//auto callback = CallFuncN::create(CC_CALLBACK_1(ScrollView::animatedScrollEnd, this));
-    //_animatedScrollAction = _container->runAction(Sequence::create(scroll, expire, callback,nullptr));
     _animatedScrollAction->retain();
     this->schedule(CC_SCHEDULE_SELECTOR(ScrollView::performedAnimatedScroll));
-}	
-
-//add by hhz
-//void ScrollView::animatedScrollEnd(Node * /*node*/)
-//{
-//	//CCLOG("animatedScrollEnd log1 movePos.y :%f", movePos.y);
-//	if (isInTopTouchBegan)
-//	{
-//		float pos = _container->getPosition().y;
-//		if (pos == minContainerOffset().y && movePos.y > 30)//30到时候导出到lua里，否则改数据需要修改底层
-//		{
-//			//isInTopTouchBegan = true;
-//			//CCLOG("animatedScrollEnd 执行回弹事件");
-//			if (_delegate != nullptr)
-//			{
-//				_delegate->scrollViewDidBounceToTop(this);
-//			}
-//			isInTopTouchBegan = false;
-//			movePos = Vec2(0, 0);
-//		}
-//	}
-//}
+}
 
 void ScrollView::stopAnimatedContentOffset() {
     stopAction(_animatedScrollAction);
@@ -457,15 +427,7 @@ Vec2 ScrollView::minContainerOffset()
     Point anchorPoint = _container->isIgnoreAnchorPointForPosition()?Point::ZERO:_container->getAnchorPoint();
     float contW       = _container->getContentSize().width * _container->getScaleX();
     float contH       = _container->getContentSize().height * _container->getScaleY();
-	//CCLOG("contW :%f contH :%f %f %f", contW, contH, anchorPoint.x, anchorPoint.y);
-
-	if(_direction == Direction::HORIZONTAL)
-	{
-		if (_viewSize.width > (1 - anchorPoint.x) * contW)
-		{
-			return Vec2(0, 0);
-		}
-	}
+    
     return Vec2(_viewSize.width - (1 - anchorPoint.x) * contW, _viewSize.height - (1 - anchorPoint.y) * contH);
 }
 
@@ -737,8 +699,6 @@ void ScrollView::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t
 
 bool ScrollView::onTouchBegan(Touch* touch, Event* /*event*/)
 {
-//{	
-//	isInTopTouchBegan = false;
     if (!this->isVisible() || !this->hasVisibleParents())
     {
         return false;
@@ -777,20 +737,6 @@ bool ScrollView::onTouchBegan(Touch* touch, Event* /*event*/)
         
         _dragging  = false;
     } 
-
-	//add by hhz
-//	float pos = _container->getPosition().y;
-//	if (pos == minContainerOffset().y)
-//	{
-//		isInTopTouchBegan = true;
-//	}
-//
-//	//auto min = this->minContainerOffset();
-//	//auto max = this->maxContainerOffset();
-//
-//	//CCLOG("min %f %f", min.x, min.y);
-//	//CCLOG("max %f %f", max.x, max.y);
-
     return true;
 }
 

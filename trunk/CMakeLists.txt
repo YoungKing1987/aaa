@@ -32,11 +32,8 @@ set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/frameworks/cocos2d-x)
 set(CMAKE_MODULE_PATH ${COCOS2DX_ROOT_PATH}/cmake/Modules/)
 
 include(CocosBuildSet)
-if(NOT USE_COCOS_PREBUILT)
-    set(BUILD_LUA_LIBS ON)
-    set(BUILD_SIMU_LIB ON)
-    add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
-endif()
+set(BUILD_LUA_LIBS ON)
+add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
 
 # script and source files info, not need to compile
 set(res_res_folders
@@ -67,7 +64,6 @@ include_directories(
         ${RUNTIME_SRC_ROOT}/Classes/custom/protocol/pbc
         ${RUNTIME_SRC_ROOT}/Classes/custom/extension
         ${RUNTIME_SRC_ROOT}/Classes/custom
-        ${RUNTIME_SRC_ROOT}/Classes/custom/extra
         ${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings/auto
         ${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings/manual
         ${COCOS2DX_ROOT_PATH}/external/lua/luajit/include
@@ -82,7 +78,6 @@ if(ANDROID)
          ${RUNTIME_SRC_ROOT}/Classes/custom/protocol/pbc
          ${RUNTIME_SRC_ROOT}/Classes/custom/extension
          ${RUNTIME_SRC_ROOT}/Classes/custom
-         ${RUNTIME_SRC_ROOT}/Classes/custom/extra
          )
     list(APPEND GAME_SOURCE
          ${RUNTIME_SRC_ROOT}/Classes/custom/protocol/pbc/src/alloc.c 
@@ -99,12 +94,9 @@ if(ANDROID)
          ${RUNTIME_SRC_ROOT}/Classes/custom/protocol/pbc/src/varint.c 
          ${RUNTIME_SRC_ROOT}/Classes/custom/protocol/pbc/src/wmessage.c 
          ${RUNTIME_SRC_ROOT}/Classes/custom/protocol/pbc/pbc-lua.c 
-         ${RUNTIME_SRC_ROOT}/Classes/custom/extension/bit/bit.c 
-         ${RUNTIME_SRC_ROOT}/Classes/custom/extension/cencbtl/encbtl.c  
          ${RUNTIME_SRC_ROOT}/Classes/custom/extension/cjson/fpconv.c 
          ${RUNTIME_SRC_ROOT}/Classes/custom/extension/cjson/lua_cjson.c 
          ${RUNTIME_SRC_ROOT}/Classes/custom/extension/cjson/strbuf.c 
-         ${RUNTIME_SRC_ROOT}/Classes/custom/extension/crandom/crandom.c 
          ${RUNTIME_SRC_ROOT}/Classes/custom/extension/crypto/crypto.c 
          ${RUNTIME_SRC_ROOT}/Classes/custom/extension/crypto/qtea.c 
          ${RUNTIME_SRC_ROOT}/Classes/custom/extension/crypto/uECC.c 
@@ -112,8 +104,6 @@ if(ANDROID)
          ${RUNTIME_SRC_ROOT}/Classes/custom/extension/crypto/xxtea.c 
          ${RUNTIME_SRC_ROOT}/Classes/custom/extension/debugger/debugger.c 
          ${RUNTIME_SRC_ROOT}/Classes/custom/extension/filesystem/lfs.c 
-         ${RUNTIME_SRC_ROOT}/Classes/custom/extension/lsqlite3/lsqlite3.c 
-         ${RUNTIME_SRC_ROOT}/Classes/custom/extension/lsqlite3/sqlite3.c 
          ${RUNTIME_SRC_ROOT}/Classes/custom/extension/luasnapshot/snapshot.c 
          ${RUNTIME_SRC_ROOT}/Classes/custom/extension/luastruct/struct.c 
          ${RUNTIME_SRC_ROOT}/Classes/custom/extension/luaxml/LuaXML_lib.c 
@@ -124,23 +114,10 @@ if(ANDROID)
          ${RUNTIME_SRC_ROOT}/Classes/custom/gamehelp/CCGh.cpp 
          ${RUNTIME_SRC_ROOT}/Classes/custom/Log/LogMore.cpp 
          ${RUNTIME_SRC_ROOT}/Classes/custom/Log/ErrorWindow.cpp 
-         ${RUNTIME_SRC_ROOT}/Classes/custom/AStar/AStar.cpp 
-         ${RUNTIME_SRC_ROOT}/Classes/custom/AStar/AStarManager.cpp 
-         ${RUNTIME_SRC_ROOT}/Classes/custom/AStar/BlockAllocator.cpp 
-         ${RUNTIME_SRC_ROOT}/Classes/custom/AStar/Singleton.cpp 
-         ${RUNTIME_SRC_ROOT}/Classes/custom/extra/encode/CCEncode.cpp 
-         ${RUNTIME_SRC_ROOT}/Classes/custom/extra/encode/base64/libbase64.cc 
-         ${RUNTIME_SRC_ROOT}/Classes/custom/extra/encode/md5/md5.cc 
-         ${RUNTIME_SRC_ROOT}/Classes/custom/extra/luabinding/cocos2dx_extra_luabinding.cpp 
-         ${RUNTIME_SRC_ROOT}/Classes/custom/extra/network/CCNetwork.cpp 
-         ${RUNTIME_SRC_ROOT}/Classes/custom/extra/platform/android/CCNativeAndroid.cpp 
-         ${RUNTIME_SRC_ROOT}/Classes/custom/extra/platform/android/CCNetworkAndroid.cpp 
-         ${RUNTIME_SRC_ROOT}/Classes/custom/extra/cocos2dx_extra_ex.cpp 
           )
 elseif(LINUX)
     list(APPEND GAME_SOURCE ${RUNTIME_SRC_ROOT}/proj.linux/main.cpp)
 elseif(WINDOWS)
-    add_definitions(-D_USRLUASTATIC -D_USRLIBSIMSTATIC)
     list(APPEND GAME_HEADER
          ${RUNTIME_SRC_ROOT}/proj.win32/main.h
          ${RUNTIME_SRC_ROOT}/proj.win32/stdafx.h
@@ -212,6 +189,11 @@ endif()
 target_link_libraries(${APP_NAME} luacocos2d)
 target_include_directories(${APP_NAME} PRIVATE ${RUNTIME_SRC_ROOT}/Classes)
 
+if(WINDOWS OR MACOSX)
+    add_subdirectory(${COCOS2DX_ROOT_PATH}/tools/simulator/libsimulator ${ENGINE_BINARY_PATH}/cocos/simulatorlib)
+    target_link_libraries(${APP_NAME} simulatorlib)
+endif()
+
 # mark app resources, resource will be copy auto after mark
 setup_cocos_app_config(${APP_NAME})
 if(APPLE)
@@ -225,7 +207,7 @@ if(APPLE)
         set_xcode_property(${APP_NAME} ASSETCATALOG_COMPILER_APPICON_NAME "AppIcon")
     endif()
 elseif(WINDOWS)
-    cocos_copy_target_dll(${APP_NAME} COPY_TO ${APP_RES_DIR})
+    cocos_copy_target_dll(${APP_NAME} COPY_TO ${APP_RES_DIR}/..)
 endif()
 # copy resource on linux or WINDOWS
 if(LINUX OR WINDOWS)

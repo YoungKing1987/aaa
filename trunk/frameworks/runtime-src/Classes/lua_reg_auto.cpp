@@ -3,7 +3,7 @@
 #include "scripting/lua-bindings/manual/LuaBasicConversions.h"
 #include "scripting/lua-bindings/manual/tolua_fix.h"
 #include "pbc-lua.h"
-#include "cocos2dx_extra_ex.h"
+
 #include "gamehelp/CCGh.h"
 #include "Log/LogMore.h"
 
@@ -921,7 +921,7 @@ TOLUA_API int register_all(lua_State* tolua_S)
 	// 注册库
 	luaopen_protobufc(tolua_S);
 	luaopen_lua_extensions_ex(tolua_S);
-	luaopen_lua_extra(tolua_S);
+	//luaopen_lua_extra(tolua_S);
 
 	// 注册自定义类
 	tolua_open(tolua_S);

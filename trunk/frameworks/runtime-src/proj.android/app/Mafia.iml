@@ -288,9 +288,6 @@
     <content url="file://$MODULE_DIR$/../../../cocos2d-x/external/edtaa3func">
       <sourceFolder url="file://$MODULE_DIR$/../../../cocos2d-x/external/edtaa3func" isTestSource="false" />
     </content>
-    <content url="file://$MODULE_DIR$/../../../cocos2d-x/external/lua/lua">
-      <sourceFolder url="file://$MODULE_DIR$/../../../cocos2d-x/external/lua/lua" isTestSource="false" />
-    </content>
     <content url="file://$MODULE_DIR$/../../../cocos2d-x/external/lua/luasocket">
       <sourceFolder url="file://$MODULE_DIR$/../../../cocos2d-x/external/lua/luasocket" isTestSource="false" />
     </content>
@@ -336,26 +333,14 @@
     <content url="file://$MODULE_DIR$/../../Classes">
       <sourceFolder url="file://$MODULE_DIR$/../../Classes" isTestSource="false" />
     </content>
-    <content url="file://$MODULE_DIR$/../../Classes/custom/AStar">
-      <sourceFolder url="file://$MODULE_DIR$/../../Classes/custom/AStar" isTestSource="false" />
-    </content>
     <content url="file://$MODULE_DIR$/../../Classes/custom/Log">
       <sourceFolder url="file://$MODULE_DIR$/../../Classes/custom/Log" isTestSource="false" />
     </content>
     <content url="file://$MODULE_DIR$/../../Classes/custom/extension">
       <sourceFolder url="file://$MODULE_DIR$/../../Classes/custom/extension" isTestSource="false" />
     </content>
-    <content url="file://$MODULE_DIR$/../../Classes/custom/extension/bit">
-      <sourceFolder url="file://$MODULE_DIR$/../../Classes/custom/extension/bit" isTestSource="false" />
-    </content>
-    <content url="file://$MODULE_DIR$/../../Classes/custom/extension/cencbtl">
-      <sourceFolder url="file://$MODULE_DIR$/../../Classes/custom/extension/cencbtl" isTestSource="false" />
-    </content>
     <content url="file://$MODULE_DIR$/../../Classes/custom/extension/cjson">
       <sourceFolder url="file://$MODULE_DIR$/../../Classes/custom/extension/cjson" isTestSource="false" />
-    </content>
-    <content url="file://$MODULE_DIR$/../../Classes/custom/extension/crandom">
-      <sourceFolder url="file://$MODULE_DIR$/../../Classes/custom/extension/crandom" isTestSource="false" />
     </content>
     <content url="file://$MODULE_DIR$/../../Classes/custom/extension/crypto">
       <sourceFolder url="file://$MODULE_DIR$/../../Classes/custom/extension/crypto" isTestSource="false" />
@@ -365,9 +350,6 @@
     </content>
     <content url="file://$MODULE_DIR$/../../Classes/custom/extension/filesystem">
       <sourceFolder url="file://$MODULE_DIR$/../../Classes/custom/extension/filesystem" isTestSource="false" />
-    </content>
-    <content url="file://$MODULE_DIR$/../../Classes/custom/extension/lsqlite3">
-      <sourceFolder url="file://$MODULE_DIR$/../../Classes/custom/extension/lsqlite3" isTestSource="false" />
     </content>
     <content url="file://$MODULE_DIR$/../../Classes/custom/extension/luasnapshot">
       <sourceFolder url="file://$MODULE_DIR$/../../Classes/custom/extension/luasnapshot" isTestSource="false" />
@@ -386,27 +368,6 @@
     </content>
     <content url="file://$MODULE_DIR$/../../Classes/custom/extension/zlib">
       <sourceFolder url="file://$MODULE_DIR$/../../Classes/custom/extension/zlib" isTestSource="false" />
-    </content>
-    <content url="file://$MODULE_DIR$/../../Classes/custom/extra">
-      <sourceFolder url="file://$MODULE_DIR$/../../Classes/custom/extra" isTestSource="false" />
-    </content>
-    <content url="file://$MODULE_DIR$/../../Classes/custom/extra/encode">
-      <sourceFolder url="file://$MODULE_DIR$/../../Classes/custom/extra/encode" isTestSource="false" />
-    </content>
-    <content url="file://$MODULE_DIR$/../../Classes/custom/extra/encode/base64">
-      <sourceFolder url="file://$MODULE_DIR$/../../Classes/custom/extra/encode/base64" isTestSource="false" />
-    </content>
-    <content url="file://$MODULE_DIR$/../../Classes/custom/extra/encode/md5">
-      <sourceFolder url="file://$MODULE_DIR$/../../Classes/custom/extra/encode/md5" isTestSource="false" />
-    </content>
-    <content url="file://$MODULE_DIR$/../../Classes/custom/extra/luabinding">
-      <sourceFolder url="file://$MODULE_DIR$/../../Classes/custom/extra/luabinding" isTestSource="false" />
-    </content>
-    <content url="file://$MODULE_DIR$/../../Classes/custom/extra/network">
-      <sourceFolder url="file://$MODULE_DIR$/../../Classes/custom/extra/network" isTestSource="false" />
-    </content>
-    <content url="file://$MODULE_DIR$/../../Classes/custom/extra/platform/android">
-      <sourceFolder url="file://$MODULE_DIR$/../../Classes/custom/extra/platform/android" isTestSource="false" />
     </content>
     <content url="file://$MODULE_DIR$/../../Classes/custom/gamehelp">
       <sourceFolder url="file://$MODULE_DIR$/../../Classes/custom/gamehelp" isTestSource="false" />
@@ -495,14 +456,17 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/incremental-classes" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/incremental-runtime-classes" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/incremental-verifier" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/instant-run-apk" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/instant-run-main-apk-res" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/instant-run-resources" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/instant-run-support" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/javaPrecompile" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/jniLibs" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/manifest-checker" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/manifests" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/prebuild" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/reload-dex" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/res" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/resources" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/rs" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/shaders" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/split-apk" />
@@ -512,10 +476,10 @@
       <excludeFolder url="file://$MODULE_DIR$/build/outputs" />
       <excludeFolder url="file://$MODULE_DIR$/build/tmp" />
     </content>
-    <content url="file://E:/android-ndk-r16b/sources/android/cpufeatures">
-      <sourceFolder url="file://E:/android-ndk-r16b/sources/android/cpufeatures" isTestSource="false" />
+    <content url="file://E:/Android/sdk/ndk-bundle/sources/android/cpufeatures">
+      <sourceFolder url="file://E:/Android/sdk/ndk-bundle/sources/android/cpufeatures" isTestSource="false" />
     </content>
-    <orderEntry type="jdk" jdkName="Android API 27 Platform" jdkType="Android SDK" />
+    <orderEntry type="jdk" jdkName="Android API 28 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="libcocos2dx" />
   </component>

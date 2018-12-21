@@ -70,18 +70,18 @@ class CCPluginCompile(cocos.CCPlugin):
         group = parser.add_argument_group(MultiLanguage.get_string('COMPILE_ARG_GROUP_ANDROID'))
         group.add_argument("--ap", dest="android_platform",
                            help=MultiLanguage.get_string('COMPILE_ARG_AP'))
-        group.add_argument("--ndk-mode", dest="ndk_mode",
-                           help=MultiLanguage.get_string('COMPILE_ARG_NDK_MODE'))
+        group.add_argument("--build-type", dest="build_type",
+                           help=MultiLanguage.get_string('COMPILE_ARG_BUILD_TYPE'))
         group.add_argument("--app-abi", dest="app_abi",
                            help=MultiLanguage.get_string('COMPILE_ARG_APP_ABI'))
         group.add_argument("--ndk-toolchain", dest="toolchain",
                            help=MultiLanguage.get_string('COMPILE_ARG_TOOLCHAIN'))
         group.add_argument("--ndk-cppflags", dest="cppflags",
                            help=MultiLanguage.get_string('COMPILE_ARG_CPPFLAGS'))
-        group.add_argument("--android-studio", dest="use_studio", action="store_true",
-                           help=MultiLanguage.get_string('COMPILE_ARG_STUDIO'))
         group.add_argument("--no-apk", dest="no_apk", action="store_true",
                            help=MultiLanguage.get_string('COMPILE_ARG_NO_APK'))
+        group.add_argument("--no-sign", dest="no_sign", action="store_true",
+                           help=MultiLanguage.get_string('COMPILE_ARG_NO_SIGN'))
 
         group = parser.add_argument_group(MultiLanguage.get_string('COMPILE_ARG_GROUP_WIN'))
         group.add_argument("--vs", dest="vs_version", type=int,
@@ -115,14 +115,6 @@ class CCPluginCompile(cocos.CCPlugin):
         group.add_argument("--lua-encrypt-sign", dest="lua_encrypt_sign",
                            help=MultiLanguage.get_string('COMPILE_ARG_LUA_ENCRYPT_SIGN'))
 
-        group = parser.add_argument_group(MultiLanguage.get_string('COMPILE_ARG_GROUP_TIZEN'))
-        group.add_argument("--tizen-arch", dest="tizen_arch", default="x86", choices=[ "x86", "arm" ], help=MultiLanguage.get_string('COMPILE_ARG_TIZEN_ARCH'))
-        # group.add_argument("--tizen-compiler", dest="tizen_compiler", choices=[ "llvm", "gcc" ], help=MultiLanguage.get_string('COMPILE_ARG_TIZEN_COMPILER'))
-        # group.add_argument("--tizen-pkgtype", dest="tizen_pkgtype", default="tpk", choices=[ "tpk", "wgt" ], help=MultiLanguage.get_string('COMPILE_ARG_TIZEN_PKGTYPE'))
-        group.add_argument("--tizen-profile", dest="tizen_profile", help=MultiLanguage.get_string('COMPILE_ARG_TIZEN_PROFILE'))
-        group.add_argument("--tizen-sign", dest="tizen_sign", help=MultiLanguage.get_string('COMPILE_ARG_TIZEN_SIGN'))
-        group.add_argument("--tizen-strip", dest="tizen_strip", action="store_true", help=MultiLanguage.get_string('COMPILE_ARG_TIZEN_STRIP'))
-
         category = self.plugin_category()
         name = self.plugin_name()
         usage = "\n\t%%prog %s %s -p <platform> [-s src_dir][-m <debug|release>]" \
@@ -137,11 +129,12 @@ class CCPluginCompile(cocos.CCPlugin):
                                                                available_modes))
 
         # android arguments
-        available_ndk_modes = [ 'release', 'debug', 'none' ]
-        self._ndk_mode = self.check_param(args.ndk_mode, self._mode, available_ndk_modes,
-                                          MultiLanguage.get_string('COMPILE_ERROR_WRONG_NDK_MODE_FMT',
-                                                                   available_ndk_modes))
+        available_build_types = [ 'cmake','ndk-build', 'none']
+        self._build_type = self.check_param(args.build_type, 'cmake', available_build_types,
+                                          MultiLanguage.get_string('COMPILE_ERROR_WRONG_BUILD_TYPE_FMT',
+                                                                   available_build_types))
         self._no_apk = args.no_apk
+        self._no_sign = args.no_sign
 
         self.app_abi = None
         if args.app_abi:
@@ -155,8 +148,6 @@ class CCPluginCompile(cocos.CCPlugin):
         if args.toolchain:
             self.ndk_toolchain = args.toolchain
 
-        self.use_studio = args.use_studio
-
         # Win32 arguments
         self.vs_version = args.vs_version
 
@@ -164,15 +155,6 @@ class CCPluginCompile(cocos.CCPlugin):
         self.xcode_target_name = None
         if args.target_name is not None:
             self.xcode_target_name = args.target_name
-
-        # Tizen arguments
-        self.tizen_arch = args.tizen_arch
-        # self.tizen_compiler = args.tizen_compiler
-        # self.tizen_pkgtype = args.tizen_pkgtype
-        self.tizen_pkgtype = 'tpk'
-        self.tizen_sign = args.tizen_sign
-        self.tizen_strip = args.tizen_strip
-        self.tizen_profile = args.tizen_profile
 
         if args.compile_script is not None:
             self._compile_script = bool(args.compile_script)
@@ -257,7 +239,7 @@ class CCPluginCompile(cocos.CCPlugin):
         }
 
         if self._platforms.is_android_active():
-            self._custom_step_args["ndk-build-mode"] = self._ndk_mode
+            self._custom_step_args["ndk-build-type"] = self._build_type
 
     def _build_cfg_path(self):
         cur_cfg = self._platforms.get_current_config()
@@ -492,7 +474,7 @@ class CCPluginCompile(cocos.CCPlugin):
 
         from build_android import AndroidBuilder
         builder = AndroidBuilder(self._verbose, project_android_dir,
-                                 self._no_res, self._project, self._ndk_mode,
+                                 self._no_res, self._project, self._mode, self._build_type,
                                  self.app_abi, gradle_support_ndk)
 
         args_ndk_copy = self._custom_step_args.copy()
@@ -502,7 +484,7 @@ class CCPluginCompile(cocos.CCPlugin):
         builder.update_project(self._ap)
 
         if not self._project._is_script_project() or self._project._is_native_support():
-            if self._ndk_mode != "none" and not gradle_support_ndk:
+            if self._build_type != "none" and not gradle_support_ndk:
                 # build native code
                 cocos.Logging.info(MultiLanguage.get_string('COMPILE_INFO_BUILD_NATIVE'))
                 ndk_build_param = [
@@ -536,7 +518,7 @@ class CCPluginCompile(cocos.CCPlugin):
                     modify_mk = True
 
                 try:
-                    builder.do_ndk_build(ndk_build_param, self._ndk_mode, self)
+                    builder.do_ndk_build(ndk_build_param, self._mode, self._build_type, self)
                 except Exception as e:
                     if e.__class__.__name__ == 'CCPluginError':
                         raise e
@@ -555,7 +537,7 @@ class CCPluginCompile(cocos.CCPlugin):
         # build apk
         if not self._no_apk:
             cocos.Logging.info(MultiLanguage.get_string('COMPILE_INFO_BUILD_APK'))
-        self.apk_path = builder.do_build_apk(build_mode, self._no_apk, output_dir, self._custom_step_args, self._ap, self)
+        self.apk_path = builder.do_build_apk(build_mode, self._no_apk, self._no_sign, output_dir, self._custom_step_args, self._ap, self)
         self.android_package, self.android_activity = builder.get_apk_info()
 
         cocos.Logging.info(MultiLanguage.get_string('COMPILE_INFO_BUILD_SUCCEED'))
@@ -788,11 +770,11 @@ class CCPluginCompile(cocos.CCPlugin):
                 "%s" % 'Debug' if self._mode == 'debug' else 'Release',
                 "-scheme" if use_scheme else "-target",
                 "\"%s\"" % targetName,
-                "%s" % "-arch i386" if self.use_sdk == 'iphonesimulator' else '',
+                "%s" % "-arch \"x86_64\"" if self.use_sdk == 'iphonesimulator' else '',
                 "-sdk",
                 "%s" % self.use_sdk,
                 "CONFIGURATION_BUILD_DIR=\"%s\"" % (output_dir),
-                "%s" % "VALID_ARCHS=\"i386\"" if self.use_sdk == 'iphonesimulator' else ''
+                "%s" % "VALID_ARCHS=\"i386 x86_64\"" if self.use_sdk == 'iphonesimulator' else ''
                 ])
 
             # PackageApplication is removed since xcode 8.3, should use new method to generate .ipa
@@ -1402,8 +1384,6 @@ class CCPluginCompile(cocos.CCPlugin):
             cmakefile_dir = os.path.join(project_dir, cfg_obj.cmake_path)
         else:
             cmakefile_dir = project_dir
-            if self._project._is_lua_project():
-                cmakefile_dir = os.path.join(project_dir, 'frameworks')
 
         # get the project name
         if cfg_obj.project_name is not None:
@@ -1416,7 +1396,7 @@ class CCPluginCompile(cocos.CCPlugin):
                     self.project_name = re.search('APP_NAME ([^\)]+)\)', line, re.IGNORECASE).group(1)
                     break
             if hasattr(self, 'project_name') == False:
-	            raise cocos.CCPluginError("Cauldn't find APP_NAME in CMakeLists.txt")
+	            raise cocos.CCPluginError("Couldn't find APP_NAME in CMakeLists.txt")
 
         if cfg_obj.build_dir is not None:
             build_dir = os.path.join(project_dir, cfg_obj.build_dir)
@@ -1426,8 +1406,8 @@ class CCPluginCompile(cocos.CCPlugin):
         if not os.path.exists(build_dir):
             os.makedirs(build_dir)
 
+        build_mode = 'Debug' if self._is_debug_mode() else 'Release'
         with cocos.pushd(build_dir):
-            build_mode = 'Debug' if self._is_debug_mode() else 'Release'
             debug_state = 'ON' if self._is_debug_mode() else 'OFF'
             self._run_cmd('cmake -DCMAKE_BUILD_TYPE=%s -DDEBUG_MODE=%s %s' % (build_mode, debug_state, os.path.relpath(cmakefile_dir, build_dir)))
 
@@ -1442,9 +1422,9 @@ class CCPluginCompile(cocos.CCPlugin):
         os.makedirs(output_dir)
 
         if cfg_obj.build_result_dir is not None:
-            result_dir = os.path.join(build_dir, 'bin', cfg_obj.build_result_dir)
+            result_dir = os.path.join(build_dir, 'bin', cfg_obj.build_result_dir, build_mode, self.project_name)
         else:
-            result_dir = os.path.join(build_dir, 'bin')
+            result_dir = os.path.join(build_dir, 'bin', build_mode, self.project_name)
         cocos.copy_files_in_dir(result_dir, output_dir)
 
         self.run_root = output_dir
@@ -1491,90 +1471,6 @@ class CCPluginCompile(cocos.CCPlugin):
         projectPath = os.path.join(metro_projectdir, sln_name)
         build_mode = 'Debug' if self._is_debug_mode() else 'Release'
         self.build_vs_project(projectPath, self.project_name, build_mode, self.vs_version)
-
-    def _build_tizen_proj(self, tizen_cmd_path, build_mode, proj_path):
-        build_native_cmd = "%s build-native -- \"%s\"" % (tizen_cmd_path, proj_path)
-        build_native_cmd += " -C %s" % build_mode
-        build_native_cmd += " -a %s" % self.tizen_arch
-
-        # if self.tizen_compiler is not None:
-        #     build_native_cmd += " -c %s" % self.tizen_compiler
-        # TODO now only support gcc
-        build_native_cmd += " -c gcc"
-
-        self._run_cmd(build_native_cmd)
-
-    def build_tizen(self):
-        if not self._platforms.is_tizen_active():
-            return
-
-        tizen_studio_path = cocos.check_environment_variable("TIZEN_STUDIO_HOME")
-        tizen_proj_path = self._platforms.project_path()
-        tizen_cmd_path = cocos.CMDRunner.convert_path_to_cmd(os.path.join(tizen_studio_path, "tools", "ide", "bin", "tizen"))
-        build_mode = 'Debug' if self._is_debug_mode() else 'Release'
-
-        # build library projects
-        build_cfg_data = self._get_build_cfg()
-        if build_cfg_data.has_key('depend_projs'):
-            lib_projs = build_cfg_data['depend_projs']
-            for proj in lib_projs:
-                proj_path = os.path.normpath(os.path.join(self._build_cfg_path(), proj))
-                self._build_tizen_proj(tizen_cmd_path, build_mode, proj_path)
-
-        # build the game project
-        self._build_tizen_proj(tizen_cmd_path, build_mode, tizen_proj_path)
-
-        # copy resources files
-        res_path = os.path.join(tizen_proj_path, 'res')
-        self._copy_resources(res_path)
-
-        # check the project config & compile the script files
-        if self._project._is_js_project():
-            self.compile_js_scripts(res_path, res_path)
-
-        if self._project._is_lua_project():
-            self.compile_lua_scripts(res_path, res_path, False)
-
-        # config the profile path
-        if self.tizen_profile is not None:
-            config_cmd = "%s cli-config -g \"default.profiles.path=%s\"" % (tizen_cmd_path, self.tizen_profile)
-            self._run_cmd(config_cmd)
-
-        # invoke tizen package
-        build_cfg_path = os.path.join(tizen_proj_path, build_mode)
-        if not os.path.isdir(build_cfg_path):
-            raise cocos.CCPluginError(MultiLanguage.get_string('COMPILE_ERROR_TIZEN_NO_FILE_FMT', build_cfg_path))
-
-        package_cmd = "%s package -- \"%s\" -t %s" % (tizen_cmd_path, build_cfg_path, self.tizen_pkgtype)
-        if self.tizen_sign is not None:
-            package_cmd += " -s \"%s\"" % self.tizen_sign
-
-        if self.tizen_strip:
-            package_cmd += " -S on"
-
-        self._run_cmd(package_cmd)
-
-        # get the package path
-        from xml.dom import minidom
-        doc = minidom.parse(os.path.join(tizen_proj_path, "tizen-manifest.xml"))
-        pkgid = doc.getElementsByTagName("manifest")[0].getAttribute("package")
-        version = doc.getElementsByTagName("manifest")[0].getAttribute("version")
-
-        if self.tizen_arch == "arm":
-            arch_str = "arm"
-        else:
-            arch_str = "i386"
-
-        pkg_file_name = "%s-%s-%s.%s" % (pkgid, version, arch_str, self.tizen_pkgtype)
-        tizen_pkg_path = os.path.join(tizen_proj_path, build_mode, pkg_file_name)
-        if not os.path.isfile(tizen_pkg_path):
-            raise cocos.CCPluginError(MultiLanguage.get_string('COMPILE_ERROR_TIZEN_BUILD_FAILED'))
-
-        # copy the package into output dir
-        if not os.path.exists(self._output_dir):
-            os.makedirs(self._output_dir)
-        shutil.copy(tizen_pkg_path, self._output_dir)
-        self.tizen_pkg_path = os.path.join(self._output_dir, pkg_file_name)
 
     def _get_build_cfg(self):
         build_cfg_dir = self._build_cfg_path()
@@ -1630,7 +1526,6 @@ class CCPluginCompile(cocos.CCPlugin):
         self.build_web()
         self.build_linux()
         self.build_metro()
-        self.build_tizen()
 
         # invoke the custom step: post-build
         self._project.invoke_custom_step_script(cocos_project.Project.CUSTOM_STEP_POST_BUILD, target_platform, args_build_copy)

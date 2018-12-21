@@ -213,7 +213,7 @@ bool AppDelegate::initGame(void)
 	auto engine = LuaEngine::getInstance();
 	ScriptEngineManager::getInstance()->setScriptEngine(engine);
 	LuaStack* stack = engine->getLuaStack();
-	stack->setXXTEAKeyAndSign("2dxLua", strlen("2dxLua"), "XXTEA", strlen("XXTEA"));
+	stack->setXXTEAKeyAndSign("WangBingSheng", strlen("WangBingSheng"), "ShengBingWang", strlen("ShengBingWang"));
 	lua_State* L = stack->getLuaState();
 
 	lua_module_register(L);
@@ -223,7 +223,7 @@ bool AppDelegate::initGame(void)
 	register_all(L);
 
 
-	//Ð´ËÀÈÈ¸üÐÂÄ¿Â¼£¬luaËùÓÐÎÄ¼þ¶¼¿ÉÈÈ¸ü
+	//Ð´ï¿½ï¿½ï¿½È¸ï¿½ï¿½ï¿½Ä¿Â¼ï¿½ï¿½luaï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¸ï¿½
 	/*std::string strPath = FileUtils::getInstance()->getWritablePath();
 	FileUtils::getInstance()->addSearchPath(strPath + "patch/src", true);
 	FileUtils::getInstance()->addSearchPath(strPath + "patch/res", true);*/
@@ -233,10 +233,10 @@ bool AppDelegate::initGame(void)
 #endif
 	FileUtils::getInstance()->addSearchPath("src");
 	FileUtils::getInstance()->addSearchPath("res");
-	if (engine->executeString("require \"src.main\""))
-	{
-		return false;
-	}
+	if (engine->executeScriptFile("main.lua"))
+    {
+        return false;
+    }
 	//pEngine->executeScriptFile("main.lua");
 	//Director::getInstance()->getKeypadDispatcher()->addDelegate(this);
 
@@ -265,7 +265,7 @@ bool AppDelegate::initScriptEngine(void)
 
 void AppDelegate::initSystem(void)
 {
-	initScriptEngine();
+	//initScriptEngine();
 	initGame();
 }
 

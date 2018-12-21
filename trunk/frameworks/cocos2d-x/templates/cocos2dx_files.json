@@ -1,8 +1,6 @@
 {
     "common": [
         ".appveyor.yml", 
-        ".vscode/c_cpp_properties.json", 
-        ".vscode/settings.json", 
         "AUTHORS", 
         "CHANGELOG", 
         "CMakeLists.txt", 
@@ -15,9 +13,8 @@
         "build/install-deps-linux.sh", 
         "cmake/Modules/CocosBuildHelpers.cmake", 
         "cmake/Modules/CocosBuildSet.cmake", 
-        "cmake/Modules/CocosCompileOptions.cmake", 
+        "cmake/Modules/CocosConfigDefine.cmake", 
         "cmake/Modules/CocosConfigDepend.cmake", 
-        "cmake/Modules/CocosSelectModule.cmake", 
         "cmake/Modules/FindChipmunk.cmake", 
         "cmake/Modules/FindFMOD.cmake", 
         "cmake/Modules/FindFontconfig.cmake", 
@@ -34,6 +31,7 @@
         "cmake/Modules/FindWebP.cmake", 
         "cmake/Modules/Findflatbuffers.cmake", 
         "cmake/Modules/Findxxhash.cmake", 
+        "cmake/Modules/PreventInSourceBuilds.cmake", 
         "cmake/Modules/iOSBundleInfo.plist.in", 
         "cmake/README.md", 
         "cmake/ios.toolchain.cmake", 
@@ -2355,6 +2353,7 @@
         "external/clipper/clipper.cpp", 
         "external/clipper/clipper.hpp", 
         "external/cmake/CocosExternalConfig.cmake", 
+        "external/config.json", 
         "external/curl/CMakeLists.txt", 
         "external/curl/include/android/curl/curl.h", 
         "external/curl/include/android/curl/curlbuild-arm32.h", 
@@ -2436,9 +2435,6 @@
         "external/edtaa3func/edtaa3func.cpp", 
         "external/edtaa3func/edtaa3func.h", 
         "external/empty.cpp", 
-        "external/fbx-conv/README.md", 
-        "external/fbx-conv/mac/fbx-conv", 
-        "external/fbx-conv/mac/libfbxsdk.dylib", 
         "external/flatbuffers/Android.mk", 
         "external/flatbuffers/CMakeLists.txt", 
         "external/flatbuffers/flatbuffers.h", 
@@ -4021,9 +4017,13 @@
         "licenses/LICENSE_zlib.txt", 
         "tools/appveyor-scripts/before-build.ps1", 
         "tools/appveyor-scripts/build.ps1", 
+        "tools/appveyor-scripts/git_retry.py", 
         "tools/appveyor-scripts/setup_android.py", 
         "tools/coding-style/include-linter.py", 
         "tools/coding-style/tailing-spaces.py", 
+        "tools/fbx-conv/README.md", 
+        "tools/fbx-conv/mac/fbx-conv", 
+        "tools/fbx-conv/mac/libfbxsdk.dylib", 
         "tools/missing-tools.txt", 
         "tools/particle/convert_YCoordFlipped.py", 
         "tools/performance-analyze/README.md", 
@@ -5007,7 +5007,8 @@
         "tools/tojs/cocos2dx_spine.ini", 
         "tools/tojs/cocos2dx_studio.ini", 
         "tools/tojs/cocos2dx_ui.ini", 
-        "tools/tojs/genbindings.py"
+        "tools/tojs/genbindings.py", 
+        "tools/tojs/userconf.ini"
     ], 
     "lua": [
         "cocos/scripting/lua-bindings/CMakeLists.txt", 
@@ -5569,6 +5570,8 @@
         "cocos/scripting/lua-bindings/manual/network/Lua_web_socket.h", 
         "cocos/scripting/lua-bindings/manual/network/lua_cocos2dx_network_manual.cpp", 
         "cocos/scripting/lua-bindings/manual/network/lua_cocos2dx_network_manual.h", 
+        "cocos/scripting/lua-bindings/manual/network/lua_downloader.cpp", 
+        "cocos/scripting/lua-bindings/manual/network/lua_downloader.h", 
         "cocos/scripting/lua-bindings/manual/network/lua_extensions.c", 
         "cocos/scripting/lua-bindings/manual/network/lua_extensions.h", 
         "cocos/scripting/lua-bindings/manual/network/lua_xml_http_request.cpp", 
@@ -5892,6 +5895,7 @@
         "tools/tolua/cocos2dx_spine.ini", 
         "tools/tolua/cocos2dx_studio.ini", 
         "tools/tolua/cocos2dx_ui.ini", 
-        "tools/tolua/genbindings.py"
+        "tools/tolua/genbindings.py", 
+        "tools/tolua/userconf.ini"
     ]
 }

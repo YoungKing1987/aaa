@@ -1325,7 +1325,7 @@ static int json_decode(lua_State *l)
  *
  * luaL_setfuncs() is used to create a module table where the functions have
  * json_config_t as their first upvalue. Code borrowed from Lua 5.2 source. */
-static void luaL_setfuncs (lua_State *l, const luaL_Reg *reg, int nup)
+static void luaL_setfuncss (lua_State *l, const luaL_Reg *reg, int nup)
 {
     int i;
 
@@ -1394,7 +1394,7 @@ static int lua_cjson_new(lua_State *l)
 
     /* Register functions with config data as upvalue */
     json_create_config(l);
-    luaL_setfuncs(l, reg, 1);
+    luaL_setfuncss(l, reg, 1);
 
     /* Set cjson.null */
     lua_pushlightuserdata(l, NULL);

@@ -702,9 +702,9 @@ void PhysicsWorld::updateJoints()
     }
     _delayRemoveJoints.clear();
 
-	for (auto joint : _joints) {
-		joint->flushDelayTasks();
-	}
+    for (auto joint : _joints) {
+        joint->flushDelayTasks();
+    }
 }
 
 void PhysicsWorld::removeShape(PhysicsShape* shape)
