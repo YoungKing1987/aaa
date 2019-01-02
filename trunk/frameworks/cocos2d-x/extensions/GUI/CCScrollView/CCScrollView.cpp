@@ -427,7 +427,15 @@ Vec2 ScrollView::minContainerOffset()
     Point anchorPoint = _container->isIgnoreAnchorPointForPosition()?Point::ZERO:_container->getAnchorPoint();
     float contW       = _container->getContentSize().width * _container->getScaleX();
     float contH       = _container->getContentSize().height * _container->getScaleY();
-    
+	//CCLOG("contW :%f contH :%f %f %f", contW, contH, anchorPoint.x, anchorPoint.y);
+
+	if(_direction == Direction::HORIZONTAL)
+	{
+		if (_viewSize.width > (1 - anchorPoint.x) * contW)
+		{
+			return Vec2(0, 0);
+		}
+	}
     return Vec2(_viewSize.width - (1 - anchorPoint.x) * contW, _viewSize.height - (1 - anchorPoint.y) * contH);
 }
 
