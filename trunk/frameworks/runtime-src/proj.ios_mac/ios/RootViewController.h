@@ -25,9 +25,9 @@
  ****************************************************************************/
 
 #import <UIKit/UIKit.h>
+#import "passport.h"
 
-
-@interface RootViewController : UIViewController {
+@interface RootViewController : UIViewController <FromPassDelegate>{
 
 }
 - (BOOL) prefersStatusBarHidden;

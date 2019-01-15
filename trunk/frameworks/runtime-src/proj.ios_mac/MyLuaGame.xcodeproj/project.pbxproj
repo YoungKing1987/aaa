@@ -23,6 +23,11 @@
 		1AF87BAA1F6F8733007BE51C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1AF87BA91F6F8730007BE51C /* LaunchScreen.storyboard */; };
 		1AF87BAB1F6F8733007BE51C /* LaunchScreenBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AF87BA81F6F872F007BE51C /* LaunchScreenBackground.png */; };
 		294D0D721D0D572600F7F5D4 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 294D0D711D0D572600F7F5D4 /* CoreText.framework */; };
+		3917281E21E5D92B0072EE90 /* passportSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3917281B21E5D92B0072EE90 /* passportSDK.framework */; };
+		3917282421E5DA3F0072EE90 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3917281F21E5D9DA0072EE90 /* FBSDKCoreKit.framework */; };
+		3917282521E5DA3F0072EE90 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3917282021E5D9DA0072EE90 /* FBSDKLoginKit.framework */; };
+		3917282721E5DA3F0072EE90 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3917282621E5DA3F0072EE90 /* Bolts.framework */; };
+		395C52E921E8725700321E77 /* LuaObjectCBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 395C52E521E8725600321E77 /* LuaObjectCBridge.mm */; };
 		396AF86521E4AF0500DB8014 /* fpconv.c in Sources */ = {isa = PBXBuildFile; fileRef = 396AF80F21E4AF0500DB8014 /* fpconv.c */; };
 		396AF86621E4AF0500DB8014 /* lua_cjson.c in Sources */ = {isa = PBXBuildFile; fileRef = 396AF81121E4AF0500DB8014 /* lua_cjson.c */; };
 		396AF86721E4AF0500DB8014 /* strbuf.c in Sources */ = {isa = PBXBuildFile; fileRef = 396AF81321E4AF0500DB8014 /* strbuf.c */; };
@@ -68,6 +73,8 @@
 		396AF89121E4AF0500DB8014 /* wmessage.c in Sources */ = {isa = PBXBuildFile; fileRef = 396AF86421E4AF0500DB8014 /* wmessage.c */; };
 		396AF89421E4AF1D00DB8014 /* lua_reg_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 396AF89321E4AF1D00DB8014 /* lua_reg_auto.cpp */; };
 		396AF8A121E4C92600DB8014 /* manifest in Resources */ = {isa = PBXBuildFile; fileRef = 396AF8A021E4C92600DB8014 /* manifest */; };
+		39B45A6C21E72A10006A3D0E /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39B45A6A21E72A10006A3D0E /* UserNotifications.framework */; };
+		39B45A6D21E72A10006A3D0E /* UserNotificationsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39B45A6B21E72A10006A3D0E /* UserNotificationsUI.framework */; };
 		3EEEDB61197107C0006A9FF8 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EEEDB60197107C0006A9FF8 /* MediaPlayer.framework */; };
 		5023811817EBBCAC00990C9B /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5023810817EBBCAC00990C9B /* AppController.mm */; };
 		5023812417EBBCAC00990C9B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5023811417EBBCAC00990C9B /* main.m */; };
@@ -220,6 +227,12 @@
 		1AF87BA81F6F872F007BE51C /* LaunchScreenBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LaunchScreenBackground.png; sourceTree = "<group>"; };
 		1AF87BA91F6F8730007BE51C /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		294D0D711D0D572600F7F5D4 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/CoreText.framework; sourceTree = DEVELOPER_DIR; };
+		3917281B21E5D92B0072EE90 /* passportSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = passportSDK.framework; sourceTree = "<group>"; };
+		3917281F21E5D9DA0072EE90 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		3917282021E5D9DA0072EE90 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
+		3917282621E5DA3F0072EE90 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
+		395C52E521E8725600321E77 /* LuaObjectCBridge.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LuaObjectCBridge.mm; sourceTree = "<group>"; };
+		395C52E821E8725700321E77 /* LuaObjectCBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LuaObjectCBridge.h; sourceTree = "<group>"; };
 		396AF80F21E4AF0500DB8014 /* fpconv.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = fpconv.c; sourceTree = "<group>"; };
 		396AF81021E4AF0500DB8014 /* fpconv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fpconv.h; sourceTree = "<group>"; };
 		396AF81121E4AF0500DB8014 /* lua_cjson.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lua_cjson.c; sourceTree = "<group>"; };
@@ -293,6 +306,8 @@
 		396AF89221E4AF1D00DB8014 /* lua_reg_auto.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = lua_reg_auto.hpp; path = ../Classes/lua_reg_auto.hpp; sourceTree = "<group>"; };
 		396AF89321E4AF1D00DB8014 /* lua_reg_auto.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = lua_reg_auto.cpp; path = ../Classes/lua_reg_auto.cpp; sourceTree = "<group>"; };
 		396AF8A021E4C92600DB8014 /* manifest */ = {isa = PBXFileReference; lastKnownFileType = folder; name = manifest; path = ../../../manifest; sourceTree = "<group>"; };
+		39B45A6A21E72A10006A3D0E /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.1.sdk/System/Library/Frameworks/UserNotifications.framework; sourceTree = DEVELOPER_DIR; };
+		39B45A6B21E72A10006A3D0E /* UserNotificationsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotificationsUI.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.1.sdk/System/Library/Frameworks/UserNotificationsUI.framework; sourceTree = DEVELOPER_DIR; };
 		3EEEDB60197107C0006A9FF8 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/MediaPlayer.framework; sourceTree = DEVELOPER_DIR; };
 		5023810717EBBCAC00990C9B /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
 		5023810817EBBCAC00990C9B /* AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppController.mm; sourceTree = "<group>"; };
@@ -366,6 +381,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				39B45A6C21E72A10006A3D0E /* UserNotifications.framework in Frameworks */,
+				39B45A6D21E72A10006A3D0E /* UserNotificationsUI.framework in Frameworks */,
+				3917282721E5DA3F0072EE90 /* Bolts.framework in Frameworks */,
+				3917282421E5DA3F0072EE90 /* FBSDKCoreKit.framework in Frameworks */,
+				3917282521E5DA3F0072EE90 /* FBSDKLoginKit.framework in Frameworks */,
+				3917281E21E5D92B0072EE90 /* passportSDK.framework in Frameworks */,
 				294D0D721D0D572600F7F5D4 /* CoreText.framework in Frameworks */,
 				9FA3AE4E1BE9BCC900FC9645 /* CFNetwork.framework in Frameworks */,
 				ED545A891B68A23E00C3958E /* libiconv.dylib in Frameworks */,
@@ -620,6 +641,8 @@
 		5023810617EBBCAC00990C9B /* ios */ = {
 			isa = PBXGroup;
 			children = (
+				395C52E821E8725700321E77 /* LuaObjectCBridge.h */,
+				395C52E521E8725600321E77 /* LuaObjectCBridge.mm */,
 				1ACE45A21FC3F2D000F87E53 /* Images.xcassets */,
 				1AF87BA91F6F8730007BE51C /* LaunchScreen.storyboard */,
 				1AF87BA81F6F872F007BE51C /* LaunchScreenBackground.png */,
@@ -697,6 +720,12 @@
 		F293B3CB15EB7BE500256477 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				39B45A6A21E72A10006A3D0E /* UserNotifications.framework */,
+				39B45A6B21E72A10006A3D0E /* UserNotificationsUI.framework */,
+				3917282621E5DA3F0072EE90 /* Bolts.framework */,
+				3917281F21E5D9DA0072EE90 /* FBSDKCoreKit.framework */,
+				3917282021E5D9DA0072EE90 /* FBSDKLoginKit.framework */,
+				3917281B21E5D92B0072EE90 /* passportSDK.framework */,
 				294D0D711D0D572600F7F5D4 /* CoreText.framework */,
 				9FA3AE4D1BE9BCC900FC9645 /* CFNetwork.framework */,
 				ED545A8A1B68A24500C3958E /* libiconv.dylib */,
@@ -997,6 +1026,7 @@
 				396AF87021E4AF0500DB8014 /* lfs.c in Sources */,
 				396AF88421E4AF0500DB8014 /* pbc-lua.c in Sources */,
 				396AF88021E4AF0500DB8014 /* lua_zlib.c in Sources */,
+				395C52E921E8725700321E77 /* LuaObjectCBridge.mm in Sources */,
 				396AF88221E4AF0500DB8014 /* ErrorWindow.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1182,6 +1212,10 @@
 				COMPRESS_PNG_FILES = NO;
 				DEVELOPMENT_TEAM = GW92PB37TW;
 				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = ios/Prefix.pch;
@@ -1210,7 +1244,7 @@
 				SDKROOT = iphoneos;
 				STRIP_PNG_TEXT = NO;
 				TARGETED_DEVICE_FAMILY = 1;
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(_COCOS_HEADER_IOS_BEGIN) $(_COCOS_HEADER_IOS_END) $(SRCROOT)/../Classes/custom $(SRCROOT)/../Classes/custom/extra $(SRCROOT)/../Classes/custom/extension $(SRCROOT)/../Classes/custom/protocol/pbc";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(_COCOS_HEADER_IOS_BEGIN) $(_COCOS_HEADER_IOS_END) $(SRCROOT)/../Classes/custom $(SRCROOT)/../Classes/custom/extra $(SRCROOT)/../Classes/custom/extension $(SRCROOT)/../Classes/custom/protocol/pbc $(SRCROOT)/passportSDK.framework/Headers";
 				VALID_ARCHS = "arm64 armv7";
 			};
 			name = Debug;
@@ -1224,6 +1258,10 @@
 				COMPRESS_PNG_FILES = NO;
 				DEVELOPMENT_TEAM = GW92PB37TW;
 				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = ios/Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
@@ -1251,7 +1289,7 @@
 				SDKROOT = iphoneos;
 				STRIP_PNG_TEXT = NO;
 				TARGETED_DEVICE_FAMILY = 1;
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(_COCOS_HEADER_IOS_BEGIN) $(_COCOS_HEADER_IOS_END) $(SRCROOT)/../Classes/custom $(SRCROOT)/../Classes/custom/extra $(SRCROOT)/../Classes/custom/extension $(SRCROOT)/../Classes/custom/protocol/pbc";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(_COCOS_HEADER_IOS_BEGIN) $(_COCOS_HEADER_IOS_END) $(SRCROOT)/../Classes/custom $(SRCROOT)/../Classes/custom/extra $(SRCROOT)/../Classes/custom/extension $(SRCROOT)/../Classes/custom/protocol/pbc $(SRCROOT)/passportSDK.framework/Headers";
 				VALID_ARCHS = "arm64 armv7";
 			};
 			name = Release;

@@ -25,11 +25,19 @@
  ****************************************************************************/
 
 #import "AppController.h"
+#import "scripting/lua-bindings/manual/CCLuaEngine.h"
+#import "scripting/lua-bindings/manual/CCLuaBridge.h"
 #import "cocos2d.h"
 #import "AppDelegate.h"
 #import "RootViewController.h"
-
+#import "passport.h"
+#import "FBSDKCoreKit/FBSDKCoreKit.h"
+#import "LuaObjectCBridge.h"
+using namespace cocos2d;
 @implementation AppController
+{
+    passport * _passport;
+}
 
 @synthesize window;
 
@@ -38,6 +46,7 @@
 
 // cocos2d application instance
 static AppDelegate s_sharedApplication;
+static AppController* s_sharedAppController;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
@@ -76,13 +85,119 @@ static AppDelegate s_sharedApplication;
     // IMPORTANT: Setting the GLView should be done after creating the RootViewController
     cocos2d::GLView *glview = cocos2d::GLViewImpl::createWithEAGLView((__bridge void *)_viewController.view);
     cocos2d::Director::getInstance()->setOpenGLView(glview);
+    [[FBSDKApplicationDelegate sharedInstance] application:application
+                             didFinishLaunchingWithOptions:launchOptions];
     
+    s_sharedAppController = self;
     //run the cocos2d-x game scene
     app->run();
-
+    self->_passport = [[passport sharedPassport] initSDK:@"https://account-mafia.5stargame.com/api/" myView:_viewController];
     return YES;
 }
 
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+            options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
+    
+    BOOL handled = [[FBSDKApplicationDelegate sharedInstance] application:application
+                                                                  openURL:url
+                                                        sourceApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey]
+                                                               annotation:options[UIApplicationOpenURLOptionsAnnotationKey]
+                    ];
+    // Add any custom logic here.
+    return handled;
+}
+
++(void) registerScriptHandler:(NSDictionary *)dict
+{
+    [[LuaObjectCBridge getInstance] setScriptHandler:[[dict objectForKey:@"scriptHandler"] intValue]];
+}
+
++(void)onLogin{
+    [s_sharedAppController MyloginbyDeviceid];
+}
+
+-(void)MyloginbyDeviceid
+{
+    [_passport loginbyDeviceid];
+}
+
++(void)onGetServerList
+{
+    [s_sharedAppController MyGetServerList];
+}
+
+-(void)MyGetServerList
+{
+    [_passport getServerList];
+}
+
++(void)GetUserInfo:(NSDictionary *)dict
+{
+    [s_sharedAppController MyGetUserInfo:dict];
+}
+
+-(void)MyGetUserInfo:(NSDictionary *)dict
+{
+    [_passport Get_Userinfo:[dict objectForKey:@"accountid"]];
+}
+
+
++(void)onFBSwitch{
+    [s_sharedAppController MyFBSwitch];
+}
+
+-(void)MyFBSwitch{
+    [_passport FB_switch];
+}
+
++(void)onPay:(NSDictionary *)dict{
+    [s_sharedAppController MyPay:dict];
+}
+
+-(void)MyPay:(NSDictionary *)dict{
+    [_passport pay_product:[dict objectForKey:@"product"] pay_money:[dict objectForKey:@"money"] package_name:[dict objectForKey:@"name"] game_user_id:[dict objectForKey:@"user"]] ;
+}
+
++(void)onServerSelect:(NSDictionary *)dict{
+    [s_sharedAppController MyServerSelect:dict];
+}
+
++(void)onFBBind{
+    [s_sharedAppController MyFBBind];
+}
+
++(void)onGCBind{
+    [s_sharedAppController MyGCBind];
+}
+
+-(void)MyServerSelect:(NSDictionary *)dict{
+    [_passport server_sel:[dict objectForKey:@"index"]];
+}
+
+-(void)MyFBBind{
+    [_passport FB_Bind];
+}
+
+-(void)MyGCBind{
+    [_passport GC_Bind];
+}
+
++(void)onAccountUnBinding:(NSDictionary *)dict{
+    [s_sharedAppController MyAccountUnBinding:dict];
+}
+
+-(void)MyAccountUnBinding:(NSDictionary *)dict{
+    [_passport accountUnBinding:[dict objectForKey:@"optye"]];
+}
+
++(void)onFB_switch{
+    [s_sharedAppController MyFB_switch];
+}
+
+-(void)MyFB_switch{
+    [_passport FB_switch];
+}
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     /*
@@ -132,6 +247,97 @@ static AppDelegate s_sharedApplication;
      Free up as much memory as possible by purging cached data objects that can be recreated (or reloaded from disk) later.
      */
 }
+
+// 将得到的deviceToken传给SDK
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken{
+    
+    NSString *deviceTokenStr = [[[[deviceToken description]
+                                  
+                                  stringByReplacingOccurrencesOfString:@"<" withString:@""]
+                                 
+                                 stringByReplacingOccurrencesOfString:@">" withString:@""]
+                                
+                                stringByReplacingOccurrencesOfString:@" " withString:@""];
+    
+    NSLog(@"deviceTokenStr:\n%@",deviceTokenStr);
+    
+    
+    
+    //
+    
+    passport *_passport =[passport sharedPassport];
+    [_passport setApns_token:deviceTokenStr];
+}
+// 注册deviceToken失败
+
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error{
+    
+    NSLog(@"注册deviceToken失败 -- %@",error);
+    
+}
+
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)())completionHandler{
+    
+    //处理推送过来的数据
+    
+    //[self handlePushMessage:response.notification.request.content.userInfo];
+    NSLog(@"PushMessage=%@", response.description);
+    
+    completionHandler();
+    
+}
+
+
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler{
+    
+    // 需要执行这个方法，选择是否提醒用户，有Badge、Sound、Alert三种类型可以设置
+    
+    completionHandler(UNNotificationPresentationOptionAlert);
+    
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary * _Nonnull)userInfo fetchCompletionHandler:(void (^ _Nonnull)(UIBackgroundFetchResult))completionHandler{
+    
+    NSLog(@"didReceiveRemoteNotification:%@",userInfo);
+    
+    
+    if(userInfo && userInfo[@"aps"]){
+        
+        NSDictionary * aps =userInfo[@"aps"];
+        if (aps && aps[@"alert"]){
+            NSLog(@"Notification=%@", aps[@"alert"]);
+        }
+    }
+    
+    completionHandler(UIBackgroundFetchResultNewData);
+    
+}
+
+- (void)redirectNotificationHandle:(NSNotification *)nf{ // 通知方法
+    //NSData *data = [[nf userInfo] objectForKey:NSFileHandleNotificationDataItem];
+    //NSString *str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    
+    //txtLog.text = [NSString stringWithFormat:@"%@\n\n%@",txtLog.text, str];// logTextView 就是要将日志输出的视图（UITextView）
+    //NSRange range;
+    //range.location = [txtLog.text length] - 1;
+    //range.length = 0;
+    //[txtLog scrollRangeToVisible:range];
+    [[nf object] readInBackgroundAndNotify];
+}
+
+- (void)redirectSTD:(int )fd{
+    NSPipe * pipe = [NSPipe pipe] ;// 初始化一个NSPipe 对象
+    NSFileHandle *pipeReadHandle = [pipe fileHandleForReading] ;
+    dup2([[pipe fileHandleForWriting] fileDescriptor], fd) ;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(redirectNotificationHandle:)
+                                                 name:NSFileHandleReadCompletionNotification
+                                               object:pipeReadHandle]; // 注册通知
+    [pipeReadHandle readInBackgroundAndNotify];
+}
+
 
 
 #if __has_feature(objc_arc)
