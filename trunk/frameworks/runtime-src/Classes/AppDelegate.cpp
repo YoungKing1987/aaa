@@ -231,8 +231,23 @@ bool AppDelegate::initGame(void)
 #if CC_64BITS
 	FileUtils::getInstance()->addSearchPath("src/64bit");
 #endif
-	FileUtils::getInstance()->addSearchPath("src");
+	string storagePath = FileUtils::getInstance()->getWritablePath() + "patch/";
+	string path1 = storagePath + "res";
+	string path2 = storagePath + "res/ui";
+	string path3 = storagePath + "src";
+	if (!FileUtils::getInstance()->isDirectoryExist(storagePath))
+	{
+		FileUtils::getInstance()->createDirectory(storagePath);
+		FileUtils::getInstance()->createDirectory(path1);
+		FileUtils::getInstance()->createDirectory(path2);
+		FileUtils::getInstance()->createDirectory(path3);
+	}
+	FileUtils::getInstance()->addSearchPath(path1);
+	FileUtils::getInstance()->addSearchPath(path2);
+	FileUtils::getInstance()->addSearchPath(path3);
 	FileUtils::getInstance()->addSearchPath("res");
+	FileUtils::getInstance()->addSearchPath("res/ui");
+	FileUtils::getInstance()->addSearchPath("src");
 	if (engine->executeScriptFile("main.lua"))
     {
         return false;
