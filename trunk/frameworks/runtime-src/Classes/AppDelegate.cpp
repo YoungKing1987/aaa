@@ -248,7 +248,7 @@ bool AppDelegate::initGame(void)
 	FileUtils::getInstance()->addSearchPath("res");
 	FileUtils::getInstance()->addSearchPath("res/ui");
 	FileUtils::getInstance()->addSearchPath("src");
-	if (engine->executeScriptFile("main.lua"))
+	if (engine->executeScriptFile("start.lua"))
     {
         return false;
     }
