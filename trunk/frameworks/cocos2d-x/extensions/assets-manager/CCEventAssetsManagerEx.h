@@ -72,10 +72,15 @@ public:
     float getPercent() const { return _percent; }
     
     float getPercentByFile() const { return _percentByFile; }
+
+	double getTotalDownloaded() const { return _totalDownloaded; }
+
+	double getTotalSize() const { return _totalSize; }
     
 CC_CONSTRUCTOR_ACCESS:
     /** Constructor */
-    EventAssetsManagerEx(const std::string& eventName, cocos2d::extension::AssetsManagerEx *manager, const EventCode &code, float percent = 0, float percentByFile = 0, const std::string& assetId = "", const std::string& message = "", int curle_code = 0, int curlm_code = 0);
+    EventAssetsManagerEx(const std::string& eventName, cocos2d::extension::AssetsManagerEx *manager, const EventCode &code, float percent = 0, float percentByFile = 0, const std::string& assetId = "", const std::string& message = "", 
+		int curle_code = 0, int curlm_code = 0, double totalDownloaded = 0, double totalSize = 0);
     
 private:
     EventCode _code;
@@ -93,6 +98,9 @@ private:
     float _percent;
     
     float _percentByFile;
+	//add by hhz
+	double _totalDownloaded;
+	double _totalSize;
 };
 
 NS_CC_EXT_END

@@ -304,6 +304,9 @@ private:
     //! Total file size need to be downloaded (sum of all file)
     double _totalSize;
     
+	//add by hhz. 热更已下载的内存大小
+	double _totalDownloaded;
+
     //! Downloaded size for each file
     std::unordered_map<std::string, double> _downloadedSize;
     

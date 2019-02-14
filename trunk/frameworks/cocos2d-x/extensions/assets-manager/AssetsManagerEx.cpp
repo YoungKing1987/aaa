@@ -69,6 +69,10 @@ AssetsManagerEx::AssetsManagerEx(const std::string& manifestUrl, const std::stri
 , _updateEntry(UpdateEntry::NONE)
 , _percent(0)
 , _percentByFile(0)
+//add by hhz 初始化
+, _totalDownloaded(0.0)
+, _totalSize(0.0)
+
 , _totalToDownload(0)
 , _totalWaitToDownload(0)
 , _nextSavePoint(0.0)
@@ -532,7 +536,7 @@ void AssetsManagerEx::dispatchUpdateEvent(EventAssetsManagerEx::EventCode code, 
             break;
     }
 
-    EventAssetsManagerEx event(_eventName, this, code, _percent, _percentByFile, assetId, message, curle_code, curlm_code);
+    EventAssetsManagerEx event(_eventName, this, code, _percent, _percentByFile, assetId, message, curle_code, curlm_code, _totalDownloaded, _totalSize);
     _eventDispatcher->dispatchEvent(&event);
 }
 
@@ -677,6 +681,8 @@ void AssetsManagerEx::startUpdate()
     _totalWaitToDownload = _totalToDownload = 0;
     _nextSavePoint = 0;
     _percent = _percentByFile = _sizeCollected = _totalSize = 0;
+	//add by hhz 初始化
+	_totalDownloaded = 0;
     _downloadedSize.clear();
     _totalEnabled = false;
     
@@ -1068,6 +1074,8 @@ void AssetsManagerEx::onProgress(double total, double downloaded, const std::str
         
         if (_totalEnabled && _updateState == State::UPDATING)
         {
+			//add by hhz
+			_totalDownloaded = totalDownloaded;
             float currentPercent = 100 * totalDownloaded / _totalSize;
             // Notify at integer level change
             if ((int)currentPercent != (int)_percent) {

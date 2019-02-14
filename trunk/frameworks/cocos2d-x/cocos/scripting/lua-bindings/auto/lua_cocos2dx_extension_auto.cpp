@@ -12106,6 +12106,103 @@ int lua_cocos2dx_extension_EventAssetsManagerEx_getPercentByFile(lua_State* tolu
 
     return 0;
 }
+
+int lua_cocos2dx_extension_EventAssetsManagerEx_getTotalDownloaded(lua_State* tolua_S)
+{
+	int argc = 0;
+	cocos2d::extension::EventAssetsManagerEx* cobj = nullptr;
+	bool ok = true;
+
+#if COCOS2D_DEBUG >= 1
+	tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+	if (!tolua_isusertype(tolua_S, 1, "cc.EventAssetsManagerEx", 0, &tolua_err)) goto tolua_lerror;
+#endif
+
+	cobj = (cocos2d::extension::EventAssetsManagerEx*)tolua_tousertype(tolua_S, 1, 0);
+
+#if COCOS2D_DEBUG >= 1
+	if (!cobj)
+	{
+		tolua_error(tolua_S, "invalid 'cobj' in function 'lua_cocos2dx_extension_EventAssetsManagerEx_getTotalDownloaded'", nullptr);
+		return 0;
+	}
+#endif
+
+	argc = lua_gettop(tolua_S) - 1;
+	if (argc == 0)
+	{
+		if (!ok)
+		{
+			tolua_error(tolua_S, "invalid arguments in function 'lua_cocos2dx_extension_EventAssetsManagerEx_getTotalDownloaded'", nullptr);
+			return 0;
+		}
+		double ret = cobj->getTotalDownloaded();
+		tolua_pushnumber(tolua_S, (lua_Number)ret);
+		return 1;
+	}
+	luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.EventAssetsManagerEx:getTotalDownloaded", argc, 0);
+	return 0;
+
+#if COCOS2D_DEBUG >= 1
+	tolua_lerror:
+				tolua_error(tolua_S, "#ferror in function 'lua_cocos2dx_extension_EventAssetsManagerEx_getTotalDownloaded'.", &tolua_err);
+#endif
+
+				return 0;
+}
+
+int lua_cocos2dx_extension_EventAssetsManagerEx_getTotalSize(lua_State* tolua_S)
+{
+	int argc = 0;
+	cocos2d::extension::EventAssetsManagerEx* cobj = nullptr;
+	bool ok = true;
+
+#if COCOS2D_DEBUG >= 1
+	tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+	if (!tolua_isusertype(tolua_S, 1, "cc.EventAssetsManagerEx", 0, &tolua_err)) goto tolua_lerror;
+#endif
+
+	cobj = (cocos2d::extension::EventAssetsManagerEx*)tolua_tousertype(tolua_S, 1, 0);
+
+#if COCOS2D_DEBUG >= 1
+	if (!cobj)
+	{
+		tolua_error(tolua_S, "invalid 'cobj' in function 'lua_cocos2dx_extension_EventAssetsManagerEx_getTotalSize'", nullptr);
+		return 0;
+	}
+#endif
+
+	argc = lua_gettop(tolua_S) - 1;
+	if (argc == 0)
+	{
+		if (!ok)
+		{
+			tolua_error(tolua_S, "invalid arguments in function 'lua_cocos2dx_extension_EventAssetsManagerEx_getTotalSize'", nullptr);
+			return 0;
+		}
+		double ret = cobj->getTotalSize();
+		tolua_pushnumber(tolua_S, (lua_Number)ret);
+		return 1;
+	}
+	luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.EventAssetsManagerEx:getTotalSize", argc, 0);
+	return 0;
+
+#if COCOS2D_DEBUG >= 1
+	tolua_lerror:
+				tolua_error(tolua_S, "#ferror in function 'lua_cocos2dx_extension_EventAssetsManagerEx_getTotalSize'.", &tolua_err);
+#endif
+
+				return 0;
+}
+
 int lua_cocos2dx_extension_EventAssetsManagerEx_getEventCode(lua_State* tolua_S)
 {
     int argc = 0;
@@ -12466,6 +12563,10 @@ int lua_register_cocos2dx_extension_EventAssetsManagerEx(lua_State* tolua_S)
         tolua_function(tolua_S,"getMessage",lua_cocos2dx_extension_EventAssetsManagerEx_getMessage);
         tolua_function(tolua_S,"getCURLMCode",lua_cocos2dx_extension_EventAssetsManagerEx_getCURLMCode);
         tolua_function(tolua_S,"getPercentByFile",lua_cocos2dx_extension_EventAssetsManagerEx_getPercentByFile);
+		//add by hhz
+		tolua_function(tolua_S, "getTotalDownloaded", lua_cocos2dx_extension_EventAssetsManagerEx_getTotalDownloaded);
+		tolua_function(tolua_S, "getTotalSize", lua_cocos2dx_extension_EventAssetsManagerEx_getTotalSize);
+
         tolua_function(tolua_S,"getEventCode",lua_cocos2dx_extension_EventAssetsManagerEx_getEventCode);
         tolua_function(tolua_S,"getPercent",lua_cocos2dx_extension_EventAssetsManagerEx_getPercent);
     tolua_endmodule(tolua_S);

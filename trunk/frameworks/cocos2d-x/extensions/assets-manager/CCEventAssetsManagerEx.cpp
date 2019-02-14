@@ -30,7 +30,8 @@
 
 NS_CC_EXT_BEGIN
 
-EventAssetsManagerEx::EventAssetsManagerEx(const std::string& eventName, cocos2d::extension::AssetsManagerEx *manager, const EventCode &code, float percent/* = 0 */, float percentByFile/* = 0*/, const std::string& assetId/* = "" */, const std::string& message/* = "" */, int curle_code/* = CURLE_OK*/, int curlm_code/* = CURLM_OK*/)
+EventAssetsManagerEx::EventAssetsManagerEx(const std::string& eventName, cocos2d::extension::AssetsManagerEx *manager, const EventCode &code, float percent/* = 0 */, float percentByFile/* = 0*/, const std::string& assetId/* = "" */, const std::string& message/* = "" */, 
+	int curle_code/* = CURLE_OK*/, int curlm_code/* = CURLM_OK*/, double totalDownloaded/* = totalDownloaded*/, double totalSize/* = totalSize*/)
 : EventCustom(eventName)
 , _code(code)
 , _manager(manager)
@@ -40,6 +41,8 @@ EventAssetsManagerEx::EventAssetsManagerEx(const std::string& eventName, cocos2d
 , _curlm_code(curlm_code)
 , _percent(percent)
 , _percentByFile(percentByFile)
+, _totalDownloaded(totalDownloaded)
+, _totalSize(totalSize)
 {
 }
 
