@@ -75,6 +75,8 @@
 		396AF8A121E4C92600DB8014 /* manifest in Resources */ = {isa = PBXBuildFile; fileRef = 396AF8A021E4C92600DB8014 /* manifest */; };
 		39B45A6C21E72A10006A3D0E /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39B45A6A21E72A10006A3D0E /* UserNotifications.framework */; };
 		39B45A6D21E72A10006A3D0E /* UserNotificationsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39B45A6B21E72A10006A3D0E /* UserNotificationsUI.framework */; };
+		39D02A502216A61800A3146D /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 39D02A4F2216A61800A3146D /* Reachability.m */; };
+		39D02A522216A62600A3146D /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39D02A512216A62600A3146D /* SystemConfiguration.framework */; };
 		3EEEDB61197107C0006A9FF8 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EEEDB60197107C0006A9FF8 /* MediaPlayer.framework */; };
 		5023811817EBBCAC00990C9B /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5023810817EBBCAC00990C9B /* AppController.mm */; };
 		5023812417EBBCAC00990C9B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5023811417EBBCAC00990C9B /* main.m */; };
@@ -308,6 +310,9 @@
 		396AF8A021E4C92600DB8014 /* manifest */ = {isa = PBXFileReference; lastKnownFileType = folder; name = manifest; path = ../../../manifest; sourceTree = "<group>"; };
 		39B45A6A21E72A10006A3D0E /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.1.sdk/System/Library/Frameworks/UserNotifications.framework; sourceTree = DEVELOPER_DIR; };
 		39B45A6B21E72A10006A3D0E /* UserNotificationsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotificationsUI.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.1.sdk/System/Library/Frameworks/UserNotificationsUI.framework; sourceTree = DEVELOPER_DIR; };
+		39D02A4C2216A61800A3146D /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		39D02A4F2216A61800A3146D /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		39D02A512216A62600A3146D /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.1.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = DEVELOPER_DIR; };
 		3EEEDB60197107C0006A9FF8 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/MediaPlayer.framework; sourceTree = DEVELOPER_DIR; };
 		5023810717EBBCAC00990C9B /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
 		5023810817EBBCAC00990C9B /* AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppController.mm; sourceTree = "<group>"; };
@@ -381,6 +386,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				39D02A522216A62600A3146D /* SystemConfiguration.framework in Frameworks */,
 				39B45A6C21E72A10006A3D0E /* UserNotifications.framework in Frameworks */,
 				39B45A6D21E72A10006A3D0E /* UserNotificationsUI.framework in Frameworks */,
 				3917282721E5DA3F0072EE90 /* Bolts.framework in Frameworks */,
@@ -641,6 +647,8 @@
 		5023810617EBBCAC00990C9B /* ios */ = {
 			isa = PBXGroup;
 			children = (
+				39D02A4C2216A61800A3146D /* Reachability.h */,
+				39D02A4F2216A61800A3146D /* Reachability.m */,
 				395C52E821E8725700321E77 /* LuaObjectCBridge.h */,
 				395C52E521E8725600321E77 /* LuaObjectCBridge.mm */,
 				1ACE45A21FC3F2D000F87E53 /* Images.xcassets */,
@@ -720,6 +728,7 @@
 		F293B3CB15EB7BE500256477 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				39D02A512216A62600A3146D /* SystemConfiguration.framework */,
 				39B45A6A21E72A10006A3D0E /* UserNotifications.framework */,
 				39B45A6B21E72A10006A3D0E /* UserNotificationsUI.framework */,
 				3917282621E5DA3F0072EE90 /* Bolts.framework */,
@@ -1015,6 +1024,7 @@
 				396AF87F21E4AF0500DB8014 /* ctime.c in Sources */,
 				396AF86521E4AF0500DB8014 /* fpconv.c in Sources */,
 				396AF86A21E4AF0500DB8014 /* qtea.c in Sources */,
+				39D02A502216A61800A3146D /* Reachability.m in Sources */,
 				396AF87921E4AF0500DB8014 /* LuaXML_lib.c in Sources */,
 				396AF86D21E4AF0500DB8014 /* xxtea.c in Sources */,
 				396AF88A21E4AF0500DB8014 /* map.c in Sources */,
