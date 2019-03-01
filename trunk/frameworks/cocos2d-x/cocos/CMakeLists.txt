@@ -37,8 +37,8 @@ set(COCOS_CORE_LIB cocos2d)
 include(2d/CMakeLists.txt)
 include(3d/CMakeLists.txt)
 include(platform/CMakeLists.txt)
-include(physics/CMakeLists.txt)
-include(physics3d/CMakeLists.txt)
+#include(physics/CMakeLists.txt)
+#include(physics3d/CMakeLists.txt)
 include(math/CMakeLists.txt)
 include(navmesh/CMakeLists.txt)
 include(renderer/CMakeLists.txt)
@@ -51,15 +51,15 @@ include(audio/CMakeLists.txt)
 include(storage/CMakeLists.txt)
 
 # default value for cocos2dx extensions modules build
-option(BUILD_EDITOR_COCOSBUILDER "Build editor support for cocosbuilder" ON)
+#option(BUILD_EDITOR_COCOSBUILDER "Build editor support for cocosbuilder" ON)
 option(BUILD_EDITOR_COCOSTUDIO "Build editor support for cocostudio" ON)
 option(BUILD_EDITOR_SPINE "Build editor support for spine" ON)
 option(BUILD_EXTENSIONS "Build extension library" ON)
 
-if(BUILD_EDITOR_COCOSBUILDER)
-    include(editor-support/cocosbuilder/CMakeLists.txt)
-    set(COCOS_EDITOR_SUPPORT_SRC ${COCOS_EDITOR_SUPPORT_SRC} ${COCOS_CCB_SRC} ${COCOS_CCB_HEADER})
-endif(BUILD_EDITOR_COCOSBUILDER)
+#if(BUILD_EDITOR_COCOSBUILDER)
+    #include(editor-support/cocosbuilder/CMakeLists.txt)
+    #set(COCOS_EDITOR_SUPPORT_SRC ${COCOS_EDITOR_SUPPORT_SRC} ${COCOS_CCB_SRC} ${COCOS_CCB_HEADER})
+#endif(BUILD_EDITOR_COCOSBUILDER)
 
 if(BUILD_EDITOR_COCOSTUDIO)
     include(editor-support/cocostudio/CMakeLists.txt)
@@ -79,8 +79,8 @@ set(COCOS_HEADER cocos2d.h
     ${COCOS_2D_HEADER}
     ${COCOS_3D_HEADER}
     ${COCOS_PLATFORM_HEADER}
-    ${COCOS_PHYSICS_HEADER}
-    ${COCOS_PHYSICS3D_HEADER}
+   # ${COCOS_PHYSICS_HEADER}
+   # ${COCOS_PHYSICS3D_HEADER}
     ${COCOS_MATH_HEADER}
     ${COCOS_NAVMESH_HEADER}
     ${COCOS_RENDERER_HEADER}
@@ -99,8 +99,8 @@ set(COCOS_SRC cocos2d.cpp
     ${COCOS_2D_SRC}
     ${COCOS_3D_SRC}
     ${COCOS_PLATFORM_SRC}
-    ${COCOS_PHYSICS_SRC}
-    ${COCOS_PHYSICS3D_SRC}
+    #${COCOS_PHYSICS_SRC}
+    #${COCOS_PHYSICS3D_SRC}
     ${COCOS_MATH_SRC}
     ${COCOS_NAVMESH_SRC}
     ${COCOS_RENDERER_SRC}
@@ -160,4 +160,13 @@ endif()
 
 if(XCODE OR VS)
     cocos_mark_code_files("cocos2d")
+endif()
+
+if(WINDOWS)
+    # precompiled header. Compilation time speedup ~4x.
+    target_sources(cocos2d PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/precheader.cpp")
+    set_target_properties(cocos2d PROPERTIES COMPILE_FLAGS "/Yuprecheader.h /FIprecheader.h")
+    set_source_files_properties("${CMAKE_CURRENT_SOURCE_DIR}/precheader.cpp" PROPERTIES COMPILE_FLAGS "/Ycprecheader.h")
+    # compile c as c++. needed for precompiled header
+    set_source_files_properties(${COCOS_SPINE_SRC} base/ccFPSImages.c PROPERTIES LANGUAGE CXX)
 endif()

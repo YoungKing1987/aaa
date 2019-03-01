@@ -72,7 +72,7 @@ FontAtlas::FontAtlas(Font &theFont)
             _letterPadding += 2 * FontFreeType::DistanceMapSpread;    
         }
         
-        reinit();
+       
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
         auto eventDispatcher = Director::getInstance()->getEventDispatcher();
@@ -343,6 +343,9 @@ bool FontAtlas::prepareLetterDefinitions(const std::u32string& utf32Text)
     {
         return false;
     } 
+
+	if (!_currentPageData)
+		reinit();
     
     std::unordered_map<unsigned int, unsigned int> codeMapOfNewChar;
     findNewCharacters(utf32Text, codeMapOfNewChar);
