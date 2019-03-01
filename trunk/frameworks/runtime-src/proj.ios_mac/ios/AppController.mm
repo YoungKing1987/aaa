@@ -33,6 +33,7 @@
 #import "passport.h"
 #import "FBSDKCoreKit/FBSDKCoreKit.h"
 #import "LuaObjectCBridge.h"
+#import "Reachability.h"
 using namespace cocos2d;
 @implementation AppController
 {
@@ -111,6 +112,16 @@ static AppController* s_sharedAppController;
 +(void) registerScriptHandler:(NSDictionary *)dict
 {
     [[LuaObjectCBridge getInstance] setScriptHandler:[[dict objectForKey:@"scriptHandler"] intValue]];
+}
+
++(BOOL) checkIsWifi
+{
+    Reachability *reach = [Reachability reachabilityForInternetConnection];
+    NetworkStatus netStatus = [reach currentReachabilityStatus];
+    if (netStatus == ReachableViaWiFi) { // 有wifi
+        return YES;
+    }
+    return NO;
 }
 
 +(void)onLogin{
