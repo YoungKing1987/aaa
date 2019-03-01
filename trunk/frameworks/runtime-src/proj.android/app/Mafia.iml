@@ -63,9 +63,6 @@
     <content url="file://$MODULE_DIR$/../../../cocos2d-x/cocos/deprecated">
       <sourceFolder url="file://$MODULE_DIR$/../../../cocos2d-x/cocos/deprecated" isTestSource="false" />
     </content>
-    <content url="file://$MODULE_DIR$/../../../cocos2d-x/cocos/editor-support/cocosbuilder">
-      <sourceFolder url="file://$MODULE_DIR$/../../../cocos2d-x/cocos/editor-support/cocosbuilder" isTestSource="false" />
-    </content>
     <content url="file://$MODULE_DIR$/../../../cocos2d-x/cocos/editor-support/cocostudio">
       <sourceFolder url="file://$MODULE_DIR$/../../../cocos2d-x/cocos/editor-support/cocostudio" isTestSource="false" />
     </content>
@@ -174,12 +171,6 @@
     <content url="file://$MODULE_DIR$/../../../cocos2d-x/cocos/network">
       <sourceFolder url="file://$MODULE_DIR$/../../../cocos2d-x/cocos/network" isTestSource="false" />
     </content>
-    <content url="file://$MODULE_DIR$/../../../cocos2d-x/cocos/physics">
-      <sourceFolder url="file://$MODULE_DIR$/../../../cocos2d-x/cocos/physics" isTestSource="false" />
-    </content>
-    <content url="file://$MODULE_DIR$/../../../cocos2d-x/cocos/physics3d">
-      <sourceFolder url="file://$MODULE_DIR$/../../../cocos2d-x/cocos/physics3d" isTestSource="false" />
-    </content>
     <content url="file://$MODULE_DIR$/../../../cocos2d-x/cocos/platform">
       <sourceFolder url="file://$MODULE_DIR$/../../../cocos2d-x/cocos/platform" isTestSource="false" />
     </content>
@@ -207,9 +198,6 @@
     <content url="file://$MODULE_DIR$/../../../cocos2d-x/cocos/scripting/lua-bindings/manual/cocos2d">
       <sourceFolder url="file://$MODULE_DIR$/../../../cocos2d-x/cocos/scripting/lua-bindings/manual/cocos2d" isTestSource="false" />
     </content>
-    <content url="file://$MODULE_DIR$/../../../cocos2d-x/cocos/scripting/lua-bindings/manual/cocosbuilder">
-      <sourceFolder url="file://$MODULE_DIR$/../../../cocos2d-x/cocos/scripting/lua-bindings/manual/cocosbuilder" isTestSource="false" />
-    </content>
     <content url="file://$MODULE_DIR$/../../../cocos2d-x/cocos/scripting/lua-bindings/manual/cocosdenshion">
       <sourceFolder url="file://$MODULE_DIR$/../../../cocos2d-x/cocos/scripting/lua-bindings/manual/cocosdenshion" isTestSource="false" />
     </content>
@@ -227,9 +215,6 @@
     </content>
     <content url="file://$MODULE_DIR$/../../../cocos2d-x/cocos/scripting/lua-bindings/manual/network">
       <sourceFolder url="file://$MODULE_DIR$/../../../cocos2d-x/cocos/scripting/lua-bindings/manual/network" isTestSource="false" />
-    </content>
-    <content url="file://$MODULE_DIR$/../../../cocos2d-x/cocos/scripting/lua-bindings/manual/physics3d">
-      <sourceFolder url="file://$MODULE_DIR$/../../../cocos2d-x/cocos/scripting/lua-bindings/manual/physics3d" isTestSource="false" />
     </content>
     <content url="file://$MODULE_DIR$/../../../cocos2d-x/cocos/scripting/lua-bindings/manual/platform/android">
       <sourceFolder url="file://$MODULE_DIR$/../../../cocos2d-x/cocos/scripting/lua-bindings/manual/platform/android" isTestSource="false" />
@@ -458,14 +443,17 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/incremental-verifier" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/instant-run-apk" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/instant-run-main-apk-res" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/instant-run-resources" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/javaPrecompile" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/jniLibs" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/lint" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/manifest-checker" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/manifests" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/merged-not-compiled-resources" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/prebuild" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/proguard-rules" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/reload-dex" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/res" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/res_stripped" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/resources" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/rs" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/shaders" />
@@ -474,6 +462,7 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/symbols" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/transforms" />
       <excludeFolder url="file://$MODULE_DIR$/build/outputs" />
+      <excludeFolder url="file://$MODULE_DIR$/build/reports" />
       <excludeFolder url="file://$MODULE_DIR$/build/tmp" />
     </content>
     <content url="file://E:/Android/sdk/ndk-bundle/sources/android/cpufeatures">
@@ -481,6 +470,69 @@
     </content>
     <orderEntry type="jdk" jdkName="Android API 28 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Gradle: com.android.support:transition-27.0.2" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.firebase:firebase-messaging-17.3.4" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-tasks-16.0.1" level="project" />
+    <orderEntry type="library" name="Gradle: com.android.support:cardview-v7-27.0.2" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.firebase:firebase-core-16.0.6" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-measurement-base-16.0.5" level="project" />
+    <orderEntry type="library" name="Gradle: com.android.support:animated-vector-drawable-27.0.2" level="project" />
+    <orderEntry type="library" name="Gradle: com.android.support:support-compat-27.0.2" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.firebase:firebase-analytics-16.0.6" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.firebase:firebase-common-16.0.3" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.zxing:core:3.3.0@jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.squareup:javawriter:2.1.1@jar" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.firebase:firebase-measurement-connector-impl-17.0.4" level="project" />
+    <orderEntry type="library" name="Gradle: com.android.support:support-vector-drawable-27.0.2" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-auth-api-phone-16.0.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-basement-16.0.1" level="project" />
+    <orderEntry type="library" name="Gradle: com.android.support:support-core-utils-27.0.2" level="project" />
+    <orderEntry type="library" name="Gradle: com.android.support.constraint:constraint-layout-1.1.3" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-base-16.0.1" level="project" />
+    <orderEntry type="library" name="Gradle: com.facebook.android:facebook-login-4.40.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: javax.inject:javax.inject:1@jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.android.support.test:monitor-1.0.2" level="project" />
+    <orderEntry type="library" name="Gradle: com.facebook.android:facebook-core-4.40.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-auth-base-16.0.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-auth-16.0.1" level="project" />
+    <orderEntry type="library" name="Gradle: com.android.billingclient:billing-1.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.android.support.constraint:constraint-layout-solver:1.1.3@jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: net.sf.kxml:kxml2:2.3.0@jar" level="project" />
+    <orderEntry type="library" name="Gradle: __local_aars__:C.\Users\yj\.gradle\caches\transforms-1\files-1.1\leqipassportsdknew-debug.aar\c8f5f3e2e5c641f4652eeb20bf34f41b:unspecified@jar" level="project" />
+    <orderEntry type="library" name="Gradle: com.android.support:support-v4-27.0.2" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.firebase:firebase-measurement-connector-17.0.1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.android.support.test:runner-1.0.2" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.android.support:support-annotations:27.1.1@jar" level="project" />
+    <orderEntry type="library" name="Gradle: com.parse.bolts:bolts-android:1.4.0@jar" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-ads-identifier-16.0.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.parse.bolts:bolts-tasks:1.4.0@jar" level="project" />
+    <orderEntry type="library" name="Gradle: com.android.support:customtabs-27.0.2" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-measurement-api-16.0.4" level="project" />
+    <orderEntry type="library" name="Gradle: com.parse.bolts:bolts-applinks:1.4.0@jar" level="project" />
+    <orderEntry type="library" name="Gradle: android.arch.core:common:1.0.0@jar" level="project" />
+    <orderEntry type="library" name="Gradle: com.android.support:recyclerview-v7-27.0.2" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-stats-16.0.1" level="project" />
+    <orderEntry type="library" name="Gradle: com.android.support:support-media-compat-27.0.2" level="project" />
+    <orderEntry type="library" name="Gradle: com.android.support:support-core-ui-27.0.2" level="project" />
+    <orderEntry type="library" name="Gradle: com.android.support:support-annotations:27.0.2@jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.google.code.findbugs:jsr305:2.0.1@jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.android.support.test.espresso:espresso-core-3.0.2" level="project" />
+    <orderEntry type="library" name="Gradle: com.android.support:support-fragment-27.0.2" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: junit:junit:4.12@jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.hamcrest:hamcrest-core:1.3@jar" level="project" />
+    <orderEntry type="library" name="Gradle: com.android.support:design-27.0.2" level="project" />
+    <orderEntry type="library" name="Gradle: com.facebook.android:facebook-common-4.40.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.android.support:appcompat-v7-27.0.2" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.android.support.test.espresso:espresso-idling-resource-3.0.2" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.code.gson:gson:2.8.2@jar" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.firebase:firebase-iid-interop-16.0.1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.hamcrest:hamcrest-integration:1.3@jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.hamcrest:hamcrest-library:1.3@jar" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.firebase:firebase-analytics-impl-16.2.4" level="project" />
+    <orderEntry type="library" name="Gradle: android.arch.lifecycle:runtime-1.0.3" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.firebase:firebase-iid-17.0.4" level="project" />
+    <orderEntry type="library" name="Gradle: android.arch.lifecycle:common:1.0.3@jar" level="project" />
     <orderEntry type="module" module-name="libcocos2dx" />
+    <orderEntry type="library" name="Gradle: android-android-28" level="project" />
   </component>
 </module>
