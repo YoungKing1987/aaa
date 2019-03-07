@@ -387,7 +387,7 @@ void TextFieldTTF::setCursorFromPoint(const Vec2 &point, const Camera* camera)
                     auto sprite = getLetter(latterPosition);
                     if (sprite)
                     {
-						rect.size = Size(sprite->getContentSize().width, _lineHeight);
+                        rect.size = sprite->getContentSize();
                         if (isScreenPointInRect(point, camera, sprite->getWorldToNodeTransform(), rect, nullptr))
                         {
                             setCursorPosition(latterPosition);

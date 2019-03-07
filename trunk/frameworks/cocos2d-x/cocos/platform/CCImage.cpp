@@ -1170,19 +1170,10 @@ bool Image::initWithPngData(const unsigned char * data, ssize_t dataLen)
         png_read_end(png_ptr, nullptr);
 
         // premultiplied alpha for RGBA8888
-		if (color_type == PNG_COLOR_TYPE_RGB_ALPHA)
-		{
-			if (PNG_PREMULTIPLIED_ALPHA_ENABLED)
-			{
-				premultipliedAlpha();
-			}
-			else
-			{
-#if CC_ENABLE_PREMULTIPLIED_ALPHA != 0
-				_hasPremultipliedAlpha = true;
-#endif
-			}
-		}
+        if (PNG_PREMULTIPLIED_ALPHA_ENABLED && color_type == PNG_COLOR_TYPE_RGB_ALPHA)
+        {
+            premultipliedAlpha();
+        }
 
         if (row_pointers != nullptr)
         {

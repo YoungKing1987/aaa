@@ -28,6 +28,9 @@
     <Filter Include="manual\cocosdenshion">
       <UniqueIdentifier>{e88a3956-3c72-495d-bef5-75aa1b1e28a7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="manual\cocosbuilder">
+      <UniqueIdentifier>{21be021b-accb-4bf7-9ab5-327661740a5b}</UniqueIdentifier>
+    </Filter>
     <Filter Include="manual\cocostudio">
       <UniqueIdentifier>{7118046c-b71e-4510-b1ea-71916d909276}</UniqueIdentifier>
     </Filter>
@@ -45,6 +48,9 @@
     </Filter>
     <Filter Include="script\cocos2d">
       <UniqueIdentifier>{8778206d-1979-4f87-8354-0207bda9d8d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="script\cocosbuilder">
+      <UniqueIdentifier>{e2b9c502-c4a1-4d73-8111-0301708ad6cb}</UniqueIdentifier>
     </Filter>
     <Filter Include="script\cocosdenshion">
       <UniqueIdentifier>{8a10f092-0016-49ee-a656-91ef2e897598}</UniqueIdentifier>
@@ -66,6 +72,9 @@
     </Filter>
     <Filter Include="manual\audioengine">
       <UniqueIdentifier>{08e7d51a-6f8a-4e54-8abe-a86101be8dad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="manual\physics3d">
+      <UniqueIdentifier>{3934b26e-18b0-465a-a89e-69a3417d107e}</UniqueIdentifier>
     </Filter>
     <Filter Include="manual\navmesh">
       <UniqueIdentifier>{fa8be49e-8b79-4dc5-8f28-febde1347eda}</UniqueIdentifier>
@@ -144,6 +153,9 @@
     <ClCompile Include="..\auto\lua_cocos2dx_3d_auto.cpp">
       <Filter>auto</Filter>
     </ClCompile>
+    <ClCompile Include="..\auto\lua_cocos2dx_cocosbuilder_auto.cpp">
+      <Filter>auto</Filter>
+    </ClCompile>
     <ClCompile Include="..\auto\lua_cocos2dx_cocosdenshion_auto.cpp">
       <Filter>auto</Filter>
     </ClCompile>
@@ -167,6 +179,12 @@
     </ClCompile>
     <ClCompile Include="..\manual\cocosdenshion\lua_cocos2dx_cocosdenshion_manual.cpp">
       <Filter>manual\cocosdenshion</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\cocosbuilder\CCBProxy.cpp">
+      <Filter>manual\cocosbuilder</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\cocosbuilder\lua_cocos2dx_cocosbuilder_manual.cpp">
+      <Filter>manual\cocosbuilder</Filter>
     </ClCompile>
     <ClCompile Include="..\manual\cocostudio\lua_cocos2dx_coco_studio_manual.cpp">
       <Filter>manual\cocostudio</Filter>
@@ -267,6 +285,9 @@
     <ClCompile Include="..\auto\lua_cocos2dx_physics3d_auto.cpp">
       <Filter>auto</Filter>
     </ClCompile>
+    <ClCompile Include="..\manual\physics3d\lua_cocos2dx_physics3d_manual.cpp">
+      <Filter>manual\physics3d</Filter>
+    </ClCompile>
     <ClCompile Include="..\auto\lua_cocos2dx_navmesh_auto.cpp">
       <Filter>auto</Filter>
     </ClCompile>
@@ -359,6 +380,9 @@
     <ClInclude Include="..\auto\lua_cocos2dx_3d_auto.hpp">
       <Filter>auto</Filter>
     </ClInclude>
+    <ClInclude Include="..\auto\lua_cocos2dx_cocosbuilder_auto.hpp">
+      <Filter>auto</Filter>
+    </ClInclude>
     <ClInclude Include="..\auto\lua_cocos2dx_cocosdenshion_auto.hpp">
       <Filter>auto</Filter>
     </ClInclude>
@@ -382,6 +406,12 @@
     </ClInclude>
     <ClInclude Include="..\manual\cocosdenshion\lua_cocos2dx_cocosdenshion_manual.h">
       <Filter>manual\cocosdenshion</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\cocosbuilder\CCBProxy.h">
+      <Filter>manual\cocosbuilder</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\cocosbuilder\lua_cocos2dx_cocosbuilder_manual.h">
+      <Filter>manual\cocosbuilder</Filter>
     </ClInclude>
     <ClInclude Include="..\manual\cocostudio\lua_cocos2dx_coco_studio_manual.hpp">
       <Filter>manual\cocostudio</Filter>
@@ -485,6 +515,9 @@
     <ClInclude Include="..\auto\lua_cocos2dx_physics3d_auto.hpp">
       <Filter>auto</Filter>
     </ClInclude>
+    <ClInclude Include="..\manual\physics3d\lua_cocos2dx_physics3d_manual.h">
+      <Filter>manual\physics3d</Filter>
+    </ClInclude>
     <ClInclude Include="..\auto\lua_cocos2dx_navmesh_auto.hpp">
       <Filter>auto</Filter>
     </ClInclude>
@@ -505,6 +538,12 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\script\CCBReaderLoad.lua">
+      <Filter>script\cocosbuilder</Filter>
+    </None>
+    <None Include="..\script\DeprecatedCocosBuilderClass.lua">
+      <Filter>script\cocosbuilder</Filter>
+    </None>
     <None Include="..\script\DeprecatedCocosDenshionClass.lua">
       <Filter>script\cocosdenshion</Filter>
     </None>

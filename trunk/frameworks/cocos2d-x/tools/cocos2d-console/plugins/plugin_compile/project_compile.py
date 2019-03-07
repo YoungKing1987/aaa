@@ -545,7 +545,7 @@ class CCPluginCompile(cocos.CCPlugin):
     def check_ios_mac_build_depends(self):
         version = cocos.get_xcode_version()
 
-        if cocos.version_compare(version, "<=", 5):
+        if version <= '5':
             message = MultiLanguage.get_string('COMPILE_ERROR_UPDATE_XCODE')
             raise cocos.CCPluginError(message, cocos.CCPluginError.ERROR_TOOLS_NOT_FOUND)
 
@@ -1238,16 +1238,15 @@ class CCPluginCompile(cocos.CCPlugin):
                 shutil.copy(file_path, output_dir)
 
         # copy lua files & res
-        res_path = os.path.join(output_dir, "Resources")
-        self._copy_resources(res_path)
+        self._copy_resources(output_dir)
 
         # check the project config & compile the script files
         if self._project._is_js_project():
-            self.compile_js_scripts(res_path, res_path)
+            self.compile_js_scripts(output_dir, output_dir)
 
         if self._project._is_lua_project():
             # windows only support 32-bit bytecode
-            self.compile_lua_scripts(res_path, res_path, False)
+            self.compile_lua_scripts(output_dir, output_dir, False)
 
         self.run_root = output_dir
 

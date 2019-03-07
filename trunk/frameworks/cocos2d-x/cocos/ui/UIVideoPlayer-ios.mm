@@ -51,10 +51,6 @@ using namespace cocos2d::experimental::ui;
 - (void) setKeepRatioEnabled:(BOOL) enabled;
 - (void) setFullScreenEnabled:(BOOL) enabled;
 - (BOOL) isFullScreenEnabled;
-- (void) setRepeatMode:(MPMovieRepeatMode)repeatMode;
-- (void) setControlStyle:(MPMovieControlStyle)controlStyle;
-- (void) setUserInteractionEnabled:(BOOL)userInteractionEnabled;
-
 
 -(id) init:(void*) videoPlayer;
 
@@ -71,9 +67,7 @@ using namespace cocos2d::experimental::ui;
     int _width;
     int _height;
     bool _keepRatioEnabled;
-    MPMovieRepeatMode _repeatMode;
-    MPMovieControlStyle _controlStyle;
-    BOOL _userInteractionEnabled;
+
     VideoPlayer* _videoPlayer;
 }
 
@@ -81,11 +75,6 @@ using namespace cocos2d::experimental::ui;
 {
     if (self = [super init]) {
         self.moviePlayer = nullptr;
-        
-        _repeatMode = MPMovieRepeatModeNone;
-        _controlStyle = MPMovieControlStyleEmbedded;
-        _userInteractionEnabled = YES;
-        
         _videoPlayer = (VideoPlayer*)videoPlayer;
         _keepRatioEnabled = false;
     }
@@ -134,31 +123,6 @@ using namespace cocos2d::experimental::ui;
     return false;
 }
 
-
--(void) setControlStyle:(MPMovieControlStyle)controlStyle
-{
-    _controlStyle = controlStyle;
-    if (self.moviePlayer != nullptr) {
-        self.moviePlayer.controlStyle = _controlStyle;
-    }
-}
-
--(void) setRepeatMode:(MPMovieRepeatMode)repeatMode
-{
-    _repeatMode = repeatMode;
-    if (self.moviePlayer != nullptr) {
-        self.moviePlayer.repeatMode = _repeatMode;
-    }
-}
-
--(void) setUserInteractionEnabled:(BOOL)userInteractionEnabled
-{
-    _userInteractionEnabled = userInteractionEnabled;
-    if (self.moviePlayer != nullptr) {
-        self.moviePlayer.view.userInteractionEnabled = _userInteractionEnabled;
-    }
-}
-
 -(void) setURL:(int)videoSource :(std::string &)videoUrl
 {
     if (self.moviePlayer != nullptr) {
@@ -179,17 +143,14 @@ using namespace cocos2d::experimental::ui;
         self.moviePlayer.movieSourceType = MPMovieSourceTypeFile;
     }
     self.moviePlayer.allowsAirPlay = false;
-    
-    self.moviePlayer.controlStyle = _controlStyle;
-    self.moviePlayer.repeatMode = _repeatMode;
+    self.moviePlayer.controlStyle = MPMovieControlStyleEmbedded;
+    self.moviePlayer.view.userInteractionEnabled = true;
 
     auto clearColor = [UIColor clearColor];
     self.moviePlayer.backgroundView.backgroundColor = clearColor;
     self.moviePlayer.view.backgroundColor = clearColor;
-    self.moviePlayer.view.userInteractionEnabled = _userInteractionEnabled;
     for (UIView * subView in self.moviePlayer.view.subviews) {
         subView.backgroundColor = clearColor;
-        subView.userInteractionEnabled = _userInteractionEnabled;
     }
 
     if (_keepRatioEnabled) {
@@ -272,8 +233,6 @@ using namespace cocos2d::experimental::ui;
     if (self.moviePlayer != NULL) {
         [self.moviePlayer.view setFrame:CGRectMake(_left, _top, _width, _height)];
         [self.moviePlayer play];
-        self.moviePlayer.view.userInteractionEnabled = _userInteractionEnabled;
-        self.moviePlayer.repeatMode = _repeatMode;
     }
 }
 
@@ -311,9 +270,6 @@ VideoPlayer::VideoPlayer()
 , _keepAspectRatioEnabled(false)
 , _videoPlayerIndex(-1)
 , _eventCallback(nullptr)
-, _isLooping(false)
-, _isUserInputEnabled(true)
-, _styleType(StyleType::DEFAULT)
 {
     _videoView = [[UIVideoViewWrapperIos alloc] init:this];
 
@@ -343,33 +299,6 @@ void VideoPlayer::setURL(const std::string& videoUrl)
     _videoURL = videoUrl;
     _videoSource = VideoPlayer::Source::URL;
     [((UIVideoViewWrapperIos*)_videoView) setURL:(int)_videoSource :_videoURL];
-}
-
-void VideoPlayer::setLooping(bool looping)
-{
-    _isLooping = looping;
-    [((UIVideoViewWrapperIos*)_videoView) setRepeatMode:_isLooping ? MPMovieRepeatModeOne : MPMovieRepeatModeNone];
-}
-
-void VideoPlayer::setUserInputEnabled(bool enableInput)
-{
-    _isUserInputEnabled = enableInput;
-    [((UIVideoViewWrapperIos*)_videoView) setUserInteractionEnabled:enableInput];
-}
-
-void VideoPlayer::setStyle(StyleType style)
-{
-    _styleType = style;
-
-    switch (style) {
-        case StyleType::DEFAULT:
-            [((UIVideoViewWrapperIos*)_videoView) setControlStyle:MPMovieControlStyleEmbedded];
-            break;
-            
-        case StyleType::NONE:
-            [((UIVideoViewWrapperIos*)_videoView) setControlStyle:MPMovieControlStyleNone];
-            break;
-    }
 }
 
 void VideoPlayer::draw(Renderer* renderer, const Mat4 &transform, uint32_t flags)
@@ -474,16 +403,6 @@ bool VideoPlayer::isPlaying() const
     return _isPlaying;
 }
 
-bool VideoPlayer::isLooping() const
-{
-    return _isLooping;
-}
-
-bool VideoPlayer::isUserInputEnabled() const
-{
-    return _isUserInputEnabled;
-}
-
 void VideoPlayer::setVisible(bool visible)
 {
     cocos2d::ui::Widget::setVisible(visible);
@@ -543,9 +462,6 @@ void VideoPlayer::copySpecialProperties(Widget *widget)
     if (videoPlayer)
     {
         _isPlaying = videoPlayer->_isPlaying;
-        _isLooping = videoPlayer->_isLooping;
-        _isUserInputEnabled = videoPlayer->_isUserInputEnabled;
-        _styleType = videoPlayer->_styleType;
         _fullScreenEnabled = videoPlayer->_fullScreenEnabled;
         _fullScreenDirty = videoPlayer->_fullScreenDirty;
         _videoURL = videoPlayer->_videoURL;
