@@ -272,6 +272,12 @@ public:
 
     bool hasVisibleParents() const;
 	void stopScrolling();
+
+	//add by hhz
+	//触摸点击的时候 是否在最上面
+	bool isInTopTouchBegan;
+	void animatedScrollEnd(Node* node);
+	Vec2 movePos;
 protected:
     /**
      * Relocates the container at the proper offset, in bounds of max/min offsets.

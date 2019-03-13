@@ -276,7 +276,7 @@ public:
 	int getMode();
 	void setMode(int mode);
 
-	//virtual void scrollViewDidBounceToTop(ScrollView* view) override;
+	virtual void scrollViewDidBounceToTop(ScrollView* view) override;
 	
     virtual bool onTouchBegan(Touch *pTouch, Event *pEvent) override;
     virtual void onTouchMoved(Touch *pTouch, Event *pEvent) override;

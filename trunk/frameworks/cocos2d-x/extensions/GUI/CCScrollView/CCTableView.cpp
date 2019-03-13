@@ -604,13 +604,13 @@ void TableView::scrollViewDidScroll(ScrollView* /*view*/)
 }
 
 //add by hhz
-//void TableView::scrollViewDidBounceToTop(ScrollView* /*view*/)
-//{
-//	if (_tableViewDelegate != nullptr) {
-//		_tableViewDelegate->scrollViewDidBounceToTop(this);
-//	}
-//}
-//
+void TableView::scrollViewDidBounceToTop(ScrollView* /*view*/)
+{
+	if (_tableViewDelegate != nullptr) {
+		_tableViewDelegate->scrollViewDidBounceToTop(this);
+	}
+}
+
 void TableView::onTouchEnded(Touch *pTouch, Event *pEvent)
 {
     if (!this->isVisible()) {
