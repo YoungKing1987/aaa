@@ -222,7 +222,7 @@ void ScrollView::setContentOffset(Vec2 offset, bool animated/* = false*/)
 {
     if (animated)
     { //animate scrolling
-        this->setContentOffsetInDuration(offset, BOUNCE_DURATION);
+        this->setContentOffsetInDuration(offset, BOUNCE_DURATION,2);
     } 
     else
     { //set the container position directly
@@ -244,7 +244,7 @@ void ScrollView::setContentOffset(Vec2 offset, bool animated/* = false*/)
     }
 }
 
-void ScrollView::setContentOffsetInDuration(Vec2 offset, float dt)
+void ScrollView::setContentOffsetInDuration(Vec2 offset, float dt,int mode)
 {
     FiniteTimeAction *scroll, *expire;
     
@@ -258,30 +258,52 @@ void ScrollView::setContentOffsetInDuration(Vec2 offset, float dt)
 	movePos.x = offset.x - _container->getPosition().x;
 	movePos.y = offset.y - _container->getPosition().y;
 	//add by hhz
-	auto callback = CallFuncN::create(CC_CALLBACK_1(ScrollView::animatedScrollEnd, this));
-    _animatedScrollAction = _container->runAction(Sequence::create(scroll, expire, callback,nullptr));
-    _animatedScrollAction->retain();
-    this->schedule(CC_SCHEDULE_SELECTOR(ScrollView::performedAnimatedScroll));
+	//mode-1 普通调用  2-由回弹调用
+	if (mode == 1)
+	{
+		_animatedScrollAction = _container->runAction(Sequence::create(scroll, expire, nullptr));
+		_animatedScrollAction->retain();
+		this->schedule(CC_SCHEDULE_SELECTOR(ScrollView::performedAnimatedScroll));
+	}
+	else
+	{
+		auto callback = CallFuncN::create(CC_CALLBACK_1(ScrollView::animatedScrollEnd, this));
+		_animatedScrollAction = _container->runAction(Sequence::create(scroll, expire, callback, nullptr));
+		_animatedScrollAction->retain();
+		this->schedule(CC_SCHEDULE_SELECTOR(ScrollView::performedAnimatedScroll));
+	}
 }	
 
 //add by hhz
 void ScrollView::animatedScrollEnd(Node * /*node*/)
 {
 	CCLOG("animatedScrollEnd log1 movePos.y :%f", movePos.y);
-	if (isInTopTouchBegan)
+	//if (isInTopTouchBegan)
+	//{
+	//	float pos = _container->getPosition().y;
+	//	if (pos == minContainerOffset().y && movePos.y > 30)//30到时候导出到lua里，否则改数据需要修改底层
+	//	{
+	//		//isInTopTouchBegan = true;
+	//		CCLOG("animatedScrollEnd 执行回弹事件");
+	//		if (_delegate != nullptr)
+	//		{
+	//			_delegate->scrollViewDidBounceToTop(this);
+	//		}
+	//		isInTopTouchBegan = false;
+	//		movePos = Vec2(0, 0);
+	//	}
+	//}
+	float pos = _container->getPosition().y;
+	if (pos == minContainerOffset().y && movePos.y > 10)//30到时候导出到lua里，否则改数据需要修改底层
 	{
-		float pos = _container->getPosition().y;
-		if (pos == minContainerOffset().y && movePos.y > 30)//30到时候导出到lua里，否则改数据需要修改底层
+		//isInTopTouchBegan = true;
+		CCLOG("animatedScrollEnd 执行回弹事件");
+		if (_delegate != nullptr)
 		{
-			//isInTopTouchBegan = true;
-			CCLOG("animatedScrollEnd 执行回弹事件");
-			if (_delegate != nullptr)
-			{
-				_delegate->scrollViewDidBounceToTop(this);
-			}
-			isInTopTouchBegan = false;
-			movePos = Vec2(0, 0);
+			_delegate->scrollViewDidBounceToTop(this);
 		}
+		isInTopTouchBegan = false;
+		movePos = Vec2(0, 0);
 	}
 }
 
