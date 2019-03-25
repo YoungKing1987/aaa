@@ -305,6 +305,17 @@ void ScrollView::animatedScrollEnd(Node * /*node*/)
 		isInTopTouchBegan = false;
 		movePos = Vec2(0, 0);
 	}
+	if (pos == 0 && movePos.y < -10)//30到时候导出到lua里，否则改数据需要修改底层
+	{
+		//isInTopTouchBegan = true;
+		CCLOG("animatedScrollEnd 执行回弹事件");
+		if (_delegate != nullptr)
+		{
+			_delegate->scrollViewDidBounceToBottom(this);
+		}
+		isInTopTouchBegan = false;
+		movePos = Vec2(0, 0);
+	}
 }
 
 void ScrollView::stopAnimatedContentOffset() {

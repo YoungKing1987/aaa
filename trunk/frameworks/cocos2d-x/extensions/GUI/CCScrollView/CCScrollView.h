@@ -63,6 +63,8 @@ public:
 
 	//add by hhz
 	virtual void scrollViewDidBounceToTop(ScrollView* view) {};
+	//add by hhz
+	virtual void scrollViewDidBounceToBottom(ScrollView* view) {};
 };
 
 

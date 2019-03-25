@@ -83,6 +83,20 @@ public:
 			}
 		}
 	}
+
+	virtual void scrollViewDidBounceToBottom(ScrollView* view) override
+	{
+		if (nullptr != view)
+		{
+			int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)view, ScriptHandlerMgr::HandlerType::SCROLLVIEW_BOUNCETOBOTTOM);
+			if (0 != handler)
+			{
+				CommonScriptData data(handler, "");
+				ScriptEvent event(kCommonEvent, (void*)&data);
+				LuaEngine::getInstance()->sendEvent(&event);
+			}
+		}
+	}
 };
 
 static int tolua_cocos2dx_ScrollView_setDelegate(lua_State* tolua_S)
@@ -536,6 +550,20 @@ public:
 				LuaTableViewEventData eventData;
 				BasicScriptData data(view, &eventData);
 				LuaEngine::getInstance()->handleEvent(ScriptHandlerMgr::HandlerType::SCROLLVIEW_BOUNCETOTOP, (void*)&data);
+			}
+		}
+	}
+
+	virtual void scrollViewDidBounceToBottom(ScrollView* view) override
+	{
+		if (nullptr != view)
+		{
+			int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)view, ScriptHandlerMgr::HandlerType::SCROLLVIEW_BOUNCETOBOTTOM);
+			if (0 != handler)
+			{
+				LuaTableViewEventData eventData;
+				BasicScriptData data(view, &eventData);
+				LuaEngine::getInstance()->handleEvent(ScriptHandlerMgr::HandlerType::SCROLLVIEW_BOUNCETOBOTTOM, (void*)&data);
 			}
 		}
 	}

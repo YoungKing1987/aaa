@@ -611,6 +611,13 @@ void TableView::scrollViewDidBounceToTop(ScrollView* /*view*/)
 	}
 }
 
+void TableView::scrollViewDidBounceToBottom(ScrollView* /*view*/)
+{
+	if (_tableViewDelegate != nullptr) {
+		_tableViewDelegate->scrollViewDidBounceToBottom(this);
+	}
+}
+
 void TableView::onTouchEnded(Touch *pTouch, Event *pEvent)
 {
     if (!this->isVisible()) {
