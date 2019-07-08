@@ -65,10 +65,14 @@ import android.os.Build;
 import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
 
+import org.cocos2dx.lib.Cocos2dxLuaJavaBridge;
+
 public class AppActivity extends Cocos2dxActivity implements
-        GoogleApiClient.OnConnectionFailedListener,GoogleLogin.GoogleSignListener,leqipass.LeqiLoginBack,FaceBookLogin.FacebookListener
+        GoogleApiClient.OnConnectionFailedListener,
+        GoogleLogin.GoogleSignListener,leqipass.LeqiLoginBack,FaceBookLogin.FacebookListener
 {
-    public leqipass tmp;
+    public static leqipass tmp;
+    public static int luaFuncCallback = 0;
     public GoogleLogin googleLogin;
     public FaceBookLogin faceBookLogin;
     public Thread thread_ =null;
@@ -97,11 +101,19 @@ public class AppActivity extends Cocos2dxActivity implements
         }
         // DO OTHER INITIALIZATION BELOW
         tmp =leqipass.shareInstance();
-        tmp.init(this, "https://account-mafia.5stargame.com/api/","");
+        tmp.init(this, "https://account-mafia.5stargame.com/api/","","");
         tmp.setLeqiLoginBack(this);
 
-        tmp.loginByDeviceID();
+        //tmp.loginByDeviceID();
     }
+
+    public static void callJavaMethod(final int luaFunc){
+        AppActivity.luaFuncCallback = luaFunc;
+        AppActivity.tmp.loginByDeviceID();
+        Cocos2dxLuaJavaBridge.retainLuaFunction(luaFunc);
+    }
+
+
 
     private class MyOnStartSetupFinishedListener implements GoogleBillingUtil.OnStartSetupFinishedListener
     {
@@ -180,8 +192,27 @@ public class AppActivity extends Cocos2dxActivity implements
     //平台返回
     @Override
     public  void back_from_pass(JSONObject json) {
+        String spro_id = json.toString();
         Log.i("hkl", "qwe收到错误="+json.toString());
         Log.i("hkl", "qwe收到错误11="+json.optString("data").toString());
+        toLuaFunC(luaFuncCallback,spro_id);
+      // Cocos2dxLuaJavaBridge.callLuaFunctionWithString(1,"fslkjfalkdfjsldkj");
+    }
+
+    public void toLuaFunC(final int funC, final String msg)
+    {
+        if (-1 != funC && null != this)
+        {
+            this.runOnGLThread(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    Cocos2dxLuaJavaBridge.callLuaFunctionWithString(funC,msg);
+                    //Cocos2dxLuaJavaBridge.releaseLuaFunction(funC);
+                }
+            });
+        }
     }
 
 
@@ -254,7 +285,7 @@ public class AppActivity extends Cocos2dxActivity implements
             tmp.Binding(1002);
         }
         else if(requestCode==1003){ //切换账号
-            tmp.exChange(1003);
+           // tmp.exChange(1003);
         }
     }
     @Override
@@ -304,7 +335,7 @@ public class AppActivity extends Cocos2dxActivity implements
             tmp.Binding(3001);
         }
         else if(requestCode==3003){
-            tmp.exChange(3003);
+            tmp.exChange(3003,"0");
         }
     }
 
