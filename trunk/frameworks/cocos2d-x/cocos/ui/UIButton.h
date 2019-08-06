@@ -322,6 +322,12 @@ CC_CONSTRUCTOR_ACCESS:
 
     virtual Size getNormalTextureSize() const;
 
+
+	//add by hhz
+	Node* getNormalRenderer();
+	Node* getClickedRenderer();
+	Node* getDisabledRenderer();
+
 protected:
     virtual void initRenderer() override;
     virtual void onPressStateChangedToNormal() override;

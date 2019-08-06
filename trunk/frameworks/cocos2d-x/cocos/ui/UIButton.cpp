@@ -676,6 +676,24 @@ Node* Button::getVirtualRenderer()
     }
 }
 
+//add by hhz
+Node* Button::getNormalRenderer()
+{
+	return _buttonNormalRenderer;
+}
+
+//add by hhz
+Node* Button::getClickedRenderer()
+{
+	return _buttonClickedRenderer;
+}
+
+//add by hhz
+Node* Button::getDisabledRenderer()
+{
+	return _buttonDisabledRenderer;
+}
+
 void Button::normalTextureScaleChangedWithSize()
 {
     _buttonNormalRenderer->setPreferredSize(_contentSize);
