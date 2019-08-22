@@ -28,10 +28,10 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#include <spine/Skeleton.h>
+#include "spine/Skeleton.h"
 #include <stdlib.h>
 #include <string.h>
-#include <spine/extension.h>
+#include "spine/extension.h"
 
 typedef enum {
 	SP_UPDATE_BONE, SP_UPDATE_IK_CONSTRAINT, SP_UPDATE_PATH_CONSTRAINT, SP_UPDATE_TRANSFORM_CONSTRAINT
@@ -351,14 +351,14 @@ void spSkeleton_updateCache (spSkeleton* self) {
 	constraintCount = ikCount + transformCount + pathCount;
 
 	i = 0;
-	continue_outer:
+	outer:
 	for (; i < constraintCount; i++) {
 		for (ii = 0; ii < ikCount; ii++) {
 			spIkConstraint* ikConstraint = ikConstraints[ii];
 			if (ikConstraint->data->order == i) {
 				_sortIkConstraint(internal, ikConstraint);
 				i++;
-				goto continue_outer;
+				goto outer;
 			}
 		}
 
@@ -367,7 +367,7 @@ void spSkeleton_updateCache (spSkeleton* self) {
 			if (transformConstraint->data->order == i) {
 				_sortTransformConstraint(internal, transformConstraint);
 				i++;
-				goto continue_outer;
+				goto outer;
 			}
 		}
 
@@ -376,7 +376,7 @@ void spSkeleton_updateCache (spSkeleton* self) {
 			if (pathConstraint->data->order == i) {
 				_sortPathConstraint(internal, pathConstraint);
 				i++;
-				goto continue_outer;
+				goto outer;
 			}
 		}
 	}

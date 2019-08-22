@@ -162,9 +162,10 @@ public:
      @param    isToRGB        whether the image is saved as RGB format.
      */
     bool saveToFile(const std::string &filename, bool isToRGB = true);
+    void premultiplyAlpha();
+    void reversePremultipliedAlpha();
 
 	Color4B getColorByPos(const Vec2 &pos);
-
 protected:
 #if CC_USE_WIC
     bool encodeWithWIC(const std::string& filePath, bool isToRGB, GUID containerFormat);
@@ -185,8 +186,6 @@ protected:
 
     bool saveImageToPNG(const std::string& filePath, bool isToRGB = true);
     bool saveImageToJPG(const std::string& filePath);
-    
-    void premultipliedAlpha();
     
 protected:
     /**

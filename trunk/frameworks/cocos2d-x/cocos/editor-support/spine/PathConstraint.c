@@ -28,9 +28,9 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#include <spine/PathConstraint.h>
-#include <spine/Skeleton.h>
-#include <spine/extension.h>
+#include "spine/PathConstraint.h"
+#include "spine/Skeleton.h"
+#include "spine/extension.h"
 
 #define PATHCONSTRAINT_NONE -1
 #define PATHCONSTRAINT_BEFORE -2
@@ -114,7 +114,7 @@ void spPathConstraint_apply (spPathConstraint* self) {
 			lengths = self->lengths;
 		}
 		for (i = 0, n = spacesCount - 1; i < n;) {
-			spBone *bone = bones[i];
+			spBone* bone = bones[i];
 			setupLength = bone->data->length;
 			if (setupLength < EPSILON) {
 				if (scale) lengths[i] = 0;

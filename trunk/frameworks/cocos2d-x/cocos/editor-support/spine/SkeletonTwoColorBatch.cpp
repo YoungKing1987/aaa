@@ -27,8 +27,8 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
-#include <spine/SkeletonTwoColorBatch.h>
-#include <spine/extension.h>
+#include "spine/SkeletonTwoColorBatch.h"
+#include "spine/extension.h"
 #include <algorithm>
 
 USING_NS_CC;
@@ -57,7 +57,7 @@ void TwoColorTrianglesCommand::init(float globalOrder, GLuint textureID, GLProgr
 	if(_triangles.indexCount % 3 != 0) {
 	int count = _triangles.indexCount;
 		_triangles.indexCount = count / 3 * 3;
-		CCLOGERROR("Resize indexCount from %zd to %zd, size must be multiple times of 3", count, _triangles.indexCount);
+		CCLOGERROR("Resize indexCount from %d to %d, size must be multiple times of 3", count, _triangles.indexCount);
 	}
 	_mv = mv;
 
@@ -91,7 +91,7 @@ void TwoColorTrianglesCommand::generateMaterialID() {
 void TwoColorTrianglesCommand::useMaterial() const {
 	//Set texture
 	GL::bindTexture2D(_textureID);
-
+	
 	if (_alphaTextureID > 0) {
 		// ANDROID ETC1 ALPHA supports.
 		GL::bindTexture2DN(1, _alphaTextureID);
@@ -339,8 +339,8 @@ void SkeletonTwoColorBatch::reset() {
 
 TwoColorTrianglesCommand* SkeletonTwoColorBatch::nextFreeCommand() {
 	if (_commandsPool.size() <= _nextFreeCommand) {
-		unsigned int newSize = _commandsPool.size() * 2 + 1;
-		for (int i = _commandsPool.size();  i < newSize; i++) {
+		size_t newSize = _commandsPool.size() * 2 + 1;
+		for (size_t i = _commandsPool.size();  i < newSize; i++) {
 			_commandsPool.push_back(new TwoColorTrianglesCommand());
 		}
 	}

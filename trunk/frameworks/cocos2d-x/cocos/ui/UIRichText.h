@@ -533,7 +533,7 @@ public:
      * @param isFontElement use attributes of text tag
      * @param handleVisitEnter callback
      */
-    static void setTagDescription(const std::string& tag, bool isFontElement, VisitEnterHandler handleVisitEnter);
+    static void setTagDescription(const std::string& tag, bool isFontElement, const VisitEnterHandler& handleVisitEnter);
 
     /**
      * @brief remove a callback to own tag.
@@ -570,7 +570,7 @@ protected:
                             const Color3B& outlineColor = Color3B::WHITE, int outlineSize = -1,
                             const Color3B& shadowColor = Color3B::BLACK, const Size& shadowOffset = Size(2.0, -2.0), int shadowBlurRadius = 0,
                             const Color3B& glowColor = Color3B::WHITE);
-    void handleImageRenderer(const std::string& filePath, const Color3B& color, GLubyte opacity, int width, int height, const std::string& url);
+    void handleImageRenderer(const std::string& filePath, Widget::TextureResType textureType, const Color3B& color, GLubyte opacity, int width, int height, const std::string& url);
     void handleCustomRenderer(Node* renderer);
     void formatRenderers();
     void addNewLine();

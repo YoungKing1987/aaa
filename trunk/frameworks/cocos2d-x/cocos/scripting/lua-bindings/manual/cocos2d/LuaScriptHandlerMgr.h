@@ -237,7 +237,7 @@ public:
      * @lua NA
      * @js NA
      */
-    ScriptHandlerMgr(void);
+    ScriptHandlerMgr();
     
     /**
      * Destructor.
@@ -245,7 +245,7 @@ public:
      * @lua NA
      * @js NA
      */
-    virtual ~ScriptHandlerMgr(void);
+    virtual ~ScriptHandlerMgr();
     
     /**
      * Get the instance of the ScriptHandlerMgr.
@@ -253,7 +253,7 @@ public:
      * @return the instance of the ScriptHandlerMgr.
      * @js NA
      */
-    static ScriptHandlerMgr* getInstance(void);
+    static ScriptHandlerMgr* getInstance();
     
     /**
      * Destroy the instance of the ScriptHandlerMgr.
@@ -261,7 +261,7 @@ public:
      * @lua NA
      * @js NA
      */
-    static void destroyInstance(void);
+    static void destroyInstance();
     
     /**
      * Construct or update the mapping relationship among c++ Ref object ,HandlerType and the reference index corresponding to the pointer of Lua function.
@@ -320,7 +320,7 @@ public:
     ScriptHandlerMgr::HandlerType addCustomHandler(void* object, int handler);
     
 private:
-    void init(void);
+    void init();
     static ScriptHandlerMgr* _scriptHandlerMgr;
     MapObjectHandlers _mapObjectHandlers;
 };

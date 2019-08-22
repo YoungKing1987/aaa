@@ -61,8 +61,6 @@
 #ifndef SPINE_EXTENSION_H_
 #define SPINE_EXTENSION_H_
 
-#include <spine/dll.h>
-
 /* All allocation uses these. */
 #define MALLOC(TYPE,COUNT) ((TYPE*)_spMalloc(sizeof(TYPE) * (COUNT), __FILE__, __LINE__))
 #define CALLOC(TYPE,COUNT) ((TYPE*)_spCalloc(COUNT, sizeof(TYPE), __FILE__, __LINE__))
@@ -131,18 +129,18 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-#include <spine/Skeleton.h>
-#include <spine/Animation.h>
-#include <spine/Atlas.h>
-#include <spine/AttachmentLoader.h>
-#include <spine/VertexAttachment.h>
-#include <spine/RegionAttachment.h>
-#include <spine/MeshAttachment.h>
-#include <spine/BoundingBoxAttachment.h>
-#include <spine/ClippingAttachment.h>
-#include <spine/PathAttachment.h>
-#include <spine/PointAttachment.h>
-#include <spine/AnimationState.h>
+#include "spine/Skeleton.h"
+#include "spine/Animation.h"
+#include "spine/Atlas.h"
+#include "spine/AttachmentLoader.h"
+#include "spine/VertexAttachment.h"
+#include "spine/RegionAttachment.h"
+#include "spine/MeshAttachment.h"
+#include "spine/BoundingBoxAttachment.h"
+#include "spine/ClippingAttachment.h"
+#include "spine/PathAttachment.h"
+#include "spine/PointAttachment.h"
+#include "spine/AnimationState.h"
 
 #ifdef __cplusplus
 extern "C" {

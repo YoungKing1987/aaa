@@ -28,12 +28,12 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#include <spine/SkeletonRenderer.h>
-#include <spine/extension.h>
-#include <spine/SkeletonBatch.h>
-#include <spine/SkeletonTwoColorBatch.h>
-#include <spine/AttachmentVertices.h>
-#include <spine/Cocos2dAttachmentLoader.h>
+#include "spine/SkeletonRenderer.h"
+#include "spine/extension.h"
+#include "spine/SkeletonBatch.h"
+#include "spine/SkeletonTwoColorBatch.h"
+#include "spine/AttachmentVertices.h"
+#include "spine/Cocos2dAttachmentLoader.h"
 #include <algorithm>
 
 #define INITIAL_WORLD_VERTICES_LENGTH 1000

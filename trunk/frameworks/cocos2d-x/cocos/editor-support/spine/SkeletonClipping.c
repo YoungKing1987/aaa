@@ -28,8 +28,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#include <spine/SkeletonClipping.h>
-#include <spine/extension.h>
+#include "spine/SkeletonClipping.h"
+#include "spine/extension.h"
 
 spSkeletonClipping* spSkeletonClipping_create() {
 	spSkeletonClipping* clipping = CALLOC(spSkeletonClipping, 1);
@@ -220,7 +220,7 @@ void spSkeletonClipping_clipTriangles(spSkeletonClipping* self, float* vertices,
 	spFloatArray_clear(clippedUVs);
 	spUnsignedShortArray_clear(clippedTriangles);
 	i = 0;
-	continue_outer:
+	outer:
 	for (; i < trianglesLength; i += 3) {
 		int p;
 		int vertexOffset = triangles[i] * stride;
@@ -306,7 +306,7 @@ void spSkeletonClipping_clipTriangles(spSkeletonClipping* self, float* vertices,
 				clippedTrianglesItems[s + 2] = (unsigned short)(index + 2);
 				index += 3;
 				i += 3;
-				goto continue_outer;
+				goto outer;
 			}
 		}
 	}

@@ -28,8 +28,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#include <spine/SkeletonBatch.h>
-#include <spine/extension.h>
+#include "spine/SkeletonBatch.h"
+#include "spine/extension.h"
 #include <algorithm>
 
 USING_NS_CC;
@@ -146,8 +146,8 @@ void SkeletonBatch::reset() {
 
 cocos2d::TrianglesCommand* SkeletonBatch::nextFreeCommand() {
 	if (_commandsPool.size() <= _nextFreeCommand) {
-		unsigned int newSize = _commandsPool.size() * 2 + 1;
-		for (int i = _commandsPool.size();  i < newSize; i++) {
+		size_t newSize = _commandsPool.size() * 2 + 1;
+		for (size_t i = _commandsPool.size();  i < newSize; i++) {
 			_commandsPool.push_back(new TrianglesCommand());
 		}
 	}

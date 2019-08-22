@@ -28,8 +28,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#include <spine/Skin.h>
-#include <spine/extension.h>
+#include "spine/Skin.h"
+#include "spine/extension.h"
 
 _Entry* _Entry_create (int slotIndex, const char* name, spAttachment* attachment) {
 	_Entry* self = NEW(_Entry);
@@ -65,7 +65,6 @@ spSkin* spSkin_create (const char* name) {
 
 void spSkin_dispose (spSkin* self) {
 	_Entry* entry = SUB_CAST(_spSkin, self)->entries;
-
 	while (entry) {
 		_Entry* nextEntry = entry->next;
 		_Entry_dispose(entry);

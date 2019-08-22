@@ -72,9 +72,9 @@ public class AppActivity extends Cocos2dxActivity implements
         GoogleLogin.GoogleSignListener,leqipass.LeqiLoginBack,FaceBookLogin.FacebookListener
 {
     public static leqipass tmp;
-    public static int luaFuncCallback = 0;
     public GoogleLogin googleLogin;
     public FaceBookLogin faceBookLogin;
+    public static int useSDK = -1;
     public Thread thread_ =null;
     private GoogleBillingUtil googleBillingUtil =null;
     private MyOnPurchaseFinishedListener mOnPurchaseFinishedListener = new MyOnPurchaseFinishedListener();//购买回调接口
@@ -104,16 +104,29 @@ public class AppActivity extends Cocos2dxActivity implements
         tmp.init(this, "https://account-mafia.5stargame.com/api/","","");
         tmp.setLeqiLoginBack(this);
 
-        //tmp.loginByDeviceID();
+        //
     }
 
-    public static void callJavaMethod(final int luaFunc){
-        AppActivity.luaFuncCallback = luaFunc;
-        AppActivity.tmp.loginByDeviceID();
-        Cocos2dxLuaJavaBridge.retainLuaFunction(luaFunc);
+    public static  void callJavaMethod(final int isUseSDK){
+//        runOnUIThread(new Runnable() {
+//            @Override
+//            public void run() {
+//                Cocos2dxLuaJavaBridge.callLuaFunctionWithString(luaFuncCallback, "success");
+//                Cocos2dxLuaJavaBridge.releaseLuaFunction(luaFuncCallback);
+//            }
+//        });
+        useSDK = isUseSDK;
+//        AppActivity app = (AppActivity)getContext();
+//        app.runOnUiThread(new Runnable()
+//        {
+//            @Override
+//            public void run()
+//            {
+//                tmp.loginByDeviceID();
+//            }
+//        });
+
     }
-
-
 
     private class MyOnStartSetupFinishedListener implements GoogleBillingUtil.OnStartSetupFinishedListener
     {
@@ -195,21 +208,125 @@ public class AppActivity extends Cocos2dxActivity implements
         String spro_id = json.toString();
         Log.i("hkl", "qwe收到错误="+json.toString());
         Log.i("hkl", "qwe收到错误11="+json.optString("data").toString());
-        toLuaFunC(luaFuncCallback,spro_id);
+//        this.runOnGLThread(new Runnable()
+////        {
+////            @Override
+////            public void run()
+////            {
+////                Cocos2dxLuaJavaBridge.callLuaFunctionWithString(luaFuncCallback,spro_id);
+////                //Cocos2dxLuaJavaBridge.releaseLuaFunction(funC);
+////            }
+////        });
+        String action =json.optString("action");
+        if (action.equals("login")){
+            //硬件码登录
+
+            if (json.optString("server_status").equals("99"))
+            {
+                //服务器维护状态  json.optString("notice") 是维护公告
+                Log.i("hkl",json.optString("notice"));
+                return;
+            }
+
+            if (googleLogin == null) {
+                googleLogin = new GoogleLogin(this, this, 1001);
+            }
+            googleLogin.setGoogleSignListener(this);
+
+            if (thread_ != null && thread_.isAlive()) {
+                return;
+            }
+
+            //需要登录GG账号
+            if (googleLogin.googlestatus <=0){
+                return;
+            }
+            thread_ = new Thread() {
+                @Override
+                public void run() {
+                    googleLogin.signIn();
+                }
+            };
+            thread_.start();
+        }
+        else if(action.equals("select")){
+            //进度不一致，选择新进度并提交平台返回
+            //在此需要重新加载游戏（账号已 更换）
+        }
+        else if(action.equals("exchange")){
+            //切换账号
+            //在此需要重新加载游戏（账号已 更换）
+            if (json.optString("account_id").equals(json.optString("account_id_ori"))){
+                //如果切换的账号和当前账号相同，则提示用户，不用重新加载游戏
+                Log.i("hkl","要切换的账号和当前账号相同，结束");
+            }
+            else
+            {
+                Log.i("hkl","此处重新加载游戏进度");
+            }
+
+        }
+        else if(action.equals("binding_gg")){
+            //绑定GG
+            String strcode =json.optString("errcode");
+            if (strcode.equals("0")) { //绑定成功
+                Log.i("hkl", "GG绑定成功");
+            }
+            else if(strcode.equals("20003")){
+                Log.i("hkl", "当前账号已绑定过GG");
+            }
+            else if(strcode.equals("20006")){
+
+            }
+        }
+        else if(action.equals("binding_fb")){
+            //绑定FB
+            String strcode =json.optString("errcode");
+            if (strcode.equals("0")) { //绑定成功
+                Log.i("hkl", "FB绑定成功");
+            }
+            else if(strcode.equals("20002")){
+                Log.i("hkl", "当前账号已绑定过FB");
+            }
+            else if(strcode.equals("20005")){
+                Log.i("hkl", "此FB账号已绑定过其他设备");
+            }
+
+        }
+        else if(action.equals("unbind")){
+            //解除绑定成功
+            //更新绑定设置显示，暂不做其他处理
+        }
+        else if(action.equals("server")){
+            if (json.optString("errcode").equals("0")){
+                //切换服务器成功,程序需要重新登录
+            }
+        }
+        else if(action.equals("version")){
+            Log.i("hkl", json.optString("version"));
+            tmp.loginByDeviceID();
+        }
+        else if(action.equals("getserver")){
+            Log.i("hkl", json.toString());
+        }
+
+        toLuaFunC(useSDK,spro_id);
       // Cocos2dxLuaJavaBridge.callLuaFunctionWithString(1,"fslkjfalkdfjsldkj");
     }
 
-    public void toLuaFunC(final int funC, final String msg)
+    public void toLuaFunC(final int func, final String msg)
     {
-        if (-1 != funC && null != this)
+        if (null != this)
         {
             this.runOnGLThread(new Runnable()
             {
                 @Override
                 public void run()
                 {
-                    Cocos2dxLuaJavaBridge.callLuaFunctionWithString(funC,msg);
+                    Log.i("hkl", "1111111111111111111111111111111");
+                    //int i = Cocos2dxLuaJavaBridge.callLuaGlobalFunctionWithString("hqxpcall_error",msg);
                     //Cocos2dxLuaJavaBridge.releaseLuaFunction(funC);
+                   // Log.i("hkl", "444444111111111111+"+i);
                 }
             });
         }

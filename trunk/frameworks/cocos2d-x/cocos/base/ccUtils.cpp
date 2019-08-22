@@ -43,6 +43,7 @@ THE SOFTWARE.
 #include "platform/CCFileUtils.h"
 #include "2d/CCSprite.h"
 #include "2d/CCRenderTexture.h"
+#include "base/ccUTF8.h"
 
 NS_CC_BEGIN
 
@@ -125,7 +126,7 @@ void onCaptureScreen(const std::function<void(bool, const std::string&)>& afterC
             }
             else
             {
-                CCASSERT(filename.find("/") == std::string::npos, "The existence of a relative path is not guaranteed!");
+                CCASSERT(filename.find('/') == std::string::npos, "The existence of a relative path is not guaranteed!");
                 outputFile = FileUtils::getInstance()->getWritablePath() + filename;
             }
 
@@ -581,22 +582,22 @@ LanguageType getLanguageTypeByISO2(const char* code)
     return ret;
 }
 
-void setBlending(GLenum sfactor, GLenum dfactor)
-{
-    if (sfactor == GL_ONE && dfactor == GL_ZERO)
-    {
-        glDisable(GL_BLEND);
-        RenderState::StateBlock::_defaultState->setBlend(false);
-    }
-    else
-    {
-        glEnable(GL_BLEND);
-        glBlendFunc(sfactor, dfactor);
+std::vector<int> parseIntegerList(const std::string &intsString) {
+    std::vector<int> result;
 
-        RenderState::StateBlock::_defaultState->setBlend(true);
-        RenderState::StateBlock::_defaultState->setBlendSrc((RenderState::Blend)sfactor);
-        RenderState::StateBlock::_defaultState->setBlendDst((RenderState::Blend)dfactor);
+    const char *cStr = intsString.c_str();
+    char *endptr;
+
+    for (long int i = strtol(cStr, &endptr, 10); endptr != cStr; i = strtol(cStr, &endptr, 10)) {
+        if (errno == ERANGE) {
+            errno = 0;
+            CCLOGWARN("%s contains out of range integers", intsString.c_str());
+        }
+        result.push_back(static_cast<int>(i));
+        cStr= endptr;
     }
+
+    return result;
 }
 
 }

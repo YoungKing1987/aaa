@@ -25,10 +25,11 @@
 
 #include "ui/UIRichText.h"
 
-#include <sstream>
-#include <vector>
-#include <locale>
 #include <algorithm>
+#include <locale>
+#include <sstream>
+#include <utility>
+#include <vector>
 
 #include "platform/CCFileUtils.h"
 #include "platform/CCApplication.h"
@@ -50,14 +51,14 @@ class ListenerComponent : public Component
 public:
     static const std::string COMPONENT_NAME;    /*!< component name */
 
-    static ListenerComponent* create(Node* parent, const std::string& url, const RichText::OpenUrlHandler handleOpenUrl = nullptr)
+    static ListenerComponent* create(Node* parent, const std::string& url, const RichText::OpenUrlHandler& handleOpenUrl = nullptr)
     {
         auto component = new (std::nothrow) ListenerComponent(parent, url, handleOpenUrl);
         component->autorelease();
         return component;
     }
 
-    explicit ListenerComponent(Node* parent, const std::string& url, const RichText::OpenUrlHandler handleOpenUrl)
+    explicit ListenerComponent(Node* parent, const std::string& url, const RichText::OpenUrlHandler& handleOpenUrl)
     : _parent(parent)
     , _url(url)
     , _handleOpenUrl(handleOpenUrl)
@@ -346,7 +347,7 @@ public:
     
     void pushBackElement(RichElement* element);
     
-    static void setTagDescription(const std::string& tag, bool isFontElement, RichText::VisitEnterHandler handleVisitEnter);
+    static void setTagDescription(const std::string& tag, bool isFontElement, const RichText::VisitEnterHandler& handleVisitEnter);
     
     static void removeTagDescription(const std::string& tag);
     
@@ -544,7 +545,7 @@ std::string MyXMLVisitor::getFace() const
 {
     for (auto i = _fontElements.rbegin(), iRend = _fontElements.rend(); i != iRend; ++i)
     {
-        if (i->face.size() != 0)
+        if (!i->face.empty())
             return i->face;
     }
     return "fonts/Marker Felt.ttf";
@@ -554,7 +555,7 @@ std::string MyXMLVisitor::getURL() const
 {
     for (auto i = _fontElements.rbegin(), iRend = _fontElements.rend(); i != iRend; ++i)
     {
-        if (i->url.size() != 0)
+        if (!i->url.empty())
             return i->url;
     }
     return "";
@@ -789,7 +790,7 @@ void MyXMLVisitor::textHandler(void* /*ctx*/, const char *str, size_t len)
         flags |= RichElementText::UNDERLINE_FLAG;
     if (strikethrough)
         flags |= RichElementText::STRIKETHROUGH_FLAG;
-    if (url.size() > 0)
+    if (!url.empty())
         flags |= RichElementText::URL_FLAG;
     if (std::get<0>(outline))
         flags |= RichElementText::OUTLINE_FLAG;
@@ -820,7 +821,7 @@ void MyXMLVisitor::pushBackElement(RichElement* element)
     _richText->pushBackElement(element);
 }
 
-void MyXMLVisitor::setTagDescription(const std::string& tag, bool isFontElement, RichText::VisitEnterHandler handleVisitEnter)
+void MyXMLVisitor::setTagDescription(const std::string& tag, bool isFontElement, const RichText::VisitEnterHandler& handleVisitEnter)
 {
     MyXMLVisitor::_tagTables[tag] = {isFontElement, handleVisitEnter};
 }
@@ -1325,7 +1326,7 @@ std::string RichText::stringWithColor4B(const cocos2d::Color4B& color4b)
     return std::string(buf, 9);
 }
 
-void RichText::setTagDescription(const std::string& tag, bool isFontElement, VisitEnterHandler handleVisitEnter)
+void RichText::setTagDescription(const std::string& tag, bool isFontElement, const VisitEnterHandler& handleVisitEnter)
 {
     MyXMLVisitor::setTagDescription(tag, isFontElement, handleVisitEnter);
 }
@@ -1446,7 +1447,6 @@ void RichText::formatText()
 
                 if (elementRenderer)
                 {
-                    
                     elementRenderer->setOpacity(element->_opacity);
                     pushToContainer(elementRenderer);
                 }
@@ -1473,7 +1473,7 @@ void RichText::formatText()
                     case RichElement::Type::IMAGE:
                     {
                         RichElementImage* elmtImage = static_cast<RichElementImage*>(element);
-                        handleImageRenderer(elmtImage->_filePath, elmtImage->_color, elmtImage->_opacity, elmtImage->_width, elmtImage->_height, elmtImage->_url);
+                        handleImageRenderer(elmtImage->_filePath, elmtImage->_textureType, elmtImage->_color, elmtImage->_opacity, elmtImage->_width, elmtImage->_height, elmtImage->_url);
                         break;
                     }
                     case RichElement::Type::CUSTOM:
@@ -1741,9 +1741,14 @@ void RichText::handleTextRenderer(const std::string& text, const std::string& fo
     }
 }
 
-void RichText::handleImageRenderer(const std::string& filePath, const Color3B &/*color*/, GLubyte /*opacity*/, int width, int height, const std::string& url)
+void RichText::handleImageRenderer(const std::string& filePath, Widget::TextureResType textureType, const Color3B &/*color*/, GLubyte /*opacity*/, int width, int height, const std::string& url)
 {
-    Sprite* imageRenderer = Sprite::create(filePath);
+    Sprite* imageRenderer;
+    if (textureType == Widget::TextureResType::LOCAL)
+        imageRenderer = Sprite::create(filePath);
+    else
+        imageRenderer = Sprite::createWithSpriteFrameName(filePath);
+
     if (imageRenderer)
     {
         auto currentSize = imageRenderer->getContentSize();
@@ -1940,7 +1945,7 @@ void RichText::adaptRenderers()
 
 void RichText::pushToContainer(cocos2d::Node *renderer)
 {
-    if (_elementRenders.size() <= 0)
+    if (_elementRenders.empty())
     {
         return;
     }

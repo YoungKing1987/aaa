@@ -53,8 +53,6 @@ SimulatorConfig::SimulatorConfig()
     _screenSizeArray.push_back(SimulatorScreenSize("Android (720x1280)", 720, 1280));
     _screenSizeArray.push_back(SimulatorScreenSize("Android (800x1280)", 800, 1280));
     _screenSizeArray.push_back(SimulatorScreenSize("Android (1080x1920)", 1080, 1920));
-	_screenSizeArray.push_back(SimulatorScreenSize("Note8 (1440x2960)", 1440, 2960));
-	_screenSizeArray.push_back(SimulatorScreenSize("iphoneX (1125x2436)", 1125, 2436));
 }
 
 int SimulatorConfig::getScreenSizeCount() const

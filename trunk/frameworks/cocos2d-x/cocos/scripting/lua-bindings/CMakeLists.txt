@@ -12,6 +12,7 @@ set(lua_bindings_manual_headers
     manual/extension/lua_cocos2dx_extension_manual.h
     manual/LuaBasicConversions.h
     manual/spine/LuaSkeletonAnimation.h
+    manual/platform/ios/CCLuaObjcBridge.h
     manual/network/lua_cocos2dx_network_manual.h
     manual/network/lua_xml_http_request.h
     manual/network/Lua_web_socket.h
@@ -144,13 +145,11 @@ elseif(ANDROID)
         ${lua_bindings_manual_headers}
         auto/lua_cocos2dx_experimental_webview_auto.hpp
         manual/ui/lua_cocos2dx_experimental_webview_manual.hpp
-        manual/platform/android/CCLuaJavaBridge.h
         )
     set(lua_bindings_manual_files
         ${lua_bindings_manual_files}
         auto/lua_cocos2dx_experimental_webview_auto.cpp
         manual/ui/lua_cocos2dx_experimental_webview_manual.cpp
-        manual/platform/android/CCLuaJavaBridge.cpp
         )
 endif()
 
