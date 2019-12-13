@@ -193,7 +193,13 @@ void ScrollView::setTouchEnabled(bool enabled)
     _touchListener = nullptr;
 
     if (enabled)
-    {
+    {	
+		//add by hhz 避免滚动层在moved的状态下调用 setTouchEnabled(true) 导致 _touches 不清空,以至于触摸失效的bug
+		_dragging = false;
+		_touchMoved = false;
+		_touches.clear();
+		//
+
         _touchListener = EventListenerTouchOneByOne::create();
         _touchListener->setSwallowTouches(true);
         _touchListener->onTouchBegan = CC_CALLBACK_2(ScrollView::onTouchBegan, this);
@@ -911,7 +917,7 @@ void ScrollView::onTouchMoved(Touch* touch, Event* /*event*/)
                 newX     = _container->getPosition().x + moveDistance.x;
                 newY     = _container->getPosition().y + moveDistance.y;
 
-                _scrollDistance = moveDistance;
+                _scrollDistance = moveDistance*2;
                 this->setContentOffset(Vec2(newX, newY));
             }
         }
