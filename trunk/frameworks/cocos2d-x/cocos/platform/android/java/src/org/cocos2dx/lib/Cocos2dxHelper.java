@@ -315,7 +315,21 @@ public class Cocos2dxHelper {
     }
 
     public static String getCurrentLanguage() {
-        return Locale.getDefault().getLanguage();
+        String lang = Locale.getDefault().getLanguage();
+        String CountryID = Locale.getDefault().getCountry();
+        if (lang.equals("zh") == true) {
+            //lang = Locale.getDefault().toString();
+            if (CountryID.equals("TW") == true || CountryID.equals("HK") == true)
+                return "zh_TW";
+            else
+                return "zh";
+        } else
+            return lang;
+    }
+
+    public static String getCountry() {
+        String CountryID = Locale.getDefault().getCountry();
+        return CountryID;
     }
     
     public static String getDeviceModel(){
