@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "492807836902-s9b56v95elcpoqjg8v4l74v0uat38uib.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.cocos2dx.Mafia",
+            "certificate_hash": "b948d4350f31bdb76572a79cd199930b3a2514e2"
+          }
+        },
+        {
           "client_id": "492807836902-5t3apkbkfn91abevqsvueqenlvhh14tf.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -22,13 +30,16 @@
       "api_key": [
         {
           "current_key": "AIzaSyDCRx4RS7K-NDaqpgupCNSA59BNfO20xQY"
+        },
+        {
+          "current_key": "AIzaSyCaI9npdM0xwH2VIVirmZ9JTJ_SE_LmzA0"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "492807836902-5t3apkbkfn91abevqsvueqenlvhh14tf.apps.googleusercontent.com",
+              "client_id": "492807836902-8cct5otksft2h7ddd4v68le4spjce05d.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

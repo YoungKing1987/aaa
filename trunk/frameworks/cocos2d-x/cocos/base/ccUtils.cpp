@@ -34,6 +34,7 @@ THE SOFTWARE.
 #include "base/CCAsyncTaskPool.h"
 #include "base/CCEventDispatcher.h"
 #include "base/base64.h"
+#include "base/ccUTF8.h"
 #include "renderer/CCCustomCommand.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCTextureCache.h"
@@ -43,7 +44,6 @@ THE SOFTWARE.
 #include "platform/CCFileUtils.h"
 #include "2d/CCSprite.h"
 #include "2d/CCRenderTexture.h"
-#include "base/ccUTF8.h"
 
 NS_CC_BEGIN
 

@@ -47,6 +47,7 @@ import android.widget.Toast;
 import com.android.billingclient.api.Purchase;
 import com.android.billingclient.api.SkuDetails;
 import org.cocos2dx.lib.Cocos2dxActivity;
+
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
@@ -56,27 +57,35 @@ import leqi.com.leqipassportsdk.comm.FaceBookLogin;
 import leqi.com.leqipassportsdk.comm.GoogleBillingUtil;
 import leqi.com.leqipassportsdk.comm.GoogleLogin;
 import leqi.com.leqipassportsdk.leqipass;
-import org.json.JSONObject;
+import leqi.com.leqipassportsdk.mUserInfo;
 
+import org.cocos2dx.lib.Cocos2dxLuaJavaBridge;
+import org.json.JSONObject;
+import com.dipan.beenpc.sdk.Countly;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import android.os.Build;
 import android.view.WindowManager;
+import admin.*;
 import android.view.WindowManager.LayoutParams;
 
-import org.cocos2dx.lib.Cocos2dxLuaJavaBridge;
+import org.cocos2dx.lua.LuaPlatform;
 
 public class AppActivity extends Cocos2dxActivity implements
         GoogleApiClient.OnConnectionFailedListener,
         GoogleLogin.GoogleSignListener,leqipass.LeqiLoginBack,FaceBookLogin.FacebookListener
 {
-    public static leqipass tmp;
+    public leqipass tmp;
+    public int mLuaCallBack = 0;
+    private LuaPlatform platform = null;
     public GoogleLogin googleLogin;
     public FaceBookLogin faceBookLogin;
     public static int useSDK = -1;
     public Thread thread_ =null;
     private GoogleBillingUtil googleBillingUtil =null;
+    public Countly countly;
+    String uid = "";
     private MyOnPurchaseFinishedListener mOnPurchaseFinishedListener = new MyOnPurchaseFinishedListener();//购买回调接口
     private MyOnQueryFinishedListener mOnQueryFinishedListener = new MyOnQueryFinishedListener();//查询回调接口
     private MyOnStartSetupFinishedListener mOnStartSetupFinishedListener = new MyOnStartSetupFinishedListener();
@@ -84,6 +93,7 @@ public class AppActivity extends Cocos2dxActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.setEnableVirtualButton(false);
         super.onCreate(savedInstanceState);
+        super.setKeepScreenOn(true);
         // Workaround in https://stackoverflow.com/questions/16283079/re-launch-of-activity-on-home-button-but-only-the-first-time/16447508
         if (!isTaskRoot()) {
             // Android launched another instance of the root activity into an existing task
@@ -99,79 +109,222 @@ public class AppActivity extends Cocos2dxActivity implements
             lp.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_NEVER;
             getWindow().setAttributes(lp);
         }
-        // DO OTHER INITIALIZATION BELOW
-        tmp =leqipass.shareInstance();
-        tmp.init(this, "https://account-mafia.5stargame.com/api/","","");
-        tmp.setLeqiLoginBack(this);
 
+        platform =LuaPlatform.shareInstance();
+        platform.init(this);
+        // DO OTHER INITIALIZATION BELOW
+        countly = Countly.sharedInstance();
+        countly.init(this,"https://countly-mafia.5stargame.com/api.html","31651830a58984cccf9e5daa72e9e9cc");
+        tmp =leqipass.shareInstance();
+        tmp.init(this);
+        tmp.setLeqiLoginBack(this);
+        //https://account-mafia.5stargame.com/api/
         //
+        initGoogleLogin();
+        initFaceBookLogin();
+        //tmp.game_init("https://account-mafia.5stargame.com/api/","","");
     }
 
-    public static  void callJavaMethod(final int isUseSDK){
-//        runOnUIThread(new Runnable() {
-//            @Override
-//            public void run() {
-//                Cocos2dxLuaJavaBridge.callLuaFunctionWithString(luaFuncCallback, "success");
-//                Cocos2dxLuaJavaBridge.releaseLuaFunction(luaFuncCallback);
-//            }
-//        });
-        useSDK = isUseSDK;
-//        AppActivity app = (AppActivity)getContext();
-//        app.runOnUiThread(new Runnable()
-//        {
-//            @Override
-//            public void run()
-//            {
-//                tmp.loginByDeviceID();
-//            }
-//        });
+    public void initSdk(final String url ,final String var){
+        //initGoogleLogin();
+        //initFaceBookLogin();
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                tmp.game_init(url,"",var);
+            }
+        });
 
+    }
+
+    public void setLuaCallBack(final int lua){
+        mLuaCallBack = lua;
+    }
+
+    void initFaceBookLogin(){
+        if (faceBookLogin == null) {
+            faceBookLogin = new FaceBookLogin(this);
+            faceBookLogin.setFacebookListener(this);
+        }
+    }
+
+    void initGoogleLogin()
+    {
+        if (googleLogin == null) {
+            googleLogin = new GoogleLogin(this, this, 1002);
+            googleLogin.setGoogleSignListener(this);
+            googleLogin.requestCode =1002;
+        }
+    }
+
+    public void CheckPayOrder(){
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                initGoogleBillingUtil();
+            }
+        });
+
+    }
+
+    public void lianxi(final String uid){
+        beenpcSdkBuilder sdkBuilder = new beenpcSdkImplBuilder();
+        beenpcSdkDirector sdkDirector = beenpcSdkDirector.getInstance(sdkBuilder);
+        sdkDirector.setUrl("https://feedback-mafia.5stargame.com/home/index/index.html");
+        sdkDirector.setGameKey("JmxAYQTUvlzIJhfGwzacmwpltQFMVSFsShVcALcleiZgtBUuXplidIqPPSNRTrNx");
+        sdkDirector.setUserID(uid);
+        sdkDirector.setModID(mUserInfo.fcm_token);
+        sdkDirector.setSvrID(mUserInfo.server_id);
+        sdkDirector.startActivity(this);
+    }
+
+    public void gameserver_list(final  String areaid){
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                tmp.gameserver_list(areaid);
+            }
+        });
+
+    }
+
+    void initGoogleBillingUtil(){
+        if (googleBillingUtil==null){
+            googleBillingUtil = new GoogleBillingUtil(this,mOnPurchaseFinishedListener,mOnQueryFinishedListener)
+                    .setOnPurchaseFinishedListener(mOnPurchaseFinishedListener)
+                    .setOnQueryFinishedListener(mOnQueryFinishedListener)
+                    .setOnStartSetupFinishedListener(mOnStartSetupFinishedListener)
+                    .build();
+        }
+    }
+
+    public void pay(final String json){
+
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    JSONObject josnObj = new JSONObject(json);
+                    String productName =  josnObj.optString("productName");
+                    String productDesc =  josnObj.optString("productDesc");
+                    int price =  josnObj.optInt("price");
+                    String uid =  josnObj.optString("uid");
+                    List<Purchase> list = googleBillingUtil.queryPurchasesInApp();
+                    if (list!=null && list.size()>0) {
+                        tmp.purchase(list.get(0).getOriginalJson(), list.get(0).getSignature());
+                    }
+                    else{
+                        tmp.purchase_order(productName, price, productDesc,uid);//pay_money 金额单位  分
+                    }
+                } catch (Exception e) {
+                    messageShow("pay"+e.toString());
+                }
+            }
+        });
+    }
+
+    public void gameserver_select(final  String sid){
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                tmp.gameserver_select(sid);
+            }
+        });
+
+    }
+
+    public void bindPlatform(String platform){
+        if (platform.equals("FB")){
+            faceBookLogin.login(3001);//
+        }else if(platform.equals("CFB")){
+            faceBookLogin.login(3003);
+        }else if(platform.equals("GG")){
+            googleLogin.signIn();
+        }else if(platform.equals("CFB1")) {
+            tmp.exChange(3003, "1");
+        }else if(platform.equals("CFB2")) {
+            tmp.exChange(1003, "11");
+        }else if(platform.equals("CGG")) {
+            if (googleLogin == null) {
+                googleLogin = new GoogleLogin(this, this, 1003);
+                googleLogin.setGoogleSignListener(this);
+            }
+            else{googleLogin.requestCode =1003;}
+            googleLogin.signOut();
+        }else if(platform.equals("CGG1")){
+            tmp.exChange(1003, "1");
+        }
     }
 
     private class MyOnStartSetupFinishedListener implements GoogleBillingUtil.OnStartSetupFinishedListener
     {
         @Override
         public void onSetupSuccess() {
-
-            //messageShow("未消耗=" + googleBillingUtil.queryPurchasesInApp().toString());
             //必须先消耗掉同条目的商品才能内购下一个
-            List<Purchase> list = googleBillingUtil.queryPurchasesInApp();
-
-            if (list.size() > 0) {
-                //重新提交平台，返回后消耗---- 平台须查询重复订单
-                tmp.purchase(list.get(0).getOriginalJson(), list.get(0).getSignature());
-
-                //googleBillingUtil.consumeAsync(list.get(0).getPurchaseToken());//消耗商品
+            try {
+                List<Purchase> list = googleBillingUtil.queryPurchasesInApp();
+                if (list!=null && list.size() > 0) {
+                    messageShow("未消耗=" + list.get(0).getOriginalJson());
+                    //重新提交平台，返回后消耗---- 平台须查询重复订单
+                    tmp.purchase(list.get(0).getOriginalJson(), list.get(0).getSignature());
+                }
+            }catch (Exception e){
             }
-        }
 
+
+        }
         @Override
         public void onSetupFail(int responseCode) {
-            //messageShow("onSetupFail="+responseCode );
+            messageShow("onSetupFail="+responseCode );
         }
-
         @Override
         public void onSetupError() {
-           // messageShow("onSetupError=" );
+            messageShow("onSetupError=" );
         }
 //...;
     }
+
+    public void  OnPayCallBack(boolean Success, String paymoney , String platform) {
+        JSONObject jsonObj = new JSONObject();
+        try {
+            jsonObj.put("action","paycheck");
+            jsonObj.put("paymoney",paymoney);
+            jsonObj.put("platform",platform);
+            if(Success) {
+                jsonObj.put("code", 0);
+            }
+            else {
+                jsonObj.put("code", -1);
+            }
+        }catch (Exception e){
+
+        }
+        messageShow(jsonObj.toString());
+        dealMessage(jsonObj.toString());
+//        if(mLuaCallBack > 0 ){
+//            Cocos2dxLuaJavaBridge.callLuaFunctionWithString(mLuaCallBack,jsonObj.toString());
+//        }
+
+        //UnityPlayer.UnitySendMessage("PlatformManager", "OnGetUserInfoSuc", jsonObj.toString());
+    }
+
     //查询商品信息回调接口
     private class MyOnQueryFinishedListener implements GoogleBillingUtil.OnQueryFinishedListener
     {
         @Override
         public void onQuerySuccess(List<SkuDetails> list) {
-            //messageShow("onQuerySuccess"+list.toString() );
+            messageShow("onQuerySuccess"+list.toString() );
+            //pay("a");
         }
 
         @Override
         public void onQueryFail(int responseCode) {
-            Log.i("hkl", "onQueryFail");
+            OnPayCallBack(false,"queryFail","google");
         }
 
         @Override
         public void onQueryError() {
-            Log.i("hkl", "onQueryError");
+            OnPayCallBack(false,"query","google");
         }
 
     }
@@ -192,12 +345,12 @@ public class AppActivity extends Cocos2dxActivity implements
 
         @Override
         public void onPurchaseFail(int responseCode) {
-            Log.i("hkl", "onPurchaseFail" +responseCode);
+            OnPayCallBack(false,"purchase","google");
         }
 
         @Override
         public void onPurchError() {
-            Log.i("hkl", "onPurchError");
+            OnPayCallBack(false,"purcherror","google");
         }
 //...;
     }
@@ -205,131 +358,78 @@ public class AppActivity extends Cocos2dxActivity implements
     //平台返回
     @Override
     public  void back_from_pass(JSONObject json) {
-        String spro_id = json.toString();
-        Log.i("hkl", "qwe收到错误="+json.toString());
-        Log.i("hkl", "qwe收到错误11="+json.optString("data").toString());
-//        this.runOnGLThread(new Runnable()
-////        {
-////            @Override
-////            public void run()
-////            {
-////                Cocos2dxLuaJavaBridge.callLuaFunctionWithString(luaFuncCallback,spro_id);
-////                //Cocos2dxLuaJavaBridge.releaseLuaFunction(funC);
-////            }
-////        });
-        String action =json.optString("action");
-        if (action.equals("login")){
-            //硬件码登录
-
-            if (json.optString("server_status").equals("99"))
-            {
-                //服务器维护状态  json.optString("notice") 是维护公告
-                Log.i("hkl",json.optString("notice"));
-                return;
-            }
-
-            if (googleLogin == null) {
-                googleLogin = new GoogleLogin(this, this, 1001);
-            }
-            googleLogin.setGoogleSignListener(this);
-
-            if (thread_ != null && thread_.isAlive()) {
-                return;
-            }
-
-            //需要登录GG账号
-            if (googleLogin.googlestatus <=0){
-                return;
-            }
-            thread_ = new Thread() {
-                @Override
-                public void run() {
+        String action = json.optString("action");
+        if (action.equals("version")) {
+            dealMessage(json.toString());
+//            if(mLuaCallBack > 0 ){
+//                Cocos2dxLuaJavaBridge.callLuaFunctionWithString(mLuaCallBack,json.toString());
+//            }
+            ///UnityPlayer.UnitySendMessage("PlatformManager", "OnInitSuc", json.optString("audit_version"));
+        }
+        else {
+            messageShow(json.toString());
+            dealMessage(json.toString());
+//            if(mLuaCallBack > 0 ){
+//                Cocos2dxLuaJavaBridge.callLuaFunctionWithString(mLuaCallBack,json.toString());
+//            }
+            //UnityPlayer.UnitySendMessage("PlatformManager", "OnGetUserInfoSuc", json.toString());
+            if (action.equals("login")){
+                //CheckPayOrder();
+                String gg_client =json.optString("gg_client");  //1代表已绑定GG
+                if (gg_client.equals("0")) {
+                    googleLogin.requestCode =1001;
                     googleLogin.signIn();
                 }
-            };
-            thread_.start();
-        }
-        else if(action.equals("select")){
-            //进度不一致，选择新进度并提交平台返回
-            //在此需要重新加载游戏（账号已 更换）
-        }
-        else if(action.equals("exchange")){
-            //切换账号
-            //在此需要重新加载游戏（账号已 更换）
-            if (json.optString("account_id").equals(json.optString("account_id_ori"))){
-                //如果切换的账号和当前账号相同，则提示用户，不用重新加载游戏
-                Log.i("hkl","要切换的账号和当前账号相同，结束");
-            }
-            else
-            {
-                Log.i("hkl","此处重新加载游戏进度");
-            }
-
-        }
-        else if(action.equals("binding_gg")){
-            //绑定GG
-            String strcode =json.optString("errcode");
-            if (strcode.equals("0")) { //绑定成功
-                Log.i("hkl", "GG绑定成功");
-            }
-            else if(strcode.equals("20003")){
-                Log.i("hkl", "当前账号已绑定过GG");
-            }
-            else if(strcode.equals("20006")){
 
             }
         }
-        else if(action.equals("binding_fb")){
-            //绑定FB
-            String strcode =json.optString("errcode");
-            if (strcode.equals("0")) { //绑定成功
-                Log.i("hkl", "FB绑定成功");
-            }
-            else if(strcode.equals("20002")){
-                Log.i("hkl", "当前账号已绑定过FB");
-            }
-            else if(strcode.equals("20005")){
-                Log.i("hkl", "此FB账号已绑定过其他设备");
-            }
-
-        }
-        else if(action.equals("unbind")){
-            //解除绑定成功
-            //更新绑定设置显示，暂不做其他处理
-        }
-        else if(action.equals("server")){
-            if (json.optString("errcode").equals("0")){
-                //切换服务器成功,程序需要重新登录
-            }
-        }
-        else if(action.equals("version")){
-            Log.i("hkl", json.optString("version"));
-            tmp.loginByDeviceID();
-        }
-        else if(action.equals("getserver")){
-            Log.i("hkl", json.toString());
-        }
-
-        toLuaFunC(useSDK,spro_id);
-      // Cocos2dxLuaJavaBridge.callLuaFunctionWithString(1,"fslkjfalkdfjsldkj");
     }
 
-    public void toLuaFunC(final int func, final String msg)
-    {
-        if (null != this)
-        {
-            this.runOnGLThread(new Runnable()
-            {
-                @Override
-                public void run()
-                {
-                    Log.i("hkl", "1111111111111111111111111111111");
-                    //int i = Cocos2dxLuaJavaBridge.callLuaGlobalFunctionWithString("hqxpcall_error",msg);
-                    //Cocos2dxLuaJavaBridge.releaseLuaFunction(funC);
-                   // Log.i("hkl", "444444111111111111+"+i);
+    public  void  getUserInfo(final String sgame_userid){
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                JSONObject json = tmp.getUserInfo(sgame_userid);
+                if (json!=null) {
+                    dealMessage(json.toString());
+//                    if(mLuaCallBack > 0 ){
+//                        Cocos2dxLuaJavaBridge.callLuaFunctionWithString(mLuaCallBack,json.toString());
+//                    }
+                    //UnityPlayer.UnitySendMessage("PlatformManager", "OnGetUserInfoSuc", json.toString());
+                }
+            }
+        });
+
+    }
+
+    //--------------------------------------count----------------------------------------------
+    public void CountlyInfo(final String userid,final  String serverid,final  String sources,final  String appver,final  String userLevel){
+        uid = userid;
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                countly.setinfo(userid,serverid,sources,appver,userLevel);
                 }
             });
-        }
+    }
+
+    public  void recordEvent(final String key){
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                countly.recordEvent(key);
+            }
+        });
+
+    }
+    public  void recordNewTaskEvent(final String key){
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                countly.recordNewTaskEvent("newtask",key);
+            }
+        });
+
     }
 
 
@@ -337,59 +437,35 @@ public class AppActivity extends Cocos2dxActivity implements
     //平台错误信息返回
     @Override
     public void back_loginfail(String saction, int retcode){
-        Log.i("hkl", "回调收到错误="+saction+","+retcode);
-        if (saction.equals("login")){//硬件码登录
-            //retcode:
-            //1001 硬件码获取失败
-            //<0网络错误
-            //平台返回错误
+        JSONObject jsonObj = new JSONObject();
+        try {
+            jsonObj.put("action",saction);
+            jsonObj.put("code", retcode);
+        }catch (Exception e){
+
         }
-        /*
-//saction
-    login =登录
-    bind =绑定
-    payorder =新订单
-    paycheck =订单确认
-    server=换服务器
-    submit=提交用户信息
-    version=初始化
-    exchange=切换账号
-
-
--1001 网络错误
-20002	当前账号已经绑定过 fb
-20003	当前账号已经绑定过 gg
-20004	当前账号已经绑定过 gc
-20005	此FB已经绑定其它设备，不能再进行绑定
-20006	此GG已经绑定其它设备，不能再进行绑定
-20007	此GC已经绑定其它设备，不能再进行绑定
-
-40001	当前服务器不存在
-40002	支付条目ID或条目序号不存在
-40003	订单信息出错，未提交
-40004	订单信息出错，无法识别
-40005	订单信息出错，应用包名出错
-40006	订单信息出错，验证失败
-
-
-         */
-        Log.i("hkl","retcode="+retcode);
-        //Toast.makeText(MainActivity.this, "登录平台失败",Toast.LENGTH_LONG ).show();
+        messageShow(jsonObj.toString());
+        dealMessage(jsonObj.toString());
+//        if(mLuaCallBack > 0 ){
+//            Cocos2dxLuaJavaBridge.callLuaFunctionWithString(mLuaCallBack,jsonObj.toString());
+//        }
+        //UnityPlayer.UnitySendMessage("PlatformManager", "OnGetUserInfoSuc", jsonObj.toString());
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.i("hkl", "requestCode==" + requestCode + ",resultCode==" + resultCode + ",data==" + data);
-
-
-        if(requestCode==googleLogin.requestCode){
-            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            googleLogin.handleSignInResult( result );
-        }
-        else if(requestCode ==64206)
-
-        {faceBookLogin.getCallbackManager().onActivityResult(requestCode, resultCode, data);}
+        try {
+            messageShow("requestCode==" + requestCode + ",resultCode==" + resultCode + ",data==" + data);
+            if(googleLogin!=null && requestCode==googleLogin.requestCode){
+                GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+                googleLogin.handleSignInResult( result );
+            }
+            else if(requestCode ==64206)
+            {
+                faceBookLogin.getCallbackManager().onActivityResult(requestCode, resultCode, data);
+            }
+        }catch (Exception e){}
     }
 
     @Override
@@ -397,18 +473,30 @@ public class AppActivity extends Cocos2dxActivity implements
 
         if(requestCode ==1001){  //绑定GG
             tmp.Binding(1001);
-        }
-        else if(requestCode==1002) {//手动绑定
+        }       else if(requestCode==1002) {//手动绑定
             tmp.Binding(1002);
         }
         else if(requestCode==1003){ //切换账号
-           // tmp.exChange(1003);
+            tmp.exChange(1003,"0");
         }
     }
     @Override
     public void googleLoginFail(){
         //未登录状态会调用
-       // messageShow("googleLoginFail");
+        JSONObject jsonObj = new JSONObject();
+        try {
+            jsonObj.put("action","bind");
+            jsonObj.put("code", 4);
+        }catch (Exception e){
+
+        }
+        dealMessage(jsonObj.toString());
+//        if(mLuaCallBack > 0 ){
+//            Cocos2dxLuaJavaBridge.callLuaFunctionWithString(mLuaCallBack,jsonObj.toString());
+//        }
+        //UnityPlayer.UnitySendMessage("PlatformManager", "OnGetUserInfoSuc", jsonObj.toString());
+        //未登录状态会调用
+        messageShow(jsonObj.toString());
     }
     @Override
     public void googleLogoutSuccess(){
@@ -447,7 +535,7 @@ public class AppActivity extends Cocos2dxActivity implements
 
     @Override
     public void facebookLoginSuccess(int requestCode) {
-        //messageShow("facebookLoginSuccess" );
+        messageShow("facebookLoginSuccess" );
         if (requestCode ==3001){
             tmp.Binding(3001);
         }
@@ -460,9 +548,16 @@ public class AppActivity extends Cocos2dxActivity implements
     @Override
     public void back_pay_by_gg_success(JSONObject json){
         //消耗内购商品
-        //messageShow("back_pay_by_gg_success=====" +json.toString()+"\n"+"开始提交GG消耗商品1");
+        messageShow("back_pay_by_gg_success=====" +json.toString()+"\n"+"开始提交GG消耗商品1");
 
-        json.optString("paymoney");///此为充值成功金额
+        OnPayCallBack(true,json.optString("paymoney"),"google");
+        if (countly!=null)
+           countly.recordPayEvents(uid,json.optString("paymoney"),"google");
+        dealMessage(json.toString());
+//        if(mLuaCallBack > 0 ){
+//            Cocos2dxLuaJavaBridge.callLuaFunctionWithString(mLuaCallBack,json.toString());
+//        }
+        //UnityPlayer.UnitySendMessage("PlatformManager", "recordPayEvents", json.optString("paymoney"));
         googleBillingUtil.consumeAsync(json.optString("purchasetoken"));
 
     }
@@ -471,14 +566,41 @@ public class AppActivity extends Cocos2dxActivity implements
     @Override
     public void back_pay_by_order_success(JSONObject json){
 
-        //messageShow("back_pay_by_order_success=====" +json.toString()+"\n"+"开始GG内购商品");
+        messageShow("back_pay_by_order_success=====" +json.toString()+"\n"+"开始GG内购商品");
         String spro_id = json.optString("product_id");
         googleBillingUtil.purchaseInApp(spro_id );
 
     }
 
+    public void messageShow(String str){
+        Log.i("sdk", str);
+    }
+
+    public void dealMessage(final  String str){
+        this.runOnGLThread(new Runnable() {
+            @Override
+            public void run() {
+                if(mLuaCallBack > 0 ){
+                    Cocos2dxLuaJavaBridge.callLuaFunctionWithString(mLuaCallBack,str);
+                }
+            }
+        });
+
+    }
+
     @Override
-    public void facebookLoginFail() {
-        Log.i("hkl", "FB登录失败或取消登录");
+    public void facebookLoginFail(int  requestCode) {
+        JSONObject jsonObj = new JSONObject();
+        try {
+            jsonObj.put("action","bind");
+            jsonObj.put("code", requestCode);
+        }catch (Exception e){
+        }
+        messageShow(jsonObj.toString());
+        dealMessage(jsonObj.toString());
+//        if(mLuaCallBack > 0 ){
+//            Cocos2dxLuaJavaBridge.callLuaFunctionWithString(mLuaCallBack,jsonObj.toString());
+//        }
+        //UnityPlayer.UnitySendMessage("PlatformManager", "OnGetUserInfoSuc", jsonObj.toString());
     }
 }

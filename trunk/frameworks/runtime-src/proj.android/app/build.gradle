@@ -9,8 +9,8 @@ android {
         applicationId "org.cocos2dx.Mafia"
         minSdkVersion PROP_MIN_SDK_VERSION
         targetSdkVersion PROP_TARGET_SDK_VERSION
-        versionCode 1020
-        versionName "1.02"
+        versionCode 1030
+        versionName "1.03"
 
         externalNativeBuild {
             if (PROP_BUILD_TYPE == 'ndk-build') {
@@ -67,12 +67,22 @@ android {
 
     signingConfigs {
         release {
-            if (project.hasProperty("RELEASE_STORE_FILE")) {
-                storeFile file(RELEASE_STORE_FILE)
-                storePassword RELEASE_STORE_PASSWORD
-                keyAlias RELEASE_KEY_ALIAS
-                keyPassword RELEASE_KEY_PASSWORD
-            }
+//            if (project.hasProperty("RELEASE_STORE_FILE")) {
+//                storeFile file(RELEASE_STORE_FILE)
+//                storePassword RELEASE_STORE_PASSWORD
+//                keyAlias RELEASE_KEY_ALIAS
+//                keyPassword RELEASE_KEY_PASSWORD
+//            }
+            keyAlias '5stargames'
+            keyPassword 'telejoewe'
+            storeFile file('C:/Users/yj/Desktop/5stargames.keystore')
+            storePassword 'telejoewe'
+        }
+        debug {
+            keyAlias '5stargames'
+            keyPassword 'telejoewe'
+            storeFile file('C:/Users/yj/Desktop/5stargames.keystore')
+            storePassword 'telejoewe'
         }
     }
 
@@ -84,9 +94,9 @@ android {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            if (project.hasProperty("RELEASE_STORE_FILE")) {
+            //if (project.hasProperty("RELEASE_STORE_FILE")) {
                 signingConfig signingConfigs.release
-            }
+            //}
             externalNativeBuild {
                 ndkBuild {
                     arguments 'NDK_DEBUG=0'
@@ -97,6 +107,7 @@ android {
             debuggable true
             jniDebuggable true
             renderscriptDebuggable true
+            signingConfig signingConfigs.debug
             externalNativeBuild {
                 ndkBuild {
                     arguments 'NDK_DEBUG=1'
@@ -194,87 +205,94 @@ android.applicationVariants.all { variant ->
             // 1 means build 64bit only
             // 2 means build both 32bit & 64bit
             def buildType = -1
-            if (compileScript) {
-                def need64 = false
-                def need32 = false
-                def abis = PROP_APP_ABI.split(':').collect{it as String}
-                abis.each{ abi->
-                    if (abi.compareTo('arm64-v8a') == 0) {
-                        need64 = true
-                    }
-                    else
-                    {
-                        need32 = true
-                    }
-                }
-
-                if (need64 && need32) {
-                    buildType = 2
-                }
-                else if (need64) {
-                    buildType = 1
-                }
-                else {
-                    buildType = 0
-                }
-            }
+//            if (compileScript) {
+//                def need64 = false
+//                def need32 = false
+//                def abis = PROP_APP_ABI.split(':').collect{it as String}
+//                abis.each{ abi->
+//                    if (abi.compareTo('arm64-v8a') == 0) {
+//                        need64 = true
+//                    }
+//                    else
+//                    {
+//                        need32 = true
+//                    }
+//                }
+//
+//                if (need64 && need32) {
+//                    buildType = 2
+//                }
+//                else if (need64) {
+//                    buildType = 1
+//                }
+//                else {
+//                    buildType = 0
+//                }
+//            }
 
             // invoke cocos command to compile & encrypt the lua files
-            switch (buildType) {
-                case -1:
-                    compileLua("${buildDir}/intermediates/assets/${variant.dirName}/src",
-                               "${buildDir}/intermediates/assets/${variant.dirName}/src",
-                               false, false, encryptLua)
-                    break
-                case 0:
-                    compileLua("${buildDir}/intermediates/assets/${variant.dirName}/src",
-                               "${buildDir}/intermediates/assets/${variant.dirName}/src",
-                               true, false, encryptLua)
-                    break
-                case 1:
-                    compileLua("${buildDir}/intermediates/assets/${variant.dirName}/src",
-                               "${buildDir}/intermediates/assets/${variant.dirName}/src/64bit",
-                               true, true, encryptLua)
-
-                    // remove the lua files in src dir
-                    delete fileTree("${buildDir}/intermediates/assets/${variant.dirName}/src") {
-                        include '**/*.lua'
-                    }
-                    delete "${buildDir}/intermediates/assets/${variant.dirName}/src/cocos"
-                    break
-                case 2:
-                    compileLua("${buildDir}/intermediates/assets/${variant.dirName}/src",
-                               "${buildDir}/intermediates/assets/${variant.dirName}/src/64bit",
-                               true, true, encryptLua)
-                    compileLua("${buildDir}/intermediates/assets/${variant.dirName}/src",
-                               "${buildDir}/intermediates/assets/${variant.dirName}/src",
-                               true, false, encryptLua)
-                    break
-            }
+//            switch (buildType) {
+//                case -1:
+//                    compileLua("${buildDir}/intermediates/assets/${variant.dirName}/src",
+//                               "${buildDir}/intermediates/assets/${variant.dirName}/src",
+//                               false, false, encryptLua)
+//                    break
+//                case 0:
+//                    compileLua("${buildDir}/intermediates/assets/${variant.dirName}/src",
+//                               "${buildDir}/intermediates/assets/${variant.dirName}/src",
+//                               true, false, encryptLua)
+//                    break
+//                case 1:
+//                    compileLua("${buildDir}/intermediates/assets/${variant.dirName}/src",
+//                               "${buildDir}/intermediates/assets/${variant.dirName}/src",
+//                               true, true, encryptLua)
+//
+//                    // remove the lua files in src dir
+//                    delete fileTree("${buildDir}/intermediates/assets/${variant.dirName}/src") {
+//                        include '**/*.lua'
+//                    }
+//                    delete "${buildDir}/intermediates/assets/${variant.dirName}/src/cocos"
+//                    break
+//                case 2:
+////                    compileLua("${buildDir}/intermediates/assets/${variant.dirName}/src",
+////                               "${buildDir}/intermediates/assets/${variant.dirName}/src",
+////                               true, true, encryptLua)
+//                    compileLua("${buildDir}/intermediates/assets/${variant.dirName}/src",
+//                               "${buildDir}/intermediates/assets/${variant.dirName}/src",
+//                               true, false, encryptLua)
+//                    break
+          //  }
         }
     }
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar','*.aar'], dir: 'libs')
+    implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
     implementation project(':libcocos2dx')
-    implementation 'com.android.support:appcompat-v7:26.1.0'
-    implementation 'com.google.firebase:firebase-core:16.0.8'
-    implementation 'com.google.firebase:firebase-iid:17.1.2'
-    implementation 'com.google.firebase:firebase-messaging:17.6.0'
-    implementation 'com.google.firebase:firebase-database:17.0.0'
+    //implementation 'com.android.support:appcompat-v7:26.1.0'
+    //    implementation 'com.google.firebase:firebase-core:16.0.8'
+    //    implementation 'com.google.firebase:firebase-iid:17.1.2'
+    //    implementation 'com.google.firebase:firebase-messaging:17.6.0'
+    //    implementation 'com.google.firebase:firebase-database:17.0.0'
     // implementation 'com.android.support:appcompat-v7:+'
+    implementation 'com.android.support:cardview-v7:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     implementation 'com.android.support:design:27.0.2'
+    //    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    //    implementation 'com.android.support:design:27.0.2'
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'com.google.android.gms:play-services-auth:16.0.1'
+    implementation 'com.google.firebase:firebase-core:16.0.8'
+    implementation 'com.google.firebase:firebase-iid:17.0.4'
+    implementation 'com.google.firebase:firebase-messaging:17.3.4'
+    //implementation 'com.google.android.gms:play-services-auth:16.0.1'
     // implementation 'com.google.android.gms:play-services-ads:17.1.2'
-    implementation 'com.google.code.gson:gson:2.8.2'
+    //implementation 'com.google.code.gson:gson:2.8.2'
     implementation 'com.android.billingclient:billing:1.0'
-    implementation project(path: ':leqipassportsdknew')
-    implementation 'com.facebook.android:facebook-login:[4,33)'
+    //implementation project(path: ':leqipassportsdknew')
+    implementation 'com.facebook.android:facebook-android-sdk:[5,6)'
+    //implementation 'com.facebook.android:facebook-login:[4,33)'
+    implementation 'androidx.annotation:annotation:+'
 }
 
 apply plugin: 'com.google.gms.google-services'

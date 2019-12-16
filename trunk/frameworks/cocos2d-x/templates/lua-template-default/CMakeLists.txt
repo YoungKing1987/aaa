@@ -42,13 +42,9 @@ set(res_res_folders
 set(res_src_folders
     "${CMAKE_CURRENT_SOURCE_DIR}/src"
     )
-set(res_script_folders
-    "${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings/script"
-    )
 if(APPLE OR VS)
     cocos_mark_multi_resources(res_res RES_TO "Resources/res" FOLDERS ${res_res_folders})
     cocos_mark_multi_resources(res_src RES_TO "Resources/src" FOLDERS ${res_src_folders})
-    cocos_mark_multi_resources(res_script RES_TO "Resources/src/cocos" FOLDERS ${res_script_folders})
     set(cc_common_res ${res_res} ${res_src} ${res_script})
 endif()
 
@@ -137,6 +133,8 @@ else()
     add_library(${APP_NAME} SHARED ${APP_SRC})
     add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos/platform/android ${ENGINE_BINARY_PATH}/cocos/platform)
     target_link_libraries(${APP_NAME} -Wl,--whole-archive cpp_android_spec -Wl,--no-whole-archive)
+    add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings/proj.android ${ENGINE_BINARY_PATH}/cocos/lua-android)
+    target_link_libraries(${APP_NAME} -Wl,--whole-archive lua_android_spec -Wl,--no-whole-archive)
 endif()
 
 target_link_libraries(${APP_NAME} luacocos2d)
@@ -154,17 +152,20 @@ if(APPLE)
     if(MACOSX)
         set_target_properties(${APP_NAME} PROPERTIES
                               MACOSX_BUNDLE_INFO_PLIST "${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/Info.plist"
+                              LINK_FLAGS "-pagezero_size 10000 -image_base 100000000"
                               )
     elseif(IOS)
         cocos_pak_xcode(${APP_NAME} INFO_PLIST "iOSBundleInfo.plist.in")
         set_xcode_property(${APP_NAME} ASSETCATALOG_COMPILER_APPICON_NAME "AppIcon")
+        set_xcode_property(${APP_NAME} DEVELOPMENT_TEAM "")
+        set_xcode_property(${APP_NAME} CODE_SIGN_IDENTITY "iPhone Developer")
     endif()
 elseif(WINDOWS)
-    cocos_copy_target_dll(${APP_NAME} COPY_TO ${APP_RES_DIR}/..)
+    cocos_copy_target_dll(${APP_NAME})
 endif()
 # copy resource on linux or WINDOWS
 if(LINUX OR WINDOWS)
-    cocos_copy_res(COPY_TO ${APP_RES_DIR}/res FOLDERS ${res_res_folders})
-    cocos_copy_res(COPY_TO ${APP_RES_DIR}/src FOLDERS ${res_src_folders})
-    cocos_copy_res(COPY_TO ${APP_RES_DIR}/src/cocos FOLDERS ${res_script_folders})
+    set(APP_RES_DIR "$<TARGET_FILE_DIR:${APP_NAME}>/Resources")
+    cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_RES_DIR}/res FOLDERS ${res_res_folders})
+    cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_RES_DIR}/src FOLDERS ${res_src_folders})
 endif()

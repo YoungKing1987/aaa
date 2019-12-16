@@ -23,6 +23,7 @@
  ****************************************************************************/
 
 #include "LabelTestNew.h"
+#include <cmath>
 #include "../testResource.h"
 #include "renderer/CCRenderer.h"
 #include "2d/CCFontAtlasCache.h"
@@ -74,6 +75,8 @@ NewLabelTests::NewLabelTests()
     ADD_TEST_CASE(LabelFNTHundredLabels);
     ADD_TEST_CASE(LabelFNTPadding);
     ADD_TEST_CASE(LabelFNTOffset);
+    ADD_TEST_CASE(LabelFNTMultiFontAtlasNoRotation);
+    ADD_TEST_CASE(LabelFNTMultiFontAtlasWithRotation);
 
     ADD_TEST_CASE(LabelTTFFontsTestNew);
     ADD_TEST_CASE(LabelTTFLongLineWrapping);
@@ -141,7 +144,7 @@ NewLabelTests::NewLabelTests()
     ADD_TEST_CASE(LabelIssueLineGap);
     ADD_TEST_CASE(LabelIssue17902);
     ADD_TEST_CASE(LabelLetterColorsTest);
-};
+}
 
 LabelFNTColorAndOpacity::LabelFNTColorAndOpacity()
 {
@@ -605,7 +608,7 @@ bool LabelFNTMultiLineAlignment::init()
     this->_arrowsBar = Sprite::create("Images/arrowsBar.png");
     this->_arrows = Sprite::create("Images/arrows.png");
 
-    MenuItemFont::setFontSize(20);
+    MenuItemFont::setFontSize(15);
     auto longSentences = MenuItemFont::create("Long Flowing Sentences", CC_CALLBACK_1(LabelFNTMultiLineAlignment::stringChanged, this));
     auto lineBreaks    = MenuItemFont::create("Short Sentences With Intentional Line Breaks", CC_CALLBACK_1(LabelFNTMultiLineAlignment::stringChanged, this));
     auto mixed         = MenuItemFont::create("Long Sentences Mixed With Intentional Line Breaks", CC_CALLBACK_1(LabelFNTMultiLineAlignment::stringChanged, this));
@@ -620,7 +623,7 @@ bool LabelFNTMultiLineAlignment::init()
     _menuItems.push_back(lineBreaks);
     _menuItems.push_back(mixed);
 
-    MenuItemFont::setFontSize(30);
+    MenuItemFont::setFontSize(20);
 
     auto left = MenuItemFont::create("Left", CC_CALLBACK_1(LabelFNTMultiLineAlignment::alignmentChanged, this));
     auto center = MenuItemFont::create("Center", CC_CALLBACK_1(LabelFNTMultiLineAlignment::alignmentChanged, this));
@@ -642,8 +645,8 @@ bool LabelFNTMultiLineAlignment::init()
     this->_arrowsBar->setScaleX(arrowsWidth / this->_arrowsBar->getContentSize().width);
     this->_arrowsBar->setPosition(Vec2(((ArrowsMax + ArrowsMin) / 2) * size.width, this->_label->getPosition().y));
 
-    stringMenu->setPosition(Vec2(size.width/2, size.height - menuItemPaddingCenter));
-    alignmentMenu->setPosition(Vec2(size.width/2, menuItemPaddingCenter+15));
+    stringMenu->setPosition(VisibleRect::top() + Vec2(0, - menuItemPaddingCenter));
+    alignmentMenu->setPosition(VisibleRect::bottom() + Vec2(0, menuItemPaddingCenter + 15));
 
     this->selectSentenceItem(longSentences);
     this->selectAlignmentItem(center);
@@ -785,7 +788,7 @@ void LabelFNTMultiLineAlignment::onTouchesMoved(const std::vector<Touch*>& touch
     this->_arrows->setPosition(Vec2(MAX(MIN(location.x, ArrowsMax*winSize.width), ArrowsMin*winSize.width), 
         this->_arrows->getPosition().y));
 
-    float labelWidth = fabs(this->_arrows->getPosition().x - this->_label->getPosition().x) * 2;
+    float labelWidth = std::fabs(this->_arrows->getPosition().x - this->_label->getPosition().x) * 2;
 
     this->_label->setMaxLineWidth(labelWidth);
 }
@@ -933,6 +936,57 @@ std::string LabelFNTBounds::subtitle() const
     return "Testing bounding-box";
 }
 
+LabelFNTMultiFontAtlasNoRotation::LabelFNTMultiFontAtlasNoRotation()
+{
+    auto s = Director::getInstance()->getWinSize();
+
+    auto label1 = Label::createWithBMFont("fonts/helvetica-32.fnt", "This is Helvetica");
+    addChild(label1);
+    label1->setPosition(Vec2(s.width / 2, s.height / 3 * 2));
+
+    auto label2 = Label::createWithBMFont("fonts/geneva-32.fnt", "And this is Geneva", TextHAlignment::LEFT, 0, Rect(0, 128, 0, 0), false);
+    addChild(label2);
+    label2->setPosition(Vec2(s.width / 2, s.height / 3 * 1));
+}
+
+std::string LabelFNTMultiFontAtlasNoRotation::title() const
+{
+    return "New Label + Multi-BM Font Atlas Test1";
+}
+
+std::string LabelFNTMultiFontAtlasNoRotation::subtitle() const
+{
+    return "Using 2 .fnt definitions that share the same texture atlas.";
+}
+
+LabelFNTMultiFontAtlasWithRotation::LabelFNTMultiFontAtlasWithRotation()
+{
+    auto s = Director::getInstance()->getWinSize();
+
+    auto spriteCache = SpriteFrameCache::getInstance();
+    spriteCache->addSpriteFramesWithFile("fonts/bmfont-rotated-test.plist");
+
+    // Label BMFont
+    auto label1 = Label::createWithBMFont("fonts/helvetica-regular-32.fnt", "Helvetica with SubTextureKey", TextHAlignment::CENTER, 0, "helvetica-regular-32.png");
+    label1->setPosition(Vec2(s.width / 2, s.height / 3 * 2));
+    this->addChild(label1);
+
+    const auto frame = spriteCache->getSpriteFrameByName("geneva-regular-32.png");
+    auto label2 = Label::createWithBMFont("fonts/geneva-regular-32.fnt", "Geneva with Rect and Rotated", TextHAlignment::CENTER, 0, frame->getRectInPixels(), frame->isRotated());
+    label2->setPosition(Vec2(s.width / 2, s.height / 3 * 1));
+    this->addChild(label2);
+}
+
+std::string LabelFNTMultiFontAtlasWithRotation::title() const
+{
+    return "New Label + Multi-BM Font Atlas Test2";
+}
+
+std::string LabelFNTMultiFontAtlasWithRotation::subtitle() const
+{
+    return "Using 2 .fnt definitions that share a PLIST texture atlas (rotated).";
+}
+
 LabelTTFLongLineWrapping::LabelTTFLongLineWrapping()
 {
     auto size = Director::getInstance()->getWinSize();
@@ -1062,12 +1116,12 @@ LabelTTFCJKWrappingTest::LabelTTFCJKWrappingTest()
         Vec2(size.width * 0.85, size.height * 0.8),
         Vec2(size.width * 0.85, 0), 1, Color4F(1, 0, 0, 1));
     
-    TTFConfig ttfConfig("fonts/HKYuanMini.ttf", 25, GlyphCollection::DYNAMIC);
+    TTFConfig ttfConfig("fonts/HKYuanMini.ttf", 20, GlyphCollection::DYNAMIC);
     auto label1 = Label::createWithTTF(ttfConfig,
         "你好，Cocos2d-x v3的New Label.", TextHAlignment::LEFT, size.width * 0.75);
     if(label1) {
         label1->setTextColor(Color4B(128, 255, 255, 255));
-        label1->setPosition(Vec2(size.width * 0.1, size.height * 0.6));
+        label1->setPosition(Vec2(size.width * 0.1, VisibleRect::top().y * 0.7));
         label1->setAnchorPoint(Vec2(0, 0.5));
         this->addChild(label1);
         // Demo for unloadFontAtlasTTF function, after it been called, all UI widget
@@ -1080,7 +1134,7 @@ LabelTTFCJKWrappingTest::LabelTTFCJKWrappingTest()
         "早上好，Cocos2d-x v3的New Label.", TextHAlignment::LEFT, size.width * 0.75);
     if(label2) {
         label2->setTextColor(Color4B(255, 128, 255, 255));
-        label2->setPosition(Vec2(size.width * 0.1, size.height * 0.4));
+        label2->setPosition(Vec2(size.width * 0.1, VisibleRect::top().y * 0.5));
         label2->setAnchorPoint(Vec2(0, 0.5));
         this->addChild(label2);
     }
@@ -1089,7 +1143,7 @@ LabelTTFCJKWrappingTest::LabelTTFCJKWrappingTest()
         "美好的一天啊美好的一天啊美好的一天啊", TextHAlignment::LEFT, size.width * 0.75);
     if(label3) {
         label3->setTextColor(Color4B(255, 255, 128, 255));
-        label3->setPosition(Vec2(size.width * 0.1, size.height * 0.2));
+        label3->setPosition(Vec2(size.width * 0.1, VisibleRect::top().y * 0.3));
         label3->setAnchorPoint(Vec2(0, 0.5));
         this->addChild(label3);
     }
