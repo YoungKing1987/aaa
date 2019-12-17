@@ -38,7 +38,7 @@ import android.os.Bundle;
 import android.os.Message;
 import android.os.PowerManager;
 import android.preference.PreferenceManager.OnActivityResultListener;
-import android.support.v4.app.FragmentActivity;
+import android.app.Activity;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,7 +52,7 @@ import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.egl.EGLDisplay;
 import javax.microedition.khronos.egl.EGLContext;
 
-public abstract class Cocos2dxActivity extends FragmentActivity implements Cocos2dxHelperListener {
+public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelperListener {
     // ===========================================================
     // Constants
     // ===========================================================

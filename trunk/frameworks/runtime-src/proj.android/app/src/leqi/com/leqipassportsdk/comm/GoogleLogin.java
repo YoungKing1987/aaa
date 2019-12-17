@@ -5,7 +5,7 @@ package leqi.com.leqipassportsdk.comm;
  */
 
 import android.content.Intent;
-import android.support.v4.app.FragmentActivity;
+import android.app.Activity;
 import android.util.Log;
 
 import com.google.android.gms.auth.api.Auth;
@@ -24,7 +24,7 @@ import leqi.com.leqipassportsdk.mUserInfo;
 public class GoogleLogin {
 
     public int requestCode = 1001 ;
-    private FragmentActivity activity ;
+    private Activity activity ;
 
     public GoogleSignInOptions gso ;
     public GoogleApiClient mGoogleApiClient ;
@@ -32,7 +32,7 @@ public class GoogleLogin {
     private GoogleSignListener googleSignListener ;
     public int googlestatus =0;
 
-    public  GoogleLogin(FragmentActivity activity ,  GoogleApiClient.OnConnectionFailedListener listener , int loginType){
+    public  GoogleLogin(Activity activity ,  GoogleApiClient.OnConnectionFailedListener listener , int loginType){
         this.activity = activity ;
         this.listener = listener ;
         this.requestCode =loginType;
@@ -69,12 +69,33 @@ public class GoogleLogin {
 
         // Build a GoogleApiClient with access to GoogleSignIn.API and the options above.
         mGoogleApiClient = new GoogleApiClient.Builder( activity )
-                .enableAutoManage( activity , listener )
+                //.enableAutoManage( activity , listener )
                 //.addConnectionCallbacks(activity.)
                 .addApi( Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
 
         //mGoogleSignInClient = GoogleSignIn.getClient(activity, gso);
+    }
+
+    public void connect(){
+        if (mGoogleApiClient != null )
+        {
+            mGoogleApiClient.connect();
+        }
+    }
+
+    public boolean isConnected(){
+        if (mGoogleApiClient != null ) {
+            return  mGoogleApiClient.isConnected();
+        }
+        else
+            return  false;
+    }
+
+    public void disconnect() {
+        if (mGoogleApiClient != null){
+            mGoogleApiClient.disconnect();
+        }
     }
 
     /**

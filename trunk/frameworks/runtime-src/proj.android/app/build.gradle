@@ -9,8 +9,8 @@ android {
         applicationId "org.cocos2dx.Mafia"
         minSdkVersion PROP_MIN_SDK_VERSION
         targetSdkVersion PROP_TARGET_SDK_VERSION
-        versionCode 1030
-        versionName "1.03"
+        versionCode 1050
+        versionName "1.05"
 
         externalNativeBuild {
             if (PROP_BUILD_TYPE == 'ndk-build') {

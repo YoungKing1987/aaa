@@ -521,16 +521,16 @@ public class AppActivity extends Cocos2dxActivity implements
         super.onStart();
         //Log.i("hkl", "onStart..........");
 
-        //mGoogleApiClient.connect();
+        googleLogin.connect();
 
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        //if (mGoogleApiClient.isConnected()) {
-        //    mGoogleApiClient.disconnect();
-        //}
+        if (googleLogin.isConnected()) {
+            googleLogin.disconnect();
+        }
     }
 
     @Override
