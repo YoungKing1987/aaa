@@ -849,6 +849,12 @@ void EventDispatcher::dispatchTouchEventToListeners(EventListenerVector* listene
             auto cameras = scene->getCameras();
             for (auto rit = cameras.rbegin(), ritRend = cameras.rend(); rit != ritRend; ++rit)
             {
+				auto& cameras_ = scene->getCameras();
+				auto it = std::find(cameras_.begin(), cameras_.end(), *rit);
+				if (it == cameras_.end())
+				{
+					continue;
+				}
                 Camera* camera = *rit;
                 if (camera->isVisible() == false)
                 {
