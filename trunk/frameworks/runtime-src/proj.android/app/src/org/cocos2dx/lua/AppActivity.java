@@ -171,10 +171,11 @@ public class AppActivity extends Cocos2dxActivity implements
         beenpcSdkBuilder sdkBuilder = new beenpcSdkImplBuilder();
         beenpcSdkDirector sdkDirector = beenpcSdkDirector.getInstance(sdkBuilder);
         sdkDirector.setUrl("https://feedback-mafia.5stargame.com/home/index/index.html");
-        sdkDirector.setGameKey("JmxAYQTUvlzIJhfGwzacmwpltQFMVSFsShVcALcleiZgtBUuXplidIqPPSNRTrNx");
+        sdkDirector.setGameKey("BgI70DVZgOst3kSvUDk09EQvN2yZhUSkRiP9daVM6ieVG3XNdN1qvcMGjvCxt1Mq");
         sdkDirector.setUserID(uid);
         sdkDirector.setModID(mUserInfo.fcm_token);
         sdkDirector.setSvrID(mUserInfo.server_id);
+        messageShow("lianxi=" + uid+mUserInfo.fcm_token+mUserInfo.server_id);
         sdkDirector.startActivity(this);
     }
 
@@ -241,7 +242,13 @@ public class AppActivity extends Cocos2dxActivity implements
         }else if(platform.equals("GG")){
             googleLogin.signIn();
         }else if(platform.equals("CFB1")) {
-            tmp.exChange(3003, "1");
+            this.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    tmp.exChange(3003, "1");
+                }
+            });
+
         }else if(platform.equals("CFB2")) {
             tmp.exChange(1003, "11");
         }else if(platform.equals("CGG")) {
@@ -252,7 +259,13 @@ public class AppActivity extends Cocos2dxActivity implements
             else{googleLogin.requestCode =1003;}
             googleLogin.signOut();
         }else if(platform.equals("CGG1")){
-            tmp.exChange(1003, "1");
+            this.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    tmp.exChange(1003, "1");
+                }
+            });
+
         }
     }
 

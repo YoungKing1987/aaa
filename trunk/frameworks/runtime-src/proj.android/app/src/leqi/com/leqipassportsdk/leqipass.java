@@ -73,7 +73,7 @@ public class leqipass {
         PlatformConfig.appKey = appKey;
         PlatformConfig.postURL = serverURL;
         PlatformConfig.appVer = appVer;
-        loginByDeviceID();
+
 
 
         try {
@@ -82,7 +82,7 @@ public class leqipass {
         catch (Exception e){
             Log.i("hkl","获取fcmtoken失败="+e.toString());
         }
-
+        loginByDeviceID();
 
 //        String str_sign_time = ""+System.currentTimeMillis();
 //        String str_auth_code =Utils.getEncodeKey("version");
@@ -207,7 +207,7 @@ public class leqipass {
         map.put("sign_time", str_sign_time);
         map.put("security", "1");
         map.put("device_id",mUserInfo.DeviceiD);
-//        map.put("googlefcm",mUserInfo.fcm_token );
+        //map.put("googlefcm",mUserInfo.fcm_token );
         map.put("user_idfa", mUserInfo.user_idfa );
         map.put("country",DeviceInfo.getUserCountry(context_));
 
@@ -268,7 +268,7 @@ public class leqipass {
                                 "serverip", ret.optString("serverip"),
                                 "is_gm", ret.optString("is_gm"),
                                 "notice", ret.optString("notice"),
-                                "googlefcm",ret.optString("googlefcm"),
+                                "googlefcm",mUserInfo.fcm_token,
                                 "country",DeviceInfo.getUserCountry(context_),
                                 "server_status", ret.optString("server_status"),
                                 "carrier",DeviceInfo.getCarrier(context_),
@@ -314,22 +314,25 @@ public class leqipass {
     public void exChange(int exTYpe,String is_create){
         String sauthcode ="";
         String openid   ="";
+        String str ="";
 
         if (exTYpe == 1003){
             sauthcode = "gg_client";
             openid = mUserInfo.google_id;
+            str ="&gg_nickname="+mUserInfo.google_user_name +"&gg_email="+mUserInfo.google_user_email;
         }
         else if (exTYpe == 3003){
             sauthcode = "fb_client";
             openid = mUserInfo.facebook_id;
+            str ="&fb_nickname="+mUserInfo.facebook_user_name +"&fb_email="+mUserInfo.facebook_user_email;
         }
 
         String str_sign_time = ""+System.currentTimeMillis();
         String str_auth_code =Utils.getEncodeKey(sauthcode);
         String auth_code ="auth_code=" + str_auth_code
                 +"&sign_time=" +str_sign_time +"&security=1"+"&account_id="+mUserInfo.UserID
-                +"&openid_str="+openid +"&is_create="+is_create
-                +"&fb_nickname="+mUserInfo.facebook_user_name +"&fb_email="+mUserInfo.facebook_user_email
+                +"&openid_str="+openid +"&is_create="+is_create+str
+                //+"&fb_nickname="+mUserInfo.facebook_user_name +"&fb_email="+mUserInfo.facebook_user_email
                 + "&device_id=" + mUserInfo.DeviceiD;
 
         Map<String, String> map = new HashMap<String, String>();
@@ -339,8 +342,14 @@ public class leqipass {
         map.put("device_id",mUserInfo.DeviceiD);
         map.put("openid_str",openid);
         map.put("is_create", is_create );
-        map.put("fb_nickname",mUserInfo.facebook_user_name);
-        map.put("fb_email",mUserInfo.facebook_user_email);
+        if (exTYpe ==3003) {
+            map.put("fb_nickname", mUserInfo.facebook_user_name);
+            map.put("fb_email", mUserInfo.facebook_user_email);
+        }
+        else{
+            map.put("gg_nickname", mUserInfo.google_user_name);
+            map.put("gg_email", mUserInfo.google_user_email);
+        }
         map.put("account_id", mUserInfo.UserID);
 
         Log.i( leqipass.Tag, auth_code );
