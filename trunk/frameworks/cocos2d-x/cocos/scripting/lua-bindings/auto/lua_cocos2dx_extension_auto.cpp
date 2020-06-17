@@ -11513,7 +11513,7 @@ int lua_cocos2dx_extension_AssetsManager_getVersion(lua_State* tolua_S)
     cobj = (cocos2d::extension::AssetsManager*)tolua_tousertype(tolua_S,1,0);
 
 #if COCOS2D_DEBUG >= 1
-    if (!cobj) 
+    if (!cobj)
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_extension_AssetsManager_getVersion'", nullptr);
         return 0;
@@ -11521,7 +11521,7 @@ int lua_cocos2dx_extension_AssetsManager_getVersion(lua_State* tolua_S)
 #endif
 
     argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
+    if (argc == 0)
     {
         if(!ok)
         {
@@ -12811,6 +12811,53 @@ int lua_cocos2dx_extension_Manifest_getVersion(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_extension_Manifest_getEngineVersion(lua_State* tolua_S)
+{
+int argc = 0;
+        cocos2d::extension::Manifest* cobj = nullptr;
+        bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+        tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+        if (!tolua_isusertype(tolua_S,1,"cc.Manifest",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::extension::Manifest*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+    tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_extension_Manifest_getVersion'", nullptr);
+    return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0)
+    {
+    if(!ok)
+    {
+    tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_extension_Manifest_getVersion'", nullptr);
+    return 0;
+    }
+    const std::string& ret = cobj->getEngineVersion();
+    lua_pushlstring(tolua_S,ret.c_str(),ret.length());
+    return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Manifest:getVersion",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_extension_Manifest_getVersion'.",&tolua_err);
+#endif
+
+    return 0;
+    }
 int lua_cocos2dx_extension_Manifest_getVersionFileUrl(lua_State* tolua_S)
 {
     int argc = 0;
@@ -12922,6 +12969,7 @@ int lua_register_cocos2dx_extension_Manifest(lua_State* tolua_S)
         tolua_function(tolua_S,"isLoaded",lua_cocos2dx_extension_Manifest_isLoaded);
         tolua_function(tolua_S,"getPackageUrl",lua_cocos2dx_extension_Manifest_getPackageUrl);
         tolua_function(tolua_S,"getVersion",lua_cocos2dx_extension_Manifest_getVersion);
+        tolua_function(tolua_S,"getEngineVersion",lua_cocos2dx_extension_Manifest_getEngineVersion);
         tolua_function(tolua_S,"getVersionFileUrl",lua_cocos2dx_extension_Manifest_getVersionFileUrl);
         tolua_function(tolua_S,"getSearchPaths",lua_cocos2dx_extension_Manifest_getSearchPaths);
     tolua_endmodule(tolua_S);

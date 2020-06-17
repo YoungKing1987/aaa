@@ -331,6 +331,12 @@ const std::string& Manifest::getVersion() const
     return _version;
 }
 
+
+const std::string& Manifest::getEngineVersion() const
+{
+	return _engineVer;
+}
+
 const std::vector<std::string>& Manifest::getGroups() const
 {
     return _groups;

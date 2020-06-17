@@ -109,6 +109,8 @@ public:
     /** @brief Gets manifest version.
      */
     const std::string& getVersion() const;
+
+	const std::string& getEngineVersion() const;
     
     /** @brief Get the search paths list related to the Manifest.
      */

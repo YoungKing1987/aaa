@@ -52,6 +52,7 @@ extern "C" {
 
     JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeOnResume() {
         static bool firstTime = true;
+
         if (Director::getInstance()->getOpenGLView()) {
             // don't invoke at first to keep the same logic as iOS
             // can refer to https://github.com/cocos2d/cocos2d-x/issues/14206

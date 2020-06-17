@@ -52,7 +52,7 @@ SimulatorConfig::SimulatorConfig()
     _screenSizeArray.push_back(SimulatorScreenSize("Android (600x1024)", 600, 1024));
     _screenSizeArray.push_back(SimulatorScreenSize("Android (720x1280)", 720, 1280));
     _screenSizeArray.push_back(SimulatorScreenSize("Android (800x1280)", 800, 1280));
-    _screenSizeArray.push_back(SimulatorScreenSize("Android (1080x1920)", 1080, 1920));
+    _screenSizeArray.push_back(SimulatorScreenSize("Android (1080x1920)", 720, 1470));
 }
 
 int SimulatorConfig::getScreenSizeCount() const

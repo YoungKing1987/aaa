@@ -147,6 +147,7 @@ public class Cocos2dxEditBox extends EditText {
 
     public  Cocos2dxEditBox(Context context){
         super(context);
+        this.setContentDescription("edit input");
     }
 
     public void setEditBoxViewRect(int left, int top, int maxWidth, int maxHeight) {

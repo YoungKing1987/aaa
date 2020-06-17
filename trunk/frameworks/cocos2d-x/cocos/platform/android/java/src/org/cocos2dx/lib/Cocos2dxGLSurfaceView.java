@@ -84,13 +84,13 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 
     public Cocos2dxGLSurfaceView(final Context context) {
         super(context);
-
+        this.setContentDescription("game view");
         this.initView();
     }
 
     public Cocos2dxGLSurfaceView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
-        
+        this.setContentDescription("game view");
         this.initView();
     }
 
