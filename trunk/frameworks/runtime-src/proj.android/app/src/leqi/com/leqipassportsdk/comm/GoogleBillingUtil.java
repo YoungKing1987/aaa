@@ -13,8 +13,9 @@ import com.android.billingclient.api.PurchasesUpdatedListener;
 import com.android.billingclient.api.SkuDetails;
 import com.android.billingclient.api.SkuDetailsParams;
 import com.android.billingclient.api.SkuDetailsResponseListener;
-//import com.app5stargames.battleship.UnityPlayerActivity;
-//import com.eyewind.framework.base.BaseApplication;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,7 +27,7 @@ import leqi.com.leqipassportsdk.leqipass;
 
 public class GoogleBillingUtil {
     private Activity activity ;
-    private String[] inAppSKUS = new String[]{"10002", "10009"};//内购ID
+    private String[] inAppSKUS = new String[]{"10002", "fs_gw_product100499"};//内购ID
     private String[] subsSKUS = new String[]{};//订阅ID
 
     public static final String BILLING_TYPE_INAPP = BillingClient.SkuType.INAPP;//内购
@@ -36,7 +37,6 @@ public class GoogleBillingUtil {
     private OnPurchaseFinishedListener mOnPurchaseFinishedListener;
     private OnStartSetupFinishedListener mOnStartSetupFinishedListener ;
     private OnQueryFinishedListener mOnQueryFinishedListener;
-
 
     public boolean mIsServiceConnected= false;
     private boolean isAutoConsumeAsync = false;
@@ -52,6 +52,8 @@ public class GoogleBillingUtil {
 
     }
 
+
+
     public GoogleBillingUtil build()
     {
 
@@ -59,10 +61,13 @@ public class GoogleBillingUtil {
         {
             synchronized (this)
             {
-                if(mBillingClient==null)
-                {
-                    //本来想做单实例，但新版api示例是在build之前就要传入购买回调接口，所以没办法做静态了。
-                    mBillingClient = BillingClient.newBuilder(this.activity).setListener(new MyPurchasesUpdatedListener(mOnPurchaseFinishedListener)).build();
+                if(mBillingClient==null) {
+
+                        //本来想做单实例，但新版api示例是在build之前就要传入购买回调接口，所以没办法做静态了。
+                        mBillingClient = BillingClient.newBuilder(this.activity).setListener(new MyPurchasesUpdatedListener(mOnPurchaseFinishedListener)).build();
+
+
+
                 }
             }
         }
@@ -83,7 +88,9 @@ public class GoogleBillingUtil {
             public void onBillingSetupFinished(@BillingClient.BillingResponse int billingResponseCode) {
                 if (billingResponseCode == BillingClient.BillingResponse.OK) {
                     mIsServiceConnected = true;
-                    queryInventoryInApp();
+                    //queryInventoryInApp();
+
+                    //queryInventoryInApp(new String[]{"10001","fs_gw_product100499"});
                     //queryInventorySubs();
                     queryPurchasesInApp();
                     if(mOnStartSetupFinishedListener!=null)
@@ -110,6 +117,14 @@ public class GoogleBillingUtil {
             }
         });
     }
+
+    public void getSkuDetails (){
+
+
+        getSkuDetails();
+    }
+
+
 
     /**
      * Google购买商品回调接口(订阅和内购都走这个接口)
@@ -153,9 +168,12 @@ public class GoogleBillingUtil {
     /**
      * 查询内购商品信息
      */
-    public void queryInventoryInApp()
+    public void queryInventoryInApp(String[] querySku)
     {
+        inAppSKUS =null;
+        inAppSKUS =querySku;
         queryInventory(BillingClient.SkuType.INAPP);
+
     }
 
     /**
@@ -221,7 +239,26 @@ public class GoogleBillingUtil {
             }
             if(responseCode== BillingClient.BillingResponse.OK&&list!=null)
             {
-                mOnQueryFinishedListener.onQuerySuccess(list);
+
+                JSONArray jsonArray = new JSONArray();
+
+                try
+                {
+                    for(int i=0; i<list.size();i++){
+                        final JSONObject json =new JSONObject();
+                        json.put(list.get(i).getSku(), list.get(i).getPrice());
+                        jsonArray.put(json);
+                    }
+
+                    final JSONObject json1 = new JSONObject();
+                    json1.put("action","SkuDetail");
+                    json1.put("data",jsonArray);
+                    mOnQueryFinishedListener.onQuerySuccess(json1);
+                }
+                catch(Exception e){
+                    Log.i("hkl", "获取条目信息失败=" + e.toString());
+                }
+               // mOnQueryFinishedListener.onQuerySuccess(list);
             }
             else
             {
@@ -304,7 +341,7 @@ public class GoogleBillingUtil {
         @Override
         public void onConsumeResponse(int responseCode, String s) {
             if (responseCode == BillingClient.BillingResponse.OK) {
-                Log.i(leqipass.Tag, "消耗成功="+s);
+                Log.i("hkl", "消耗成功="+s);
             }
         }
     }
@@ -517,7 +554,7 @@ public class GoogleBillingUtil {
      *  本工具查询回调接口
      */
     public interface OnQueryFinishedListener{
-        public void onQuerySuccess(List<SkuDetails> list);
+        public void onQuerySuccess(JSONObject list);
         public void onQueryFail(int responseCode);
         public void onQueryError();
     }
@@ -559,9 +596,5 @@ public class GoogleBillingUtil {
     {
         this.isAutoConsumeAsync= isAutoConsumeAsync;
     }
-
-
-
-
 
 }

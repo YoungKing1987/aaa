@@ -1,45 +1,34 @@
 {
   "project_info": {
-    "project_number": "492807836902",
-    "firebase_url": "https://mafia-22815027.firebaseio.com",
-    "project_id": "mafia-22815027",
-    "storage_bucket": "mafia-22815027.appspot.com"
+    "project_number": "829180757711",
+    "firebase_url": "https://rise-of-under-world-2b433.firebaseio.com",
+    "project_id": "rise-of-under-world-2b433",
+    "storage_bucket": "rise-of-under-world-2b433.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:492807836902:android:112c0ac716e08e62",
+        "mobilesdk_app_id": "1:829180757711:android:406923105cc20ab7e1d9ba",
         "android_client_info": {
-          "package_name": "org.cocos2dx.Mafia"
+          "package_name": "com.app5stargames.rouw"
         }
       },
       "oauth_client": [
         {
-          "client_id": "492807836902-s9b56v95elcpoqjg8v4l74v0uat38uib.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "org.cocos2dx.Mafia",
-            "certificate_hash": "b948d4350f31bdb76572a79cd199930b3a2514e2"
-          }
-        },
-        {
-          "client_id": "492807836902-5t3apkbkfn91abevqsvueqenlvhh14tf.apps.googleusercontent.com",
+          "client_id": "829180757711-a9pg2d2df7oud3fsodd9g7crckupoh3e.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDCRx4RS7K-NDaqpgupCNSA59BNfO20xQY"
-        },
-        {
-          "current_key": "AIzaSyCaI9npdM0xwH2VIVirmZ9JTJ_SE_LmzA0"
+          "current_key": "AIzaSyAWIMvnHlFj-CHoQj-n-x4naL-7G9UDlTo"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "492807836902-8cct5otksft2h7ddd4v68le4spjce05d.apps.googleusercontent.com",
+              "client_id": "829180757711-a9pg2d2df7oud3fsodd9g7crckupoh3e.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

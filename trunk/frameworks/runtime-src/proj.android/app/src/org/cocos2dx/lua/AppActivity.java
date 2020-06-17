@@ -32,6 +32,8 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
@@ -41,6 +43,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -62,8 +65,13 @@ import leqi.com.leqipassportsdk.mUserInfo;
 import org.cocos2dx.lib.Cocos2dxLuaJavaBridge;
 import org.json.JSONObject;
 import com.dipan.beenpc.sdk.Countly;
+import com.app5stargames.rouw.R;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Currency;
 import java.util.List;
 import android.os.Build;
 import android.view.WindowManager;
@@ -71,6 +79,12 @@ import admin.*;
 import android.view.WindowManager.LayoutParams;
 
 import org.cocos2dx.lua.LuaPlatform;
+import com.facebook.appevents.*;
+import android.app.Application;
+import android.util.Log;
+import com.appsflyer.AppsFlyerLib;
+import com.appsflyer.AppsFlyerConversionListener;
+import java.util.Map;
 
 public class AppActivity extends Cocos2dxActivity implements
         GoogleApiClient.OnConnectionFailedListener,
@@ -86,6 +100,9 @@ public class AppActivity extends Cocos2dxActivity implements
     private GoogleBillingUtil googleBillingUtil =null;
     public Countly countly;
     String uid = "";
+    AppEventsLogger logger;
+    private static Handler mUIHandler = null;
+    private static ImageView imageView=null;
     private MyOnPurchaseFinishedListener mOnPurchaseFinishedListener = new MyOnPurchaseFinishedListener();//购买回调接口
     private MyOnQueryFinishedListener mOnQueryFinishedListener = new MyOnQueryFinishedListener();//查询回调接口
     private MyOnStartSetupFinishedListener mOnStartSetupFinishedListener = new MyOnStartSetupFinishedListener();
@@ -109,20 +126,81 @@ public class AppActivity extends Cocos2dxActivity implements
             lp.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_NEVER;
             getWindow().setAttributes(lp);
         }
-
+        countly = Countly.sharedInstance();
+        countly.init(this,"https://countly-mafia.5stargame.com/api.html","31651830a58984cccf9e5daa72e9e9cc");
+        mUIHandler = new Handler();
+        addContentView(createLogoImg(), new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));//添加启动页
         platform =LuaPlatform.shareInstance();
         platform.init(this);
         // DO OTHER INITIALIZATION BELOW
-        countly = Countly.sharedInstance();
-        countly.init(this,"https://countly-mafia.5stargame.com/api.html","31651830a58984cccf9e5daa72e9e9cc");
+
         tmp =leqipass.shareInstance();
         tmp.init(this);
         tmp.setLeqiLoginBack(this);
         //https://account-mafia.5stargame.com/api/
         //
+        try {
+            logger = AppEventsLogger.newLogger(this);
+            logger.logEvent(AppEventsConstants.EVENT_NAME_ACTIVATED_APP);
+        }catch (Exception e) { }
+
         initGoogleLogin();
         initFaceBookLogin();
+        AppsFlyerConversionListener conversionListener = new AppsFlyerConversionListener() {
+
+
+            @Override
+            public void onConversionDataSuccess(Map<String, Object> conversionData) {
+
+//                for (String attrName : conversionData.keySet()) {
+//                    Log.d("LOG_TAG", "attribute: " + attrName + " = " + conversionData.get(attrName));
+//                }
+            }
+
+            @Override
+            public void onConversionDataFail(String errorMessage) {
+                //Log.d("LOG_TAG", "error getting conversion data: " + errorMessage);
+            }
+
+            @Override
+            public void onAppOpenAttribution(Map<String, String> conversionData) {
+
+//                for (String attrName : conversionData.keySet()) {
+//                    Log.d("LOG_TAG", "attribute: " + attrName + " = " + conversionData.get(attrName));
+//                }
+
+            }
+
+            @Override
+            public void onAttributionFailure(String errorMessage) {
+               // Log.d("LOG_TAG", "error onAttributionFailure : " + errorMessage);
+            }
+        };
+
+        AppsFlyerLib.getInstance().init("LPWmj3dXEDtv5B6r77XLxJ", conversionListener, this);
+        AppsFlyerLib.getInstance().startTracking(this);
+        //AppsFlyerLib.getInstance().setAppId("com.app5stargames.rouw");
         //tmp.game_init("https://account-mafia.5stargame.com/api/","","");
+    }
+
+    public ImageView createLogoImg() {
+        imageView = new ImageView(this);
+        imageView.setImageResource(
+                R.drawable.cplogo);
+        imageView.setContentDescription("game logo");
+        imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);// 设置当前图像的图像（position为当前图像列表的位置）
+        return imageView;
+    }
+
+    public static void removeImgView() {
+        mUIHandler.post(new Runnable() {//imageView是在UI程，即主线程里，所以我们只能通过子线程发送消息给主线程去跟新UI
+            @Override
+            public void run() {
+                if (imageView!=null) {
+                    imageView.setVisibility(View.GONE);
+                }
+            }
+        });
     }
 
     public void initSdk(final String url ,final String var){
@@ -158,13 +236,14 @@ public class AppActivity extends Cocos2dxActivity implements
     }
 
     public void CheckPayOrder(){
+        //dealMessage("{\"action\":\"SkuDetail\",\"data\":[{\"fs_rouw_product_0099\":\"TWD $30.00\"},{\"fs_rouw_product_0299\":\"TWD $160.00\"}]}");
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 initGoogleBillingUtil();
             }
         });
-
+        Log.i("hkl","CheckPayOrderCheckPayOrderCheckPayOrderCheckPayOrder");
     }
 
     public void lianxi(final String uid){
@@ -196,6 +275,15 @@ public class AppActivity extends Cocos2dxActivity implements
                     .setOnQueryFinishedListener(mOnQueryFinishedListener)
                     .setOnStartSetupFinishedListener(mOnStartSetupFinishedListener)
                     .build();
+        }
+    }
+
+    public void queryInventoryInApp(final String list){
+        if (googleBillingUtil != null) {
+            String[] arrayStr = new String[] {};// 字符数组
+            arrayStr = list.split(",");
+            Log.i("hkl",list);
+            googleBillingUtil.queryInventoryInApp(arrayStr);
         }
     }
 
@@ -250,7 +338,13 @@ public class AppActivity extends Cocos2dxActivity implements
             });
 
         }else if(platform.equals("CFB2")) {
-            tmp.exChange(1003, "11");
+            this.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    tmp.exChange(1003, "11");
+                }
+            });
+
         }else if(platform.equals("CGG")) {
             if (googleLogin == null) {
                 googleLogin = new GoogleLogin(this, this, 1003);
@@ -304,6 +398,14 @@ public class AppActivity extends Cocos2dxActivity implements
             jsonObj.put("paymoney",paymoney);
             jsonObj.put("platform",platform);
             if(Success) {
+                if (logger!=null) {
+                    double num = Double.valueOf(paymoney) / 100;
+                    Bundle params = new Bundle();
+                    params.putString(AppEventsConstants.EVENT_PARAM_CURRENCY, "USD");
+                    params.putString(AppEventsConstants.EVENT_PARAM_CONTENT_TYPE, "google");
+                    params.putString(AppEventsConstants.EVENT_PARAM_CONTENT_ID, "google");
+                    logger.logPurchase(BigDecimal.valueOf(num), Currency.getInstance("USD"), params);
+                }
                 jsonObj.put("code", 0);
             }
             else {
@@ -325,8 +427,9 @@ public class AppActivity extends Cocos2dxActivity implements
     private class MyOnQueryFinishedListener implements GoogleBillingUtil.OnQueryFinishedListener
     {
         @Override
-        public void onQuerySuccess(List<SkuDetails> list) {
-            messageShow("onQuerySuccess"+list.toString() );
+        public void onQuerySuccess(JSONObject json) {
+            dealMessage(json.toString());
+            messageShow("onQuerySuccess"+json.toString() );
             //pay("a");
         }
 
@@ -390,6 +493,7 @@ public class AppActivity extends Cocos2dxActivity implements
                 //CheckPayOrder();
                 String gg_client =json.optString("gg_client");  //1代表已绑定GG
                 if (gg_client.equals("0")) {
+                    this.setIsNotPause(true);
                     googleLogin.requestCode =1001;
                     googleLogin.signIn();
                 }
@@ -471,6 +575,7 @@ public class AppActivity extends Cocos2dxActivity implements
         try {
             messageShow("requestCode==" + requestCode + ",resultCode==" + resultCode + ",data==" + data);
             if(googleLogin!=null && requestCode==googleLogin.requestCode){
+                this.setIsNotPause(false);
                 GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
                 googleLogin.handleSignInResult( result );
             }
@@ -478,7 +583,9 @@ public class AppActivity extends Cocos2dxActivity implements
             {
                 faceBookLogin.getCallbackManager().onActivityResult(requestCode, resultCode, data);
             }
-        }catch (Exception e){}
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -564,8 +671,10 @@ public class AppActivity extends Cocos2dxActivity implements
         messageShow("back_pay_by_gg_success=====" +json.toString()+"\n"+"开始提交GG消耗商品1");
 
         OnPayCallBack(true,json.optString("paymoney"),"google");
-        if (countly!=null)
-           countly.recordPayEvents(uid,json.optString("paymoney"),"google");
+        if (countly!=null){
+            countly.recordPayEvents(uid,json.optString("paymoney"),"google");
+        }
+
         dealMessage(json.toString());
 //        if(mLuaCallBack > 0 ){
 //            Cocos2dxLuaJavaBridge.callLuaFunctionWithString(mLuaCallBack,json.toString());

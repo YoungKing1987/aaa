@@ -4,13 +4,13 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion PROP_COMPILE_SDK_VERSION.toInteger()
-
     defaultConfig {
-        applicationId "org.cocos2dx.Mafia"
+        applicationId "com.app5stargames.rouw"
+
         minSdkVersion PROP_MIN_SDK_VERSION
         targetSdkVersion PROP_TARGET_SDK_VERSION
-        versionCode 1050
-        versionName "1.05"
+        versionCode 1230
+        versionName "1.23"
 
         externalNativeBuild {
             if (PROP_BUILD_TYPE == 'ndk-build') {
@@ -73,16 +73,16 @@ android {
 //                keyAlias RELEASE_KEY_ALIAS
 //                keyPassword RELEASE_KEY_PASSWORD
 //            }
-            keyAlias '5stargames'
-            keyPassword 'telejoewe'
-            storeFile file('C:/Users/yj/Desktop/5stargames.keystore')
-            storePassword 'telejoewe'
+           // keyAlias '5stargames'
+           // keyPassword 'telejoewe'
+            //storeFile file('C:telejoewe/Users/yj/Desktop/5stargames.keystore')
+            //storePassword ''
         }
         debug {
-            keyAlias '5stargames'
-            keyPassword 'telejoewe'
-            storeFile file('C:/Users/yj/Desktop/5stargames.keystore')
-            storePassword 'telejoewe'
+//            keyAlias '5stargames'
+//            keyPassword 'telejoewe'
+//            storeFile file('C:/Users/yj/Desktop/5stargames.keystore')
+//            storePassword 'telejoewe'
         }
     }
 
@@ -95,7 +95,7 @@ android {
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             //if (project.hasProperty("RELEASE_STORE_FILE")) {
-                signingConfig signingConfigs.release
+                //signingConfig signingConfigs.release
             //}
             externalNativeBuild {
                 ndkBuild {
@@ -121,7 +121,7 @@ def getCocosCommandPath() {
     if (OperatingSystem.current().isWindows()) {
         return 'cocos.bat'
     }
-    else {
+    else {isSBSettingEnabled
         // on unix like system, can not get environments variables easily
         // so run a shell script to get environment variable sets by cocos2d-x setup.py
         new ByteArrayOutputStream().withStream { os ->
@@ -265,10 +265,15 @@ android.applicationVariants.all { variant ->
         }
     }
 }
+repositories {
+    mavenCentral()
+}
 
 dependencies {
     implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
+    //implementation 'com.appsflyer:af-android-sdk:5.3.0'
     implementation project(':libcocos2dx')
+    implementation 'com.appsflyer:af-android-sdk:5.2.0'
     //implementation 'com.android.support:appcompat-v7:26.1.0'
     //    implementation 'com.google.firebase:firebase-core:16.0.8'
     //    implementation 'com.google.firebase:firebase-iid:17.1.2'
@@ -293,6 +298,7 @@ dependencies {
     implementation 'com.facebook.android:facebook-android-sdk:[5,6)'
     //implementation 'com.facebook.android:facebook-login:[4,33)'
     implementation 'androidx.annotation:annotation:+'
+    implementation 'com.android.installreferrer:installreferrer:1.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

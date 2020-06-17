@@ -213,7 +213,7 @@ bool AppDelegate::initGame(void)
 	auto engine = LuaEngine::getInstance();
 	ScriptEngineManager::getInstance()->setScriptEngine(engine);
 	LuaStack* stack = engine->getLuaStack();
-	stack->setXXTEAKeyAndSign("WangBingSheng", strlen("WangBingSheng"), "ShengBingWang", strlen("ShengBingWang"));
+	stack->setXXTEAKeyAndSign(nullptr, 0, "ShengBingWang", 0);
 	lua_State* L = stack->getLuaState();
 
 	lua_module_register(L);

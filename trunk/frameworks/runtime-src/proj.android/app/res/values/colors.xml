@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 这里我们取主场景的背景色 -->
+    <color name="splashBg">#000000</color>
+</resources>

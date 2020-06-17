@@ -1,4 +1,6 @@
 package org.cocos2dx.lua;
+import android.content.pm.PackageManager;
+
 import org.cocos2dx.lua.AppActivity;
 import org.cocos2dx.lib.Cocos2dxLuaJavaBridge;
 import org.cocos2dx.lib.Cocos2dxHelper;
@@ -31,6 +33,8 @@ public class LuaPlatform
 
     public static  void CheckPayOrder(){sActivity.CheckPayOrder();}
 
+    public static  void queryInventoryInApp(final String list) {sActivity.queryInventoryInApp(list);}
+
     public static  void gameserver_list(final String areaid){sActivity.gameserver_list(areaid);}
 
     public static  void pay(final String josn ){sActivity.pay(josn);}
@@ -47,8 +51,21 @@ public class LuaPlatform
 
     public static  void recordNewTaskEvent(final String key){sActivity.recordNewTaskEvent(key);}
 
+    public static void removeImgView(){sActivity.removeImgView();}
+
 //    public static void callbackLua(final String tipInfo,final int luaFunc){
 //        Cocos2dxLuaJavaBridge.callLuaFunctionWithString(luaFunc, tipInfo);
 //        Cocos2dxLuaJavaBridge.releaseLuaFunction(luaFunc);
 //    }
+    public static String getVerName() {
+        String verName = "";
+        try {
+            verName = sActivity.getPackageManager().
+                    getPackageInfo(sActivity.getPackageName(), 0).versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return verName;
+    }
+
 }

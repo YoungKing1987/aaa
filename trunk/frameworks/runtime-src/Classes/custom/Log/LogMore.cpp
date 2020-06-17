@@ -109,6 +109,7 @@ void LogMore::showErrorWindow()
 		s_errorWindow = ErrorWindow::create(s_errorText);
 		runingScenes->addChild(s_errorWindow,runingScenes->getChildrenCount() + 9999999);
 		// Director::getInstance()->pause();
+		s_errorText = "";
 	}
 }
 void LogMore::logErrorFormat(const char* sformat, ...)

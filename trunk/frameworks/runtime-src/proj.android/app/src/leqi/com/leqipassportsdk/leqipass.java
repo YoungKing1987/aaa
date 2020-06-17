@@ -23,7 +23,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 public class leqipass {
-    public  static  String Tag = "SDK";
+    public  static  String Tag = "hkl";
     private static leqipass sharedInstance_;
     private Context context_;
     private LeqiLoginBack leqiLoginBack;

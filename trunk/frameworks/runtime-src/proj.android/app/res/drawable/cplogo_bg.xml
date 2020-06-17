@@ -1,0 +1,15 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+    <!--矩形 黄色作为背景色-->
+    <item >
+        <shape android:shape="rectangle" >
+            <solid android:color="@color/splashBg" />
+        </shape >
+    </item >
+
+    <!--单独的slogan图片居中显示-->
+    <item >
+        <bitmap
+            android:gravity="center"
+            android:src="@drawable/cplogo"/>
+    </item >
+</layer-list >
