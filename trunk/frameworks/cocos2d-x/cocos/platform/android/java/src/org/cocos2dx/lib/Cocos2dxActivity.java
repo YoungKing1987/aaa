@@ -74,7 +74,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     private boolean showVirtualButton = false;
     private boolean gainAudioFocus = false;
     private boolean paused = true;
-    private boolean isPause = false;
+//    private boolean isPause = false;
 
     public Cocos2dxGLSurfaceView getGLSurfaceView(){
         return  mGLSurfaceView;
@@ -195,9 +195,9 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
     	Log.d(TAG, "onWindowFocusChanged() hasFocus=" + hasFocus);
-    	if (isPause){
-    	    hasFocus = true;
-        }
+//    	if (isPause){
+//    	    hasFocus = true;
+//        }
         super.onWindowFocusChanged(hasFocus);
         
         this.hasFocus = hasFocus;
@@ -247,9 +247,9 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         this.mGLSurfaceView.queueEvent(pRunnable);
     }
 
-    public void setIsNotPause(final boolean isPause){
-        this.isPause = isPause;
-    }
+//    public void setIsNotPause(final boolean isPause){
+//        this.isPause = isPause;
+//    }
     
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)

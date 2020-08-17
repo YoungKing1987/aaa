@@ -31,7 +31,7 @@
 #ifndef SPINE_SKELETONRENDERER_H_
 #define SPINE_SKELETONRENDERER_H_
 
-#include "spine/spine.h"
+#include <spine/spine.h>
 #include "cocos2d.h"
 
 namespace spine {
@@ -49,7 +49,7 @@ public:
 
 	virtual void update (float deltaTime) override;
 	virtual void draw (cocos2d::Renderer* renderer, const cocos2d::Mat4& transform, uint32_t transformFlags) override;
-    virtual void drawDebug (cocos2d::Renderer* renderer, const cocos2d::Mat4& transform, uint32_t transformFlags);
+	virtual void drawDebug (cocos2d::Renderer* renderer, const cocos2d::Mat4& transform, uint32_t transformFlags);
 	virtual cocos2d::Rect getBoundingBox () const override;
 	virtual void onEnter () override;
 	virtual void onExit () override;
@@ -129,11 +129,11 @@ CC_CONSTRUCTOR_ACCESS:
 	void initWithData (spSkeletonData* skeletonData, bool ownsSkeletonData = false);
 	void initWithJsonFile (const std::string& skeletonDataFile, spAtlas* atlas, float scale = 1);
 	void initWithJsonFile (const std::string& skeletonDataFile, const std::string& atlasFile, float scale = 1);
-    void initWithBinaryFile (const std::string& skeletonDataFile, spAtlas* atlas, float scale = 1);
-    void initWithBinaryFile (const std::string& skeletonDataFile, const std::string& atlasFile, float scale = 1);
+	void initWithBinaryFile (const std::string& skeletonDataFile, spAtlas* atlas, float scale = 1);
+	void initWithBinaryFile (const std::string& skeletonDataFile, const std::string& atlasFile, float scale = 1);
 
 	virtual void initialize ();
-
+	
 protected:
 	void setSkeletonData (spSkeletonData* skeletonData, bool ownsSkeletonData);
 	virtual AttachmentVertices* getAttachmentVertices (spRegionAttachment* attachment) const;

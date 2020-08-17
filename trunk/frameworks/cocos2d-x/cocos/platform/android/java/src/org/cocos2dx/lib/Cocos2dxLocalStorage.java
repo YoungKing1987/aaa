@@ -37,7 +37,7 @@ public class Cocos2dxLocalStorage {
 
     private static String DATABASE_NAME = "jsb.sqlite";
     private static String TABLE_NAME = "data";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     
     private static DBOpenHelper mDatabaseOpenHelper = null;
     private static SQLiteDatabase mDatabase = null;

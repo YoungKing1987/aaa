@@ -31,12 +31,12 @@
 #ifndef SPINE_COCOS2DX_H_
 #define SPINE_COCOS2DX_H_
 
-#include "spine/spine.h"
+#include <spine/spine.h>
 #include "cocos2d.h"
-#include "spine/Cocos2dAttachmentLoader.h"
-#include "spine/SkeletonRenderer.h"
-#include "spine/SkeletonAnimation.h"
-#include "spine/SkeletonBatch.h"
+#include <spine/Cocos2dAttachmentLoader.h>
+#include <spine/SkeletonRenderer.h>
+#include <spine/SkeletonAnimation.h>
+#include <spine/SkeletonBatch.h>
 
 namespace spine {
 	typedef cocos2d::Texture2D* (*CustomTextureLoader)(const char* path);
