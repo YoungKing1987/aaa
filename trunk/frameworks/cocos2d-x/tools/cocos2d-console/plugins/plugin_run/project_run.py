@@ -57,6 +57,10 @@ class CCPluginRun(cocos.CCPlugin):
         group.add_argument("--working-dir", dest="working_dir", default='',
                           help=MultiLanguage.get_string('RUN_ARG_WORKING_DIR'))
 
+        group = parser.add_argument_group(MultiLanguage.get_string('RUN_ARG_GROUP_IOS'))
+        group.add_argument("-sdk", dest="use_sdk", metavar="USE_SDK", nargs='?', default='iphonesimulator',
+                          help=MultiLanguage.get_string('RUN_ARG_IOS_SDK'))
+
     def _check_custom_options(self, args):
         self._port = args.port
         self._mode = args.mode
@@ -205,6 +209,12 @@ class CCPluginRun(cocos.CCPlugin):
                 launch_sim = "%s launch \"%s\" &" % (iossim_exe_path, deploy_dep._iosapp_path)
                 self._run_cmd(launch_sim)
 
+    def run_ios_device(self):
+        if not self._platforms.is_ios_active():
+            return
+
+        cocos.Logging.warning('Do not support running on iOS devices.')
+
     def _run_with_desktop_options(self, cmd):
         if self._no_console:
             cmd += ' -console no'
@@ -338,9 +348,8 @@ class CCPluginRun(cocos.CCPlugin):
         cocos.Logging.info(MultiLanguage.get_string('RUN_INFO_START_APP'))
         self.run_android_device(dependencies)
         self.run_ios_sim(dependencies)
+        # self.run_ios_device()
         self.run_mac(dependencies)
         self.run_web(dependencies)
         self.run_win32(dependencies)
         self.run_linux(dependencies)
-        self.run_tizen(dependencies)
-
